@@ -2,4 +2,18 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--    Background Color    -->
+    <color name="backgroundColor">#F4FAFF</color>
+
+    <!--    StatusBar Color -->
+    <color name="statusBarColor">#F4FAFF</color>
+
+    <!--    NavigationBar Color -->
+    <color name="navBarColor">#F4FAFF</color>
+
+    <!-- Button Bottom Color    -->
+    <color name="buttonCategoryColor">#525DC0</color>
+    <color name="buttonFavoritesColor">#E13E3E</color>
+    <color name="buttonTextColor">#FFFFFFFF</color>
 </resources>
