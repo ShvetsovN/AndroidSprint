@@ -2,8 +2,8 @@
 <resources>
     <!--    Text Style  -->
     <style name="StyleTitle14" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">@dimen/text_size</item>
-        <item name="android:fontFamily">@font/montserrat_alternates_bold</item>
+        <item name="android:textSize">@dimen/button_style_nav_text_size</item>
+        <item name="android:fontFamily">@font/montserrat_alternates_semi_bold</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/white</item>
     </style>

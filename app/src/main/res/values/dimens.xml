@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--    Main Indent     -->
-    <dimen name="mainIndent">16dp</dimen>
-    <dimen name="halfMainIndent">8dp</dimen>
+    <dimen name="main_indent">16dp</dimen>
+    <dimen name="half_main_indent">8dp</dimen>
 
     <!--    Button Bottom Dimension -->
     <dimen name="button_gap">2dp</dimen>
     <dimen name="button_corner_radius">8dp</dimen>
     <dimen name="button_padding_vertical">10dp</dimen>
+    <dimen name="button_style_nav_text_size">14sp</dimen>
 
-    <!--    TextSize Dimension  -->
-    <dimen name="text_size">14sp</dimen>
 </resources>

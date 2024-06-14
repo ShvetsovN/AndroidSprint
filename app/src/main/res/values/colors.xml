@@ -4,9 +4,9 @@
     <color name="white">#FFFFFFFF</color>
 
     <!--    Background Color    -->
-    <color name="backgroundColor">#F4FAFF</color>
+    <color name="background_color">#F4FAFF</color>
 
     <!-- Button Bottom Color    -->
-    <color name="buttonCategoryColor">#525DC0</color>
-    <color name="buttonFavoritesColor">#E13E3E</color>
+    <color name="button_category_color">#525DC0</color>
+    <color name="button_favorites_color">#E13E3E</color>
 </resources>
