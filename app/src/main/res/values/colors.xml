@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--    Background Color    -->
+    <color name="background_color">#F4FAFF</color>
+
+    <!-- Button Bottom Color    -->
+    <color name="button_category_color">#525DC0</color>
+    <color name="button_favorites_color">#E13E3E</color>
 </resources>
