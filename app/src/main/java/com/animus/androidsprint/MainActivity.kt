@@ -7,6 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import com.animus.androidsprint.databinding.ActivityMainBinding
 import com.animus.androidsprint.databinding.FragmentListCategoriesBinding
 
@@ -14,7 +15,9 @@ class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
     private val binding
-        get() = _binding ?: throw IllegalStateException("Binding for ActivityMainBinding must not be null")
+        get() = _binding
+            ?: throw IllegalStateException("Binding for ActivityMainBinding must not be null")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
@@ -25,6 +28,17 @@ class MainActivity : AppCompatActivity() {
                 setReorderingAllowed(true)
                 add<CategoriesListFragment>(R.id.mainContainer)
             }
+        }
+
+        with(binding) {
+            btnFavorites.setOnClickListener {
+                supportFragmentManager.commit {
+                    replace<FavoritesFragment>(R.id.mainContainer)
+                    setReorderingAllowed(true)
+                    addToBackStack(null)
+                }
+            }
+            btnCategory.setOnClickListener { }
         }
     }
 }
