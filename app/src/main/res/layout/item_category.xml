@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/cardview_item_category_width"
+    android:layout_height="@dimen/cardview_item_category_height"
+    android:layout_marginHorizontal="@dimen/half_main_indent"
+    android:layout_marginVertical="@dimen/main_indent"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="@dimen/corner_radius">
+
+</androidx.cardview.widget.CardView>

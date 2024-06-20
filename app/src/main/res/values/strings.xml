@@ -5,4 +5,6 @@
     <string name="button_category">Категории</string>
     <string name="button_favorites">Избранное</string>
 
+    <string name="header_categories">Categories header</string>
+
 </resources>
