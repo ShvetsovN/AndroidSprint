@@ -11,5 +11,7 @@
     <color name="button_favorites_color">#E13E3E</color>
 
     <!--   Header Text Color -->
-    <color name="text_header_color">#5F3678</color>
+    <color name="cardview_text_header_color">#5F3678</color>
+
+    <color name="cardview_description_text_color">#666666</color>
 </resources>
