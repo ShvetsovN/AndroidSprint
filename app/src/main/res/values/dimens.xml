@@ -3,11 +3,15 @@
     <!--    Main Indent     -->
     <dimen name="main_indent">16dp</dimen>
     <dimen name="half_main_indent">8dp</dimen>
+    <dimen name="corner_radius">8dp</dimen>
+    <dimen name="padding_vertical_horizontal">10dp</dimen>
 
     <!--    Button Bottom Dimension -->
     <dimen name="button_gap">2dp</dimen>
-    <dimen name="button_corner_radius">8dp</dimen>
-    <dimen name="button_padding_vertical">10dp</dimen>
     <dimen name="button_style_nav_text_size">14sp</dimen>
+
+    <dimen name="fragment_header_size">224dp</dimen>
+    <dimen name="cardview_item_category_width">160dp</dimen>
+    <dimen name="cardview_item_category_height">220dp</dimen>
 
 </resources>

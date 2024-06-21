@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="@color/background_color"
+    android:orientation="vertical"
     tools:context=".CategoriesListFragment">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fragment_header_size">
+
+        <ImageView
+            android:id="@+id/ivHeader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/header_categories"
+            android:src="@drawable/zagluwka"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categories List Fragment"
+            style="@style/HeaderText"
+            app:layout_constraintBottom_toBottomOf="@+id/ivHeader"
+            app:layout_constraintStart_toStartOf="@+id/ivHeader" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCategories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Categories List Fragment" />
+        tools:listitem="@layout/item_category"
+        android:layout_marginHorizontal="@dimen/half_main_indent"
+        android:layout_marginVertical="@dimen/half_main_indent"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        tools:itemCount="6" />
 
-</FrameLayout>
+
+</LinearLayout>
