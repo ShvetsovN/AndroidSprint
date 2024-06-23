@@ -2,7 +2,6 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cvId"
     android:layout_width="match_parent"
     android:layout_height="@dimen/cardview_item_category_height"
     android:layout_marginHorizontal="@dimen/half_main_indent"
