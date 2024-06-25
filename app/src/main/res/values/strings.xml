@@ -6,5 +6,6 @@
     <string name="button_favorites">Избранное</string>
 
     <string name="header_categories">Categories header</string>
+    <string name="cardview_categories_image">Categories Image</string>
 
 </resources>
