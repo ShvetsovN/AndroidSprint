@@ -1,15 +1,11 @@
 package com.animus.androidsprint
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.animus.androidsprint.databinding.ActivityMainBinding
-import com.animus.androidsprint.databinding.FragmentListCategoriesBinding
 
 class MainActivity : AppCompatActivity() {
 

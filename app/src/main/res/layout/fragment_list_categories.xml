@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/header_categories"
             android:scaleType="centerCrop"
-            android:src="@drawable/cardview_iv_stub" />
+            android:src="@drawable/bcg_categories" />
 
         <TextView
             style="@style/HeaderText"
