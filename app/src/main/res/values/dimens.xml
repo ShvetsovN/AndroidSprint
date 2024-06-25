@@ -8,15 +8,18 @@
 
     <!--    Button Bottom Dimension -->
     <dimen name="button_gap">2dp</dimen>
-    <dimen name="button_style_nav_text_size">14sp</dimen>
 
+    <!--    Fragment Dimension  -->
     <dimen name="fragment_header_size">224dp</dimen>
 
-    <!--    CardView dimension-->
+    <!--    CardView Dimension  -->
     <dimen name="cardview_item_category_width">160dp</dimen>
     <dimen name="cardview_item_category_height">220dp</dimen>
+    <dimen name="cardview_item_iv_height">130dp</dimen>
+
+    <!--    Text Size Dimension -->
+    <dimen name="button_style_nav_text_size">14sp</dimen>
     <dimen name="cardview_item_description_text_size">12sp</dimen>
     <dimen name="cardview_item_header_text_size">16sp</dimen>
-    <dimen name="cardview_item_iv_height">130dp</dimen>
 
 </resources>

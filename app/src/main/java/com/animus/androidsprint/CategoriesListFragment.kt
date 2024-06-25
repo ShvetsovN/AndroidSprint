@@ -22,6 +22,7 @@ class CategoriesListFragment : Fragment() {
     ): View {
         _binding = FragmentListCategoriesBinding.inflate(inflater, container, false)
         val view = binding.root
+        binding.ivHeader.setImageResource(R.drawable.bcg_categories)
         initRecycle()
         return view
     }

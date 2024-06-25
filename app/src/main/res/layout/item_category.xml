@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/cardview_item_category_height"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/half_main_indent"
-    android:layout_marginVertical="@dimen/main_indent"
+    android:layout_marginBottom="@dimen/main_indent"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
@@ -21,10 +21,10 @@
             android:layout_height="@dimen/cardview_item_iv_height"
             android:contentDescription="@string/cardview_categories_image"
             android:scaleType="centerCrop"
-            android:src="@drawable/zagluwka"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/cardview_iv_stub" />
 
         <TextView
             android:id="@+id/tvItemHeader"
@@ -33,9 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/half_main_indent"
             android:layout_marginTop="@dimen/half_main_indent"
-            android:text="Бургеры"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivItemImage" />
+            app:layout_constraintTop_toBottomOf="@+id/ivItemImage"
+            tools:text="Бургеры" />
 
         <TextView
             android:id="@+id/tvItemDescription"
@@ -44,10 +44,11 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/half_main_indent"
             android:layout_marginBottom="@dimen/half_main_indent"
-            android:text="Рецепты всех популярных видов бургеров "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvItemHeader"
+            tools:text="Рецепты всех популярных видов бургеров " />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
