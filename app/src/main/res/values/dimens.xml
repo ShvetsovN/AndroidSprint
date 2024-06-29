@@ -12,14 +12,15 @@
     <!--    Fragment Dimension  -->
     <dimen name="fragment_header_size">224dp</dimen>
 
-    <!--    CardView Dimension  -->
-    <dimen name="cardview_item_category_width">160dp</dimen>
-    <dimen name="cardview_item_category_height">220dp</dimen>
-    <dimen name="cardview_item_iv_height">130dp</dimen>
+    <!--    CardView Category Dimension  -->
+    <dimen name="cardview_item_category_iv_height">130dp</dimen>
+
+    <!--    CardView Recipe Dimension  -->
+    <dimen name="cardview_item_recipe_iv_height">100dp</dimen>
 
     <!--    Text Size Dimension -->
     <dimen name="button_style_nav_text_size">14sp</dimen>
     <dimen name="cardview_item_description_text_size">12sp</dimen>
-    <dimen name="cardview_item_header_text_size">16sp</dimen>
+    <dimen name="cardview_item_header_text_size">14sp</dimen>
 
 </resources>
