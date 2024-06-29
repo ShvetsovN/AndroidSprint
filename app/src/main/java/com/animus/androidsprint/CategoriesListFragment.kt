@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,16 +40,24 @@ class CategoriesListFragment : Fragment() {
         val adapter = CategoriesListAdapter(STUB.getCategories())
         val recyclerView: RecyclerView = binding.rvCategories
         recyclerView.adapter = adapter
-        adapter.setOnItemClickListener(object: CategoriesListAdapter.OnItemClickListener{
-            override fun onItemClick() {
-                openRecipesByCategoryId()
+        adapter.setOnItemClickListener(object : CategoriesListAdapter.OnItemClickListener {
+            override fun onItemClick(categoryId: Int) {
+                openRecipesByCategoryId(categoryId)
             }
         })
     }
 
-    fun openRecipesByCategoryId(){
+    fun openRecipesByCategoryId(categoryId: Int) {
+        val category = STUB.getCategories().find { it.id == categoryId }
+        val categoryName = category?.title
+        val categoryImageUrl = category?.imageUrl
+        val bundle = Bundle().apply {
+            putInt("ARG_CATEGORY_ID", categoryId)
+            putString("ARG_CATEGORY_NAME", categoryName)
+            putString("ARG_CATEGORY_IMAGE_URL", categoryImageUrl)
+        }
         parentFragmentManager.commit {
-            replace<RecipeListFragment>(R.id.mainContainer)
+            replace<RecipeListFragment>(R.id.mainContainer, args = bundle)
             setReorderingAllowed(true)
             addToBackStack(null)
         }

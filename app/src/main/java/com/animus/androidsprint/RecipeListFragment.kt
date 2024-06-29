@@ -8,12 +8,20 @@ import android.view.ViewGroup
 
 class RecipeListFragment : Fragment() {
 
+    private var categoryId: Int? = null
+    private var categoryName: String? = null
+    private var categoryImageUrl: String? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? {
-        // Inflate the layout for this fragment
+        arguments?.let {
+            categoryId = it.getInt("CATEGORY_ID")
+            categoryName = it.getString("CATEGORY_NAME")
+            categoryImageUrl = it.getString("CATEGORY_IMAGE_URL")
+        }
         return inflater.inflate(R.layout.fragment_recipe_list, container, false)
     }
-
 }
