@@ -21,6 +21,7 @@
             tools:src="@drawable/bcg_categories"/>
 
         <TextView
+            android:id="@+id/tvHeaderRicipeList"
             style="@style/HeaderText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

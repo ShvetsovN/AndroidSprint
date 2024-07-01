@@ -20,22 +20,31 @@ class RecipeListFragment : Fragment() {
     private var categoryImageUrl: String? = null
     private var _binding: FragmentRecipeListBinding? = null
     private val binding
-        get() = _binding ?: throw IllegalStateException("Binding for FragmentRecipeListBinding must not be null")
+        get() = _binding
+            ?: throw IllegalStateException("Binding for FragmentRecipeListBinding must not be null")
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-
     ): View {
         _binding = FragmentRecipeListBinding.inflate(inflater, container, false)
         val view = binding.root
-        binding.ivHeaderRecipeList.setImageResource(R.drawable.bcg_categories)
-        initRecycle()
 
         arguments?.let {
             categoryId = it.getInt(Constants.ARG_CATEGORY_ID)
             categoryName = it.getString(Constants.ARG_CATEGORY_NAME)
             categoryImageUrl = it.getString(Constants.ARG_CATEGORY_IMAGE_URL)
         }
+        categoryName?.let {
+            binding.tvHeaderRicipeList.text = it
+        }
+
+        categoryImageUrl?.let {
+            binding.ivHeaderRecipeList.setImageResource(R.drawable.bcg_categories)
+        }
+
+        initRecycle()
+
         return view
     }
 
@@ -43,6 +52,7 @@ class RecipeListFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
     private fun initRecycle() {
         val adapter = categoryId?.let { STUB.getRecipesByCategoryId(it) }
             ?.let { RecipeListAdapter(it) }
@@ -54,14 +64,9 @@ class RecipeListFragment : Fragment() {
             }
         })
     }
-    fun openRecipeByRecipeId(recipeId: Int) {
-        val id = categoryId ?: return
-        val recipe = STUB.getRecipesByCategoryId(id).find { it.id == recipeId }
-        val recipeName = recipe?.title
-        val recipeIngredient = recipe?.ingredients
-        val recipeMethod = recipe?.method
-        val recipeImageUrl = recipe?.imageUrl
 
+    fun openRecipeByRecipeId(recipeId: Int) {
+        val recipe = categoryId?.let{STUB.getRecipesByCategoryId(it).find{it.id == recipeId}}
         parentFragmentManager.commit {
             replace<RecipeFragment>(R.id.mainContainer)
             setReorderingAllowed(true)
