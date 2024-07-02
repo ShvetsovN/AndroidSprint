@@ -29,7 +29,10 @@ class RecipeListFragment : Fragment() {
     ): View {
         _binding = FragmentRecipeListBinding.inflate(inflater, container, false)
         val view = binding.root
-
+        return view
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             categoryId = it.getInt(Constants.ARG_CATEGORY_ID)
             categoryName = it.getString(Constants.ARG_CATEGORY_NAME)
@@ -38,14 +41,10 @@ class RecipeListFragment : Fragment() {
         categoryName?.let {
             binding.tvHeaderRicipeList.text = it
         }
-
         categoryImageUrl?.let {
             binding.ivHeaderRecipeList.setImageResource(R.drawable.bcg_categories)
         }
-
         initRecycle()
-
-        return view
     }
 
     override fun onDestroyView() {
@@ -66,7 +65,7 @@ class RecipeListFragment : Fragment() {
     }
 
     fun openRecipeByRecipeId(recipeId: Int) {
-        val recipe = categoryId?.let{STUB.getRecipesByCategoryId(it).find{it.id == recipeId}}
+        val recipe = categoryId?.let { STUB.getRecipesByCategoryId(it).find { it.id == recipeId } }
         parentFragmentManager.commit {
             replace<RecipeFragment>(R.id.mainContainer)
             setReorderingAllowed(true)
