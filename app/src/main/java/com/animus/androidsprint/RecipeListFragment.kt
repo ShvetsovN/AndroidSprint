@@ -67,8 +67,11 @@ class RecipeListFragment : Fragment() {
 
     fun openRecipeByRecipeId(recipeId: Int) {
         val recipe = categoryId?.let{STUB.getRecipesByCategoryId(it).find{it.id == recipeId}}
+        val bundle = Bundle().apply {
+            putParcelable(Constants.ARG_RECIPE, recipe)
+        }
         parentFragmentManager.commit {
-            replace<RecipeFragment>(R.id.mainContainer)
+            replace<RecipeFragment>(R.id.mainContainer, args = bundle)
             setReorderingAllowed(true)
             addToBackStack(null)
         }

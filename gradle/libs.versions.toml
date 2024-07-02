@@ -10,6 +10,7 @@ material = "1.10.0"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
 fragmentVersion = "1.8.0"
+kotlinPlugin = "2.0.20-Beta1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -25,3 +26,4 @@ androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", versio
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-parcelize = {id = "org.jetbrains.kotlin.plugin.parcelize", version.ref="kotlinPlugin"}
