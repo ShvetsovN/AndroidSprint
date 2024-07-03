@@ -9,7 +9,7 @@
         android:id="@+id/tvRecipeHeader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="30sp"
-        android:text="Recipe Fragment!" />
+        android:text="Recipe Fragment!"
+        android:textSize="30sp" />
 
 </FrameLayout>
