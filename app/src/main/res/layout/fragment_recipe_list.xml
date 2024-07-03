@@ -21,11 +21,11 @@
             tools:src="@drawable/bcg_categories"/>
 
         <TextView
-            android:id="@+id/tvHeaderRicipeList"
-            style="@style/HeaderText"
+            android:id="@+id/tvHeaderRecipeList"
+            style="@style/HeaderTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Бургеры"
+            tools:text="Бургеры"
             app:layout_constraintBottom_toBottomOf="@+id/ivHeaderRecipeList"
             app:layout_constraintStart_toStartOf="@+id/ivHeaderRecipeList" />
     </androidx.constraintlayout.widget.ConstraintLayout>

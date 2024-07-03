@@ -30,7 +30,7 @@
     </style>
 
     <!--    Text Header Style   -->
-    <style name="HeaderText" parent="TextAppearance.AppCompat">
+    <style name="HeaderTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/cardview_text_header_color</item>
         <item name="android:fontFamily">@font/montserrat_alternates_semi_bold</item>

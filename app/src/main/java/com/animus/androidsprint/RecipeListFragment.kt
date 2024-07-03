@@ -43,7 +43,7 @@ class RecipeListFragment : Fragment() {
             categoryImageUrl = it.getString(Constants.ARG_CATEGORY_IMAGE_URL)
         }
         categoryName?.let {
-            binding.tvHeaderRicipeList.text = it
+            binding.tvHeaderRecipeList.text = it
         }
         categoryImageUrl?.let{ imageUrl ->
             try {

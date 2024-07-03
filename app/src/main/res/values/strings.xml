@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">AndroidSprint</string>
 
-    <string name="category">Категории</string>
-    <string name="favorites">Избранное</string>
+    <!--  Button Name Space -->
+    <string name="button_category_text">Категории</string>
+    <string name="button_favorites_text">Избранное</string>
+
+    <!--  Title Text-->
+    <string name="category_text">Категории</string>
+    <string name="favorites_text">Избранное</string>
 
     <string name="header_categories">Categories header</string>
     <string name="cardview_categories_image">Categories Image</string>
-
-
 
 </resources>

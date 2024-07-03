@@ -21,10 +21,10 @@
             android:src="@drawable/bcg_categories" />
 
         <TextView
-            style="@style/HeaderText"
+            style="@style/HeaderTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/category"
+            android:text="@string/category_text"
             app:layout_constraintBottom_toBottomOf="@+id/ivHeader"
             app:layout_constraintStart_toStartOf="@+id/ivHeader" />
     </androidx.constraintlayout.widget.ConstraintLayout>
