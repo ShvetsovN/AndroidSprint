@@ -1,11 +1,6 @@
 <resources>
     <string name="app_name">AndroidSprint</string>
 
-    <!--  Button Name Space -->
-    <string name="button_category_text">Категории</string>
-    <string name="button_favorites_text">Избранное</string>
-
-    <!--  Title Text-->
     <string name="category_text">Категории</string>
     <string name="favorites_text">Избранное</string>
 
