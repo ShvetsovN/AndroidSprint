@@ -25,13 +25,14 @@ class RecipeFragment : Fragment() {
         _binding = FragmentRecipeBinding.inflate(inflater, container, false)
         val view = binding.root
 
-//        arguments?.let {
-//            recipe = it.getParcelable(Constants.ARG_RECIPE)
-//        }
         arguments?.let {
-            recipe = it.getParcelable(Constants.ARG_RECIPE, Recipe::class.java)
+            recipe = if (Build.VERSION.SDK_INT < 33) {
+                it.getParcelable(Constants.ARG_RECIPE)
+            } else {
+                it.getParcelable(Constants.ARG_RECIPE, Recipe::class.java)
+            }
         }
-        recipe?.title?.let{
+        recipe?.title?.let {
             binding.tvRecipeHeader.text = it
         }
 

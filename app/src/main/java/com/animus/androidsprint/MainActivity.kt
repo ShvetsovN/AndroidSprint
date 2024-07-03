@@ -34,7 +34,13 @@ class MainActivity : AppCompatActivity() {
                     addToBackStack(null)
                 }
             }
-            btnCategory.setOnClickListener { }
+            btnCategory.setOnClickListener {
+                supportFragmentManager.commit {
+                    replace<CategoriesListFragment>(R.id.mainContainer)
+                    setReorderingAllowed(true)
+                    addToBackStack(null)
+                }
+            }
         }
     }
 }

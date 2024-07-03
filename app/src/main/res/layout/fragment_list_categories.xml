@@ -24,7 +24,7 @@
             style="@style/HeaderText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Categories List Fragment"
+            android:text="@string/category"
             app:layout_constraintBottom_toBottomOf="@+id/ivHeader"
             app:layout_constraintStart_toStartOf="@+id/ivHeader" />
     </androidx.constraintlayout.widget.ConstraintLayout>

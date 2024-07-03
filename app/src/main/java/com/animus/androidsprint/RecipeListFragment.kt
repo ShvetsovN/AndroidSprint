@@ -1,7 +1,9 @@
 package com.animus.androidsprint
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.TextUtils.replace
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.animus.androidsprint.databinding.FragmentListCategoriesBinding
 import com.animus.androidsprint.databinding.FragmentRecipeBinding
 import com.animus.androidsprint.databinding.FragmentRecipeListBinding
+import java.io.IOException
+import java.io.InputStream
 
 class RecipeListFragment : Fragment() {
 
@@ -29,6 +33,11 @@ class RecipeListFragment : Fragment() {
     ): View {
         _binding = FragmentRecipeListBinding.inflate(inflater, container, false)
         val view = binding.root
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
             categoryId = it.getInt(Constants.ARG_CATEGORY_ID)
@@ -39,13 +48,18 @@ class RecipeListFragment : Fragment() {
             binding.tvHeaderRicipeList.text = it
         }
 
-        categoryImageUrl?.let {
-            binding.ivHeaderRecipeList.setImageResource(R.drawable.bcg_categories)
+        categoryImageUrl?.let { imageUrl ->
+            try {
+                val inputStream: InputStream =
+                    binding.ivHeaderRecipeList.context.assets.open(imageUrl)
+                val drawable = Drawable.createFromStream(inputStream, null)
+                binding.ivHeaderRecipeList.setImageDrawable(drawable)
+            } catch (ex: IOException) {
+                Log.e("RLF.onViewCreated", "Error loading image from assets")
+            }
         }
 
         initRecycle()
-
-        return view
     }
 
     override fun onDestroyView() {
@@ -66,7 +80,7 @@ class RecipeListFragment : Fragment() {
     }
 
     fun openRecipeByRecipeId(recipeId: Int) {
-        val recipe = categoryId?.let{STUB.getRecipesByCategoryId(it).find{it.id == recipeId}}
+        val recipe = categoryId?.let { STUB.getRecipesByCategoryId(it).find { it.id == recipeId } }
         val bundle = Bundle().apply {
             putParcelable(Constants.ARG_RECIPE, recipe)
         }
