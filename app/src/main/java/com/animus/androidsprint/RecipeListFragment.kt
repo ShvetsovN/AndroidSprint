@@ -35,30 +35,25 @@ class RecipeListFragment : Fragment() {
         val view = binding.root
         return view
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         arguments?.let {
             categoryId = it.getInt(Constants.ARG_CATEGORY_ID)
             categoryName = it.getString(Constants.ARG_CATEGORY_NAME)
             categoryImageUrl = it.getString(Constants.ARG_CATEGORY_IMAGE_URL)
         }
         categoryName?.let {
-            binding.tvHeaderRicipeList.text = it
+            binding.tvHeaderRecipeList.text = it
         }
-
-        categoryImageUrl?.let { imageUrl ->
+        categoryImageUrl?.let{ imageUrl ->
             try {
-                val inputStream: InputStream =
-                    binding.ivHeaderRecipeList.context.assets.open(imageUrl)
+                val inputStream: InputStream = binding.ivHeaderRecipeList.context.assets.open(imageUrl)
                 val drawable = Drawable.createFromStream(inputStream, null)
                 binding.ivHeaderRecipeList.setImageDrawable(drawable)
-            } catch (ex: IOException) {
+            } catch (ex: IOException){
                 Log.e("RLF.onViewCreated", "Error loading image from assets")
             }
         }
-
         initRecycle()
     }
 
@@ -80,12 +75,9 @@ class RecipeListFragment : Fragment() {
     }
 
     fun openRecipeByRecipeId(recipeId: Int) {
-        val recipe = categoryId?.let { STUB.getRecipesByCategoryId(it).find { it.id == recipeId } }
-        val bundle = Bundle().apply {
-            putParcelable(Constants.ARG_RECIPE, recipe)
-        }
+        val recipe = categoryId?.let{STUB.getRecipesByCategoryId(it).find{it.id == recipeId}}
         parentFragmentManager.commit {
-            replace<RecipeFragment>(R.id.mainContainer, args = bundle)
+            replace<RecipeFragment>(R.id.mainContainer)
             setReorderingAllowed(true)
             addToBackStack(null)
         }

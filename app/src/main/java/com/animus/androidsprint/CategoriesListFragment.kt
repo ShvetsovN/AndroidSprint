@@ -26,9 +26,13 @@ class CategoriesListFragment : Fragment() {
     ): View {
         _binding = FragmentListCategoriesBinding.inflate(inflater, container, false)
         val view = binding.root
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.ivHeader.setImageResource(R.drawable.bcg_categories)
         initRecycle()
-        return view
     }
 
     override fun onDestroyView() {
