@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--    Text Style  -->
-    <style name="StyleTitle16" parent="TextAppearance.AppCompat">
+    <style name="StyleTitle14ItemHeader" parent="TextAppearance.AppCompat">
         <item name="android:textSize">@dimen/cardview_item_header_text_size</item>
         <item name="android:fontFamily">@font/montserrat_alternates_semi_bold</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/cardview_text_header_color</item>
     </style>
 
-    <style name="StyleTitle14" parent="TextAppearance.AppCompat">
+    <style name="StyleTitle14BottomButton" parent="TextAppearance.AppCompat">
         <item name="android:textSize">@dimen/button_style_nav_text_size</item>
         <item name="android:fontFamily">@font/montserrat_alternates_semi_bold</item>
         <item name="android:textAllCaps">true</item>
@@ -24,13 +24,13 @@
 
     <!--    Button Style    -->
     <style name="StyleNavButton" parent="Widget.Material3.Button">
-        <item name="android:textAppearance">@style/StyleTitle14</item>
+        <item name="android:textAppearance">@style/StyleTitle14BottomButton</item>
         <item name="cornerRadius">@dimen/corner_radius</item>
         <item name="android:paddingVertical">@dimen/padding_vertical_horizontal</item>
     </style>
 
     <!--    Text Header Style   -->
-    <style name="HeaderText" parent="TextAppearance.AppCompat">
+    <style name="HeaderTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/cardview_text_header_color</item>
         <item name="android:fontFamily">@font/montserrat_alternates_semi_bold</item>

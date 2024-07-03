@@ -37,7 +37,7 @@
             android:layout_marginEnd="@dimen/button_gap"
             android:layout_weight="1"
             android:backgroundTint="@color/button_category_color"
-            android:text="@string/button_category" />
+            android:text="@string/category_text" />
 
         <Button
             android:id="@+id/btnFavorites"
@@ -47,7 +47,7 @@
             android:layout_marginStart="@dimen/button_gap"
             android:layout_weight="1"
             android:backgroundTint="@color/button_favorites_color"
-            android:text="@string/button_favorites"
+            android:text="@string/favorites_text"
             app:icon="@drawable/ic_heart"
             app:iconGravity="end" />
     </LinearLayout>

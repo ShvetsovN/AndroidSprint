@@ -16,39 +16,27 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/ivItemImage"
+            android:id="@+id/ivItemRecipeImage"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/cardview_item_category_iv_height"
+            android:layout_height="@dimen/cardview_item_recipe_iv_height"
             android:contentDescription="@string/cardview_categories_image"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/bcg_categories" />
+            tools:src="@drawable/bcg_categories"/>
 
         <TextView
-            android:id="@+id/tvItemHeader"
+            android:id="@+id/tvItemRecipeHeader"
             style="@style/StyleTitle14ItemHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/half_main_indent"
             android:layout_marginStart="@dimen/half_main_indent"
-            android:layout_marginTop="@dimen/half_main_indent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivItemImage"
-            tools:text="Бургеры" />
-
-        <TextView
-            android:id="@+id/tvItemDescription"
-            style="@style/StyleTitle12"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/half_main_indent"
-            android:layout_marginBottom="@dimen/half_main_indent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvItemHeader"
-            tools:text="Рецепты всех популярных видов бургеров " />
+            app:layout_constraintTop_toBottomOf="@+id/ivItemRecipeImage"
+            tools:text="Бургеры" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

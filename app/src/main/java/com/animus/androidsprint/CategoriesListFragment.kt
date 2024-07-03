@@ -26,9 +26,13 @@ class CategoriesListFragment : Fragment() {
     ): View {
         _binding = FragmentListCategoriesBinding.inflate(inflater, container, false)
         val view = binding.root
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.ivHeader.setImageResource(R.drawable.bcg_categories)
         initRecycle()
-        return view
     }
 
     override fun onDestroyView() {
@@ -52,9 +56,9 @@ class CategoriesListFragment : Fragment() {
         val categoryName = category?.title
         val categoryImageUrl = category?.imageUrl
         val bundle = Bundle().apply {
-            putInt("ARG_CATEGORY_ID", categoryId)
-            putString("ARG_CATEGORY_NAME", categoryName)
-            putString("ARG_CATEGORY_IMAGE_URL", categoryImageUrl)
+            putInt(Constants.ARG_CATEGORY_ID, categoryId)
+            putString(Constants.ARG_CATEGORY_NAME, categoryName)
+            putString(Constants.ARG_CATEGORY_IMAGE_URL, categoryImageUrl)
         }
         parentFragmentManager.commit {
             replace<RecipeListFragment>(R.id.mainContainer, args = bundle)

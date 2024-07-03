@@ -6,15 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.animus.androidsprint.databinding.ItemCategoryBinding
+import com.animus.androidsprint.databinding.ItemRecipeBinding
 import java.io.IOException
 import java.io.InputStream
 
-class CategoriesListAdapter(private val dataSet: List<Category>) :
-    RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
+class RecipeListAdapter(private val dataSet: List<Recipe>) :
+    RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
-        fun onItemClick(categoryId: Int)
+        fun onItemClick(recipeId: Int)
     }
 
     private var itemClickListener: OnItemClickListener? = null
@@ -25,10 +25,9 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
 
     class ViewHolder(item: View) :
         RecyclerView.ViewHolder(item) {
-        private val binding = ItemCategoryBinding.bind(item)
-        fun bind(itemView: Category) = with(binding) {
-            tvItemHeader.text = itemView.title
-            tvItemDescription.text = itemView.description
+        private val binding = ItemRecipeBinding.bind(item)
+        fun bind(itemView: Recipe) = with(binding) {
+            tvItemRecipeHeader.text = itemView.title
             loadImageFromAsset(itemView.imageUrl)
         }
 
@@ -36,7 +35,7 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
             try {
                 val inputStream: InputStream = itemView.context.assets.open(imageUrl)
                 val drawable = Drawable.createFromStream(inputStream, null)
-                binding.ivItemImage.setImageDrawable(drawable)
+                binding.ivItemRecipeImage.setImageDrawable(drawable)
             } catch (ex: IOException) {
                 Log.e("ViewHolder", Log.getStackTraceString(ex))
             }
@@ -45,15 +44,15 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.item_category, viewGroup, false)
+            .inflate(R.layout.item_recipe, viewGroup, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        val category = dataSet[position]
-        viewHolder.bind(category)
+        val recipe = dataSet[position]
+        viewHolder.bind(recipe)
         viewHolder.itemView.setOnClickListener {
-            itemClickListener?.onItemClick(category.id)
+            itemClickListener?.onItemClick(recipe.id)
         }
     }
 
