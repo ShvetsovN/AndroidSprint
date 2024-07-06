@@ -1,15 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:backgroundTint="@color/background_color"
     tools:context=".RecipeFragment">
 
-    <TextView
-        android:id="@+id/tvRecipeHeader"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Recipe Fragment!"
-        android:textSize="30sp" />
+        android:orientation="vertical">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fragment_header_size">
+
+            <ImageView
+                android:id="@+id/ivFragmentRecipeHeader"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fragment_header_size"
+                android:contentDescription="@string/fragment_recipe_header"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/bcg_categories" />
+
+            <TextView
+                android:id="@+id/tvRecipeHeader"
+                style="@style/HeaderTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/ivFragmentRecipeHeader"
+                app:layout_constraintStart_toStartOf="@+id/ivFragmentRecipeHeader"
+                tools:text="Recipe Fragment!" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/main_indent"
+            android:layout_marginVertical="@dimen/main_indent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/IngredientHeaderTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_recipe_ingredients_text" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/PortionTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_recipe_portion_text" />
+
+                <TextView
+                    android:id="@+id/tvNumberOfPortions"
+                    style="@style/PortionTextStyle"
+                    android:layout_width="@dimen/fragment_recipe_portion_text_width_25dp"
+                    android:layout_height="wrap_content"
+                    tools:text="3" />
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvIngredients"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fragment_recipe_rv_ingredients_height"
+            android:layout_marginHorizontal="@dimen/main_indent"
+            tools:listitem="@layout/item_ingredient"/>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/half_main_indent"
+            app:dividerColor="@color/recipe_fragment_divider_decorator_color" />
+
+        <TextView
+            style="@style/IngredientHeaderTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_indent"
+            android:text="@string/fragment_recipe_method_text" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMethod"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fragment_recipe_rv_ingredients_height"
+            android:layout_marginHorizontal="@dimen/main_indent"
+            android:layout_marginTop="@dimen/main_indent"
+            tools:listitem="@layout/item_method"/>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

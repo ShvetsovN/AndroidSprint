@@ -13,10 +13,10 @@
         android:layout_height="@dimen/fragment_header_size">
 
         <ImageView
-            android:id="@+id/ivHeader"
+            android:id="@+id/ivFragmentListCategoriesHeader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/header_categories"
+            android:contentDescription="@string/fragment_list_categories_header"
             android:scaleType="centerCrop"
             android:src="@drawable/bcg_categories" />
 
@@ -25,8 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/category_text"
-            app:layout_constraintBottom_toBottomOf="@+id/ivHeader"
-            app:layout_constraintStart_toStartOf="@+id/ivHeader" />
+            app:layout_constraintBottom_toBottomOf="@+id/ivFragmentListCategoriesHeader"
+            app:layout_constraintStart_toStartOf="@+id/ivFragmentListCategoriesHeader" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView

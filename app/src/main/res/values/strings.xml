@@ -4,7 +4,12 @@
     <string name="category_text">Категории</string>
     <string name="favorites_text">Избранное</string>
 
-    <string name="header_categories">Categories header</string>
+    <string name="fragment_list_categories_header">Categories list</string>
+    <string name="fragment_recipe_list_header">Recipe list</string>
     <string name="cardview_categories_image">Categories Image</string>
+    <string name="fragment_recipe_header">Recipe</string>
+    <string name="fragment_recipe_ingredients_text">Ингредиенты</string>
+    <string name="fragment_recipe_portion_text">Порции:</string>
+    <string name="fragment_recipe_method_text">Способ приготовления</string>
 
 </resources>

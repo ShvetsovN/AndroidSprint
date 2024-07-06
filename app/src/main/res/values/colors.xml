@@ -14,4 +14,11 @@
     <color name="cardview_text_header_color">#5F3678</color>
 
     <color name="cardview_description_text_color">#666666</color>
+    <color name="recipe_fragment_ingredients_header_text_color">#422952</color>
+    <color name="recipe_fragment_portion_text_color">#626466</color>
+    <color name="recipe_fragment_ingredient_text_color">#666666</color>
+
+    <color name="recipe_fragment_divider_decorator_color">#F4FAFF</color>
+    <color name="cardview_item_ingredient_divider_color">#F5F5F5</color>
+
 </resources>

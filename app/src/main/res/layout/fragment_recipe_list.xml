@@ -13,10 +13,10 @@
         android:layout_height="@dimen/fragment_header_size">
 
         <ImageView
-            android:id="@+id/ivHeaderRecipeList"
+            android:id="@+id/ivFragmentRecipeListHeader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/header_categories"
+            android:contentDescription="@string/fragment_recipe_list_header"
             android:scaleType="centerCrop"
             tools:src="@drawable/bcg_categories" />
 
@@ -25,8 +25,8 @@
             style="@style/HeaderTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/ivHeaderRecipeList"
-            app:layout_constraintStart_toStartOf="@+id/ivHeaderRecipeList"
+            app:layout_constraintBottom_toBottomOf="@+id/ivFragmentRecipeListHeader"
+            app:layout_constraintStart_toStartOf="@+id/ivFragmentRecipeListHeader"
             tools:text="Бургеры" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -46,9 +46,9 @@ class RecipeListFragment : Fragment() {
         categoryImageUrl?.let { imageUrl ->
             try {
                 val inputStream: InputStream =
-                    binding.ivHeaderRecipeList.context.assets.open(imageUrl)
+                    binding.ivFragmentRecipeListHeader.context.assets.open(imageUrl)
                 val drawable = Drawable.createFromStream(inputStream, null)
-                binding.ivHeaderRecipeList.setImageDrawable(drawable)
+                binding.ivFragmentRecipeListHeader.setImageDrawable(drawable)
             } catch (ex: IOException) {
                 Log.e("RLF.onViewCreated", "Error loading image from assets")
             }
