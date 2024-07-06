@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.animus.androidsprint.databinding.FragmentRecipeBinding
 import java.io.IOException
@@ -54,9 +56,23 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initRecycle() {
+        val contextIngredients = binding.rvIngredients.context
+        val contextMethod = binding.rvMethod.context
         recipe?.let {
             binding.rvIngredients.adapter = IngredientsAdapter(it.ingredients)
+            binding.rvIngredients.addItemDecoration(
+                DividerItemDecoration(
+                    contextIngredients,
+                    LinearLayoutManager.VERTICAL
+                )
+            )
             binding.rvMethod.adapter = MethodAdapter(it.method)
+            binding.rvMethod.addItemDecoration(
+                DividerItemDecoration(
+                    contextMethod,
+                    LinearLayoutManager.VERTICAL
+                )
+            )
         }
     }
 
