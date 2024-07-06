@@ -11,8 +11,8 @@ class MethodAdapter(private val dataSet: List<String>) :
 
     class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         private val binding = ItemMethodBinding.bind(item)
-        fun bind(itemView: Recipe) = with(binding) {
-            tvMethod.text = itemView.method[position]
+        fun bind(method: String) = with(binding) {
+            tvMethod.text = method
         }
     }
 
@@ -24,6 +24,7 @@ class MethodAdapter(private val dataSet: List<String>) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val method = dataSet[position]
+        viewHolder.bind(method)
     }
 
     override fun getItemCount() = dataSet.size

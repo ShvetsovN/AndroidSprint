@@ -27,7 +27,7 @@ class CategoriesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ivHeader.setImageResource(R.drawable.bcg_categories)
+        binding.ivFragmentListCategoriesHeader.setImageResource(R.drawable.bcg_categories)
         initRecycle()
     }
 

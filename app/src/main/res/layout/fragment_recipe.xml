@@ -67,13 +67,8 @@
                     style="@style/PortionTextStyle"
                     android:layout_width="@dimen/fragment_recipe_portion_text_width_25dp"
                     android:layout_height="wrap_content"
-                    tools:text="3" />
+                    android:text="1" />
             </LinearLayout>
-
-            <SeekBar
-                android:id="@+id/seekBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

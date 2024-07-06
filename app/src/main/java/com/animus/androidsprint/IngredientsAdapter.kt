@@ -13,8 +13,7 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
         private val binding = ItemIngredientBinding.bind(item)
         fun bind(itemView: Ingredient) = with(binding) {
             tvIngredientDescription.text = itemView.description
-            tvIngredientQuantity.text = itemView.quantity
-            tvIngredientUnitOfMeasure.text = itemView.unitOfMeasure
+            tvIngredientQuantity.text = "${itemView.quantity} ${itemView.unitOfMeasure}"
         }
     }
 
