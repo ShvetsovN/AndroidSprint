@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -58,7 +59,8 @@ class RecipeFragment : Fragment() {
         val contextIngredients = binding.rvIngredients.context
         val contextMethod = binding.rvMethod.context
         recipe?.let {
-            binding.rvIngredients.adapter = IngredientsAdapter(it.ingredients)
+            val ingredientAdapter = IngredientsAdapter(it.ingredients)
+            binding.rvIngredients.adapter = ingredientAdapter
             binding.rvIngredients.addItemDecoration(
                 DividerItemDecoration(
                     contextIngredients,
@@ -72,6 +74,20 @@ class RecipeFragment : Fragment() {
                     LinearLayoutManager.VERTICAL
                 )
             )
+            binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
+                    ingredientAdapter.updateIngredients(progress)
+                    binding.tvNumberOfPortions.text = progress.toString()
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            })
+
         }
     }
 

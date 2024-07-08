@@ -9,11 +9,24 @@ import com.animus.androidsprint.databinding.ItemIngredientBinding
 class IngredientsAdapter(private val dataSet: List<Ingredient>) :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
+    private var quantity = 1
+
+    fun updateIngredients(progress: Int) {
+        quantity = progress
+        notifyDataSetChanged()
+    }
+
     class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         private val binding = ItemIngredientBinding.bind(item)
-        fun bind(itemView: Ingredient) = with(binding) {
+        fun bind(itemView: Ingredient, quantity: Int) = with(binding) {
             tvIngredientDescription.text = itemView.description
-            tvIngredientQuantity.text = "${itemView.quantity} ${itemView.unitOfMeasure}"
+            val numberOfPortion = itemView.quantity.toDouble() * quantity
+            val quantityText = if (numberOfPortion % 1 == 0.0) {
+                "${numberOfPortion.toInt()}"
+            } else {
+                String.format("%.1f",numberOfPortion)
+            }
+            tvIngredientQuantity.text = "$quantityText ${itemView.unitOfMeasure}"
         }
     }
 
@@ -28,9 +41,8 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val ingredient = dataSet[position]
-        viewHolder.bind(ingredient)
+        viewHolder.bind(ingredient, quantity)
     }
 
     override fun getItemCount() = dataSet.size
-
 }
