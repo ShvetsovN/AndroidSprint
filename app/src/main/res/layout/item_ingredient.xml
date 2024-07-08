@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:backgroundTint="@color/white"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/cardview_item_ingredient_horizontal_indent"
         android:layout_marginVertical="@dimen/half_main_indent_and_corner_radius"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/tvIngredientDescription"
