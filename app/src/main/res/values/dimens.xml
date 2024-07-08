@@ -2,8 +2,8 @@
 <resources>
     <!--    Main Indent     -->
     <dimen name="main_indent">16dp</dimen>
-    <dimen name="half_main_indent">8dp</dimen>
-    <dimen name="corner_radius">8dp</dimen>
+    <dimen name="half_main_indent_and_corner_radius">8dp</dimen>
+    <dimen name="recipe_portion_ingredient_text_indent">6dp</dimen>
     <dimen name="padding_vertical_horizontal">10dp</dimen>
 
     <!--    Button Bottom Dimension -->
@@ -11,6 +11,7 @@
 
     <!--    Fragment Dimension  -->
     <dimen name="fragment_header_size">224dp</dimen>
+    <dimen name="fragment_recipe_portion_text_width_25dp">25dp</dimen>
 
     <!--    CardView Category Dimension  -->
     <dimen name="cardview_item_category_iv_height">130dp</dimen>
@@ -22,5 +23,7 @@
     <dimen name="button_style_nav_text_size">14sp</dimen>
     <dimen name="cardview_item_description_text_size">12sp</dimen>
     <dimen name="cardview_item_header_text_size">14sp</dimen>
+    <dimen name="cardview_item_ingredient_horizontal_indent">12dp</dimen>
+    <dimen name="cardview_item_tv_ingredient_name_width">175dp</dimen>
 
 </resources>

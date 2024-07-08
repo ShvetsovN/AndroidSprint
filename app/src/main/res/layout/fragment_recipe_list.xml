@@ -13,28 +13,28 @@
         android:layout_height="@dimen/fragment_header_size">
 
         <ImageView
-            android:id="@+id/ivHeaderRecipeList"
+            android:id="@+id/ivFragmentRecipeListHeader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/header_categories"
+            android:contentDescription="@string/category_image_list_of_recipes"
             android:scaleType="centerCrop"
-            tools:src="@drawable/bcg_categories"/>
+            tools:src="@drawable/bcg_categories" />
 
         <TextView
             android:id="@+id/tvHeaderRecipeList"
             style="@style/HeaderTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Бургеры"
-            app:layout_constraintBottom_toBottomOf="@+id/ivHeaderRecipeList"
-            app:layout_constraintStart_toStartOf="@+id/ivHeaderRecipeList" />
+            app:layout_constraintBottom_toBottomOf="@+id/ivFragmentRecipeListHeader"
+            app:layout_constraintStart_toStartOf="@+id/ivFragmentRecipeListHeader"
+            tools:text="Бургеры" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRecipes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="@dimen/half_main_indent"
+        android:layout_marginHorizontal="@dimen/half_main_indent_and_corner_radius"
         android:layout_marginTop="@dimen/main_indent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="8"

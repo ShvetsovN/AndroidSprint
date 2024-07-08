@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">AndroidSprint</string>
+
+    <string name="category_text">Categories</string>
+    <string name="favorites_text">Favorites</string>
+
+    <string name="category_image_list_of_categories">Category image: Categories list</string>
+    <string name="category_image_list_of_recipes">Category image: Recipe list</string>
+    <string name="category_image_food_categories">Category image: Food categories</string>
+    <string name="fragment_recipe_header">Recipe</string>
+    <string name="fragment_recipe_ingredients_text">Ingredients</string>
+    <string name="fragment_recipe_portion_text">Portions:</string>
+    <string name="fragment_recipe_method_text">Cooking method</string>
+    <string name="сategory_image_recipe_title">Category image: Recipe title</string>
+
+</resources>

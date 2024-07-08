@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/half_main_indent"
+    android:layout_marginHorizontal="@dimen/half_main_indent_and_corner_radius"
     android:layout_marginBottom="@dimen/main_indent"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardCornerRadius="@dimen/corner_radius">
+    app:cardCornerRadius="@dimen/half_main_indent_and_corner_radius">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:id="@+id/ivItemImage"
             android:layout_width="match_parent"
             android:layout_height="@dimen/cardview_item_category_iv_height"
-            android:contentDescription="@string/cardview_categories_image"
+            android:contentDescription="@string/category_image_food_categories"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,8 +31,8 @@
             style="@style/StyleTitle14ItemHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/half_main_indent"
-            android:layout_marginTop="@dimen/half_main_indent"
+            android:layout_marginStart="@dimen/half_main_indent_and_corner_radius"
+            android:layout_marginTop="@dimen/half_main_indent_and_corner_radius"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivItemImage"
             tools:text="Бургеры" />
@@ -42,8 +42,8 @@
             style="@style/StyleTitle12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/half_main_indent"
-            android:layout_marginBottom="@dimen/half_main_indent"
+            android:layout_marginHorizontal="@dimen/half_main_indent_and_corner_radius"
+            android:layout_marginBottom="@dimen/half_main_indent_and_corner_radius"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

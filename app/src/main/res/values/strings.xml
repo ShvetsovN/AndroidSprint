@@ -1,10 +1,19 @@
 <resources>
-    <string name="app_name">AndroidSprint</string>
+    <string name="app_name" translatable="false">AndroidSprint</string>
 
     <string name="category_text">Категории</string>
     <string name="favorites_text">Избранное</string>
 
-    <string name="header_categories">Categories header</string>
-    <string name="cardview_categories_image">Categories Image</string>
+
+    <string name="fragment_recipe_header">Рецепт</string>
+    <string name="fragment_recipe_ingredients_text">Ингредиенты</string>
+    <string name="fragment_recipe_portion_text">Порции:</string>
+    <string name="fragment_recipe_method_text">Способ приготовления</string>
+
+    <!--   ContentDescription-->
+    <string name="category_image_list_of_categories">Изображение категории: Список категорий</string>
+    <string name="category_image_list_of_recipes">Изображение категории: Список рецептов</string>
+    <string name="category_image_food_categories">Изображение категории: Категории блюд</string>
+    <string name="сategory_image_recipe_title">Изображение категории: Название рецепта</string>
 
 </resources>
