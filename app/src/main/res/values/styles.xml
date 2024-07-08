@@ -18,7 +18,8 @@
     <style name="StyleTitle12" parent="TextAppearance.AppCompat">
         <item name="android:textSize">@dimen/cardview_item_description_text_size</item>
         <item name="android:fontFamily">@font/montserrat_medium</item>
-        <item name="android:textColor">@color/cardview_description_or_recipe_ingredient_text_color</item>
+        <item name="android:textColor">@color/cardview_description_or_recipe_ingredient_text_color
+        </item>
         <item name="android:gravity">left</item>
     </style>
 
@@ -61,18 +62,29 @@
     <!--    Text Ingredient Style   -->
     <style name="IngredientTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/cardview_description_or_recipe_ingredient_text_color</item>
+        <item name="android:textColor">@color/cardview_description_or_recipe_ingredient_text_color
+        </item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
     <!--   Item Method Text Style -->
     <style name="MethodTextStyle" parent="TextAppearance.AppCompat">
-        <item name="android:layout_marginHorizontal">@dimen/cardview_item_ingredient_horizontal_indent</item>
+        <item name="android:layout_marginHorizontal">
+            @dimen/cardview_item_ingredient_horizontal_indent
+        </item>
         <item name="android:layout_marginVertical">@dimen/half_main_indent_and_corner_radius</item>
-        <item name="android:textColor">@color/cardview_description_or_recipe_ingredient_text_color</item>
+        <item name="android:textColor">@color/cardview_description_or_recipe_ingredient_text_color
+        </item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="styleSeekBar">
+        <item name="android:thumb">@drawable/shape_seekbar_thumb</item>
+        <item name="android:progressDrawable">@drawable/shape_seekbar_progress</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
     </style>
 
 </resources>

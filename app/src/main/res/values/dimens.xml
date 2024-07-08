@@ -4,6 +4,7 @@
     <dimen name="main_indent">16dp</dimen>
     <dimen name="half_main_indent_and_corner_radius">8dp</dimen>
     <dimen name="recipe_portion_ingredient_text_indent">6dp</dimen>
+
     <dimen name="padding_vertical_horizontal">10dp</dimen>
 
     <!--    Button Bottom Dimension -->
@@ -26,4 +27,12 @@
     <dimen name="cardview_item_ingredient_horizontal_indent">12dp</dimen>
     <dimen name="cardview_item_tv_ingredient_name_width">175dp</dimen>
 
+    <!--    SeekBar Dimension-->
+
+    <dimen name="seekbar_thumb_width">8dp</dimen>
+    <dimen name="seekbar_thumb_height">30dp</dimen>
+    <dimen name="seekbar_thumb_corner_radius">2dp</dimen>
+
+    <dimen name="seekbar_progress_height">16dp</dimen>
+    <dimen name="seekbar_progress_corner_radius">4dp</dimen>
 </resources>

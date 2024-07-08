@@ -19,4 +19,7 @@
 
     <color name="cardview_item_ingredient_divider_color">#F5F5F5</color>
 
+    <color name="seekbar_progress_color">#A1A9F9</color>
+    <color name="seekbar_thumb_color">#525DC0</color>
+
 </resources>
