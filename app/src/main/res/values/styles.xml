@@ -18,14 +18,14 @@
     <style name="StyleTitle12" parent="TextAppearance.AppCompat">
         <item name="android:textSize">@dimen/cardview_item_description_text_size</item>
         <item name="android:fontFamily">@font/montserrat_medium</item>
-        <item name="android:textColor">@color/cardview_description_text_color</item>
+        <item name="android:textColor">@color/cardview_description_or_recipe_ingredient_text_color</item>
         <item name="android:gravity">left</item>
     </style>
 
     <!--    Button Style    -->
     <style name="StyleNavButton" parent="Widget.Material3.Button">
         <item name="android:textAppearance">@style/StyleTitle14BottomButton</item>
-        <item name="cornerRadius">@dimen/corner_radius</item>
+        <item name="cornerRadius">@dimen/half_main_indent_and_corner_radius</item>
         <item name="android:paddingVertical">@dimen/padding_vertical_horizontal</item>
     </style>
 
@@ -61,9 +61,18 @@
     <!--    Text Ingredient Style   -->
     <style name="IngredientTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/recipe_fragment_ingredient_text_color</item>
+        <item name="android:textColor">@color/cardview_description_or_recipe_ingredient_text_color</item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
         <item name="android:textAllCaps">true</item>
+    </style>
+
+    <!--   Item Method Text Style -->
+    <style name="MethodTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:layout_marginHorizontal">@dimen/cardview_item_ingredient_horizontal_indent</item>
+        <item name="android:layout_marginVertical">@dimen/half_main_indent_and_corner_radius</item>
+        <item name="android:textColor">@color/cardview_description_or_recipe_ingredient_text_color</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>

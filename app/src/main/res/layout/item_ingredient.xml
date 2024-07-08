@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/cardview_item_ingredient_horizontal_indent"
-        android:layout_marginVertical="@dimen/half_main_indent"
+        android:layout_marginVertical="@dimen/half_main_indent_and_corner_radius"
         android:orientation="horizontal">
 
         <TextView

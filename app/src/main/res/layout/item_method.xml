@@ -1,14 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <TextView
+        style="@style/MethodTextStyle"
         android:id="@+id/tvMethod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/cardview_item_ingredient_horizontal_indent"
-        android:layout_marginVertical="@dimen/half_main_indent"
-        android:text="Method Step"
-        android:textSize="16sp" />
+        tools:text="Method Step" />
 </LinearLayout>

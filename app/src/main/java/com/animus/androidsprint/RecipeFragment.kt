@@ -26,7 +26,6 @@ class RecipeFragment : Fragment() {
         get() = _binding
             ?: throw throw IllegalStateException("Binding for FragmentRecipeBinding must not be null")
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
