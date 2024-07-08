@@ -75,8 +75,8 @@
                 android:id="@+id/seekBar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:min="1"
-                android:max="5"/>
+                android:max="5"
+                android:min="1" />
 
         </LinearLayout>
 
