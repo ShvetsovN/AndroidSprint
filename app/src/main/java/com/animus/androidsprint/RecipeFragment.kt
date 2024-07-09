@@ -1,5 +1,6 @@
 package com.animus.androidsprint
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -9,13 +10,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import androidx.annotation.RequiresApi
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.animus.androidsprint.databinding.FragmentRecipeBinding
+import com.google.android.material.divider.MaterialDividerItemDecoration
 import java.io.IOException
 import java.io.InputStream
 
@@ -55,25 +52,32 @@ class RecipeFragment : Fragment() {
         _binding = null
     }
 
+    private fun dpToPx(dp: Int, context: Context): Int {
+        val density = context.resources.displayMetrics.density
+        return (dp * density).toInt()
+    }
+
     private fun initRecycle() {
         val contextIngredients = binding.rvIngredients.context
         val contextMethod = binding.rvMethod.context
         recipe?.let {
             val ingredientAdapter = IngredientsAdapter(it.ingredients)
             binding.rvIngredients.adapter = ingredientAdapter
-            binding.rvIngredients.addItemDecoration(
-                DividerItemDecoration(
-                    contextIngredients,
-                    LinearLayoutManager.VERTICAL
-                )
-            )
+            val itemDecorationIngredient = MaterialDividerItemDecoration(contextIngredients,LinearLayoutManager.VERTICAL).apply {
+                isLastItemDecorated = false
+                dividerInsetStart = dpToPx(12, contextIngredients)
+                dividerInsetEnd = dpToPx(12, contextIngredients)
+                setDividerColorResource(contextIngredients, R.color.cardview_item_ingredient_divider_color)
+            }
+            binding.rvIngredients.addItemDecoration(itemDecorationIngredient)
             binding.rvMethod.adapter = MethodAdapter(it.method)
-            binding.rvMethod.addItemDecoration(
-                DividerItemDecoration(
-                    contextMethod,
-                    LinearLayoutManager.VERTICAL
-                )
-            )
+            val itemDecorationMethod = MaterialDividerItemDecoration(contextMethod,LinearLayoutManager.VERTICAL).apply {
+                isLastItemDecorated = false
+                dividerInsetStart = dpToPx(12, contextMethod)
+                dividerInsetEnd = dpToPx(12, contextMethod)
+                setDividerColorResource(contextMethod, R.color.cardview_item_ingredient_divider_color)
+            }
+            binding.rvMethod.addItemDecoration(itemDecorationMethod)
             binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(
                     seekBar: SeekBar?,
@@ -107,3 +111,4 @@ class RecipeFragment : Fragment() {
         }
     }
 }
+
