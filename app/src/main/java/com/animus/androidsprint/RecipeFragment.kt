@@ -58,20 +58,30 @@ class RecipeFragment : Fragment() {
             val ingredientAdapter = IngredientsAdapter(it.ingredients)
             val sizeInDp = resources.getDimensionPixelSize(R.dimen.rv_divider_indent_horizontal)
             binding.rvIngredients.adapter = ingredientAdapter
-            val itemDecorationIngredient = MaterialDividerItemDecoration(contextIngredients,LinearLayoutManager.VERTICAL).apply {
+            val itemDecorationIngredient = MaterialDividerItemDecoration(
+                contextIngredients,
+                LinearLayoutManager.VERTICAL
+            ).apply {
                 isLastItemDecorated = false
                 dividerInsetStart = sizeInDp
                 dividerInsetEnd = sizeInDp
-                setDividerColorResource(contextIngredients, R.color.cardview_item_ingredient_divider_color)
+                setDividerColorResource(
+                    contextIngredients,
+                    R.color.cardview_item_ingredient_divider_color
+                )
             }
             binding.rvIngredients.addItemDecoration(itemDecorationIngredient)
             binding.rvMethod.adapter = MethodAdapter(it.method)
-            val itemDecorationMethod = MaterialDividerItemDecoration(contextMethod,LinearLayoutManager.VERTICAL).apply {
-                isLastItemDecorated = false
-                dividerInsetStart = sizeInDp
-                dividerInsetEnd = sizeInDp
-                setDividerColorResource(contextMethod, R.color.cardview_item_ingredient_divider_color)
-            }
+            val itemDecorationMethod =
+                MaterialDividerItemDecoration(contextMethod, LinearLayoutManager.VERTICAL).apply {
+                    isLastItemDecorated = false
+                    dividerInsetStart = sizeInDp
+                    dividerInsetEnd = sizeInDp
+                    setDividerColorResource(
+                        contextMethod,
+                        R.color.cardview_item_ingredient_divider_color
+                    )
+                }
             binding.rvMethod.addItemDecoration(itemDecorationMethod)
             binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(
