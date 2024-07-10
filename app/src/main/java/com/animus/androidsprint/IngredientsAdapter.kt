@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.animus.androidsprint.databinding.ItemIngredientBinding
 import java.math.BigDecimal
+import java.math.RoundingMode
 
 class IngredientsAdapter(private val dataSet: List<Ingredient>) :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
@@ -21,8 +22,9 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
         private val binding = ItemIngredientBinding.bind(item)
         fun bind(itemView: Ingredient, quantity: Int) = with(binding) {
             tvIngredientDescription.text = itemView.description
-            val numberOfPortion = (itemView.quantity.toDouble() * quantity).toBigDecimal()
-            val quantityText: String = if (numberOfPortion.divide(BigDecimal.ONE).equals(0.0)) {
+            val numberOfPortion: BigDecimal = BigDecimal.valueOf((itemView.quantity.toDouble() * quantity))
+            val divider: BigDecimal = numberOfPortion.remainder(BigDecimal.ONE)
+            val quantityText: String = if (divider.compareTo(BigDecimal.ZERO) == 0) {
                 "${numberOfPortion.toInt()}"
             } else {
                 "${numberOfPortion.setScale(1)}"
