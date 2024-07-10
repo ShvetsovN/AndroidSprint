@@ -22,14 +22,12 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
         private val binding = ItemIngredientBinding.bind(item)
         fun bind(itemView: Ingredient, quantity: Int) = with(binding) {
             tvIngredientDescription.text = itemView.description
-            val numberOfPortion: BigDecimal = BigDecimal.valueOf((itemView.quantity.toDouble() * quantity))
-            val divider: BigDecimal = numberOfPortion.remainder(BigDecimal.ONE)
-            val quantityText: String = if (divider.compareTo(BigDecimal.ZERO) == 0) {
-                "${numberOfPortion.toInt()}"
-            } else {
-                "${numberOfPortion.setScale(1)}"
-            }
-            tvIngredientQuantity.text = "$quantityText ${itemView.unitOfMeasure}"
+            val totalQuantity = BigDecimal(itemView.quantity) * BigDecimal(quantity)
+            val displayQuantity: String = totalQuantity
+                .setScale(1, RoundingMode.HALF_UP)
+                .stripTrailingZeros()
+                .toPlainString()
+            tvIngredientQuantity.text = "$displayQuantity ${itemView.unitOfMeasure}"
         }
     }
 

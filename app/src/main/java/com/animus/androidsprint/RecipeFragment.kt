@@ -1,6 +1,5 @@
 package com.animus.androidsprint
 
-import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -52,29 +51,25 @@ class RecipeFragment : Fragment() {
         _binding = null
     }
 
-    private fun dpToPx(dp: Int, context: Context): Int {
-        val density = context.resources.displayMetrics.density
-        return (dp * density).toInt()
-    }
-
     private fun initRecycle() {
         val contextIngredients = binding.rvIngredients.context
         val contextMethod = binding.rvMethod.context
         recipe?.let {
             val ingredientAdapter = IngredientsAdapter(it.ingredients)
+            val sizeInDp = resources.getDimensionPixelSize(R.dimen.rv_divider_indent_horizontal)
             binding.rvIngredients.adapter = ingredientAdapter
             val itemDecorationIngredient = MaterialDividerItemDecoration(contextIngredients,LinearLayoutManager.VERTICAL).apply {
                 isLastItemDecorated = false
-                dividerInsetStart = dpToPx(12, contextIngredients)
-                dividerInsetEnd = dpToPx(12, contextIngredients)
+                dividerInsetStart = sizeInDp
+                dividerInsetEnd = sizeInDp
                 setDividerColorResource(contextIngredients, R.color.cardview_item_ingredient_divider_color)
             }
             binding.rvIngredients.addItemDecoration(itemDecorationIngredient)
             binding.rvMethod.adapter = MethodAdapter(it.method)
             val itemDecorationMethod = MaterialDividerItemDecoration(contextMethod,LinearLayoutManager.VERTICAL).apply {
                 isLastItemDecorated = false
-                dividerInsetStart = dpToPx(12, contextMethod)
-                dividerInsetEnd = dpToPx(12, contextMethod)
+                dividerInsetStart = sizeInDp
+                dividerInsetEnd = sizeInDp
                 setDividerColorResource(contextMethod, R.color.cardview_item_ingredient_divider_color)
             }
             binding.rvMethod.addItemDecoration(itemDecorationMethod)
