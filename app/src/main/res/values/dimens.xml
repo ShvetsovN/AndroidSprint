@@ -1,39 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--    Main Indent     -->
-    <dimen name="main_indent">16dp</dimen>
-    <dimen name="half_main_indent_and_corner_radius">8dp</dimen>
-    <dimen name="recipe_portion_ingredient_text_indent">6dp</dimen>
-    <dimen name="padding_vertical_horizontal">10dp</dimen>
-
-    <!--    Button Bottom Dimension -->
-    <dimen name="button_gap">2dp</dimen>
-
-    <!--    Fragment Dimension  -->
+    <!--    Indent, padding, margin...etc...all in DP    -->
     <dimen name="fragment_header_size">224dp</dimen>
-    <dimen name="fragment_recipe_portion_text_width_25dp">25dp</dimen>
-
-    <!--    CardView Category Dimension  -->
+    <dimen name="cardview_item_tv_ingredient_name_width">175dp</dimen>
     <dimen name="cardview_item_category_iv_height">130dp</dimen>
-
-    <!--    CardView Recipe Dimension  -->
     <dimen name="cardview_item_recipe_iv_height">100dp</dimen>
+    <dimen name="seekbar_thumb_height">30dp</dimen>
+    <dimen name="fragment_recipe_portion_text_width_25dp">25dp</dimen>
+    <dimen name="main_indent_seekbar_height">16dp</dimen>
+    <dimen name="cardview_item_ingredient_divider_horizontal_indent">12dp</dimen>
+    <dimen name="padding_vertical_horizontal">10dp</dimen>
+    <dimen name="half_main_indent_and_corner_radius_seekbar_thumb_width">8dp</dimen>
+    <dimen name="recipe_portion_ingredient_text_indent">6dp</dimen>
+    <dimen name="seekbar_progress_corner_radius_padding">4dp</dimen>
+    <dimen name="button_gap_radius_corner">2dp</dimen>
 
     <!--    Text Size Dimension -->
-    <dimen name="button_style_nav_text_size">14sp</dimen>
+    <dimen name="text_header_size">20sp</dimen>
+    <dimen name="text_ingredients_size">16sp</dimen>
+
+    <dimen name="button_cardview_style_nav_text_size">14sp</dimen>
     <dimen name="cardview_item_description_text_size">12sp</dimen>
-    <dimen name="cardview_item_header_text_size">14sp</dimen>
-    <dimen name="cardview_item_ingredient_horizontal_indent">12dp</dimen>
-    <dimen name="cardview_item_tv_ingredient_name_width">175dp</dimen>
 
-    <dimen name="rv_divider_indent_horizontal">12dp</dimen>
-
-    <!--    SeekBar Dimension-->
-
-    <dimen name="seekbar_thumb_width">8dp</dimen>
-    <dimen name="seekbar_thumb_height">30dp</dimen>
-    <dimen name="seekbar_thumb_corner_radius">2dp</dimen>
-
-    <dimen name="seekbar_progress_height">16dp</dimen>
-    <dimen name="seekbar_progress_corner_radius">4dp</dimen>
 </resources>

@@ -2,14 +2,14 @@
 <resources>
     <!--    Text Style  -->
     <style name="StyleTitle14ItemHeader" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">@dimen/cardview_item_header_text_size</item>
+        <item name="android:textSize">@dimen/button_cardview_style_nav_text_size</item>
         <item name="android:fontFamily">@font/montserrat_alternates_semi_bold</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/cardview_text_header_color</item>
     </style>
 
     <style name="StyleTitle14BottomButton" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">@dimen/button_style_nav_text_size</item>
+        <item name="android:textSize">@dimen/button_cardview_style_nav_text_size</item>
         <item name="android:fontFamily">@font/montserrat_alternates_semi_bold</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/white</item>
@@ -26,24 +26,25 @@
     <!--    Button Style    -->
     <style name="StyleNavButton" parent="Widget.Material3.Button">
         <item name="android:textAppearance">@style/StyleTitle14BottomButton</item>
-        <item name="cornerRadius">@dimen/half_main_indent_and_corner_radius</item>
+        <item name="cornerRadius">@dimen/half_main_indent_and_corner_radius_seekbar_thumb_width
+        </item>
         <item name="android:paddingVertical">@dimen/padding_vertical_horizontal</item>
     </style>
 
     <!--    Text Header Style   -->
     <style name="HeaderTextStyle" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/text_header_size</item>
         <item name="android:textColor">@color/cardview_text_header_color</item>
         <item name="android:fontFamily">@font/montserrat_alternates_semi_bold</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:background">@drawable/shape_rounded_variants</item>
-        <item name="android:layout_marginHorizontal">@dimen/main_indent</item>
-        <item name="android:layout_marginVertical">@dimen/main_indent</item>
+        <item name="android:layout_marginHorizontal">@dimen/main_indent_seekbar_height</item>
+        <item name="android:layout_marginVertical">@dimen/main_indent_seekbar_height</item>
     </style>
 
     <!--    Text Ingredient Style   -->
     <style name="IngredientHeaderTextStyle" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/text_header_size</item>
         <item name="android:textColor">@color/recipe_fragment_ingredients_header_text_color</item>
         <item name="android:fontFamily">@font/montserrat_alternates_semi_bold</item>
         <item name="android:textAllCaps">true</item>
@@ -52,7 +53,7 @@
 
     <!--    Text Portion Style   -->
     <style name="PortionTextStyle" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/text_ingredients_size</item>
         <item name="android:textColor">@color/recipe_fragment_portion_text_color</item>
         <item name="android:fontFamily">@font/montserrat_semi_bold</item>
         <item name="android:layout_marginEnd">@dimen/recipe_portion_ingredient_text_indent</item>
@@ -61,7 +62,7 @@
 
     <!--    Text Ingredient Style   -->
     <style name="IngredientTextStyle" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/button_cardview_style_nav_text_size</item>
         <item name="android:textColor">@color/cardview_description_or_recipe_ingredient_text_color
         </item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
@@ -71,20 +72,27 @@
     <!--   Item Method Text Style -->
     <style name="MethodTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:layout_marginHorizontal">
-            @dimen/cardview_item_ingredient_horizontal_indent
+            @dimen/cardview_item_ingredient_divider_horizontal_indent
         </item>
-        <item name="android:layout_marginVertical">@dimen/half_main_indent_and_corner_radius</item>
+        <item name="android:layout_marginVertical">
+            @dimen/half_main_indent_and_corner_radius_seekbar_thumb_width
+        </item>
         <item name="android:textColor">@color/cardview_description_or_recipe_ingredient_text_color
         </item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/text_ingredients_size</item>
     </style>
 
-    <style name="styleSeekBar">
+    <style name="SeekBarStyle">
         <item name="android:thumb">@drawable/shape_seekbar_thumb</item>
         <item name="android:progressDrawable">@drawable/shape_seekbar_progress</item>
-        <item name="android:paddingStart">4dp</item>
-        <item name="android:paddingEnd">4dp</item>
+        <item name="android:paddingStart">@dimen/seekbar_progress_corner_radius_padding</item>
+        <item name="android:paddingEnd">@dimen/seekbar_progress_corner_radius_padding</item>
     </style>
 
+    <style name="RecycleViewStyle">
+        <item name="android:background">@drawable/shape_recycle_view_variants</item>
+        <item name="android:layout_marginHorizontal">@dimen/main_indent_seekbar_height</item>
+        <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
+    </style>
 </resources>

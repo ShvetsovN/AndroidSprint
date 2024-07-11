@@ -56,7 +56,7 @@ class RecipeFragment : Fragment() {
         val contextMethod = binding.rvMethod.context
         recipe?.let {
             val ingredientAdapter = IngredientsAdapter(it.ingredients)
-            val sizeInDp = resources.getDimensionPixelSize(R.dimen.rv_divider_indent_horizontal)
+            val sizeInDp = resources.getDimensionPixelSize(R.dimen.cardview_item_ingredient_divider_horizontal_indent)
             binding.rvIngredients.adapter = ingredientAdapter
             val itemDecorationIngredient = MaterialDividerItemDecoration(
                 contextIngredients,
