@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/background_color"
+    android:background="@color/background_color"
     android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".RecipeFragment">
@@ -41,8 +41,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/main_indent"
-            android:layout_marginVertical="@dimen/main_indent"
+            android:layout_marginHorizontal="@dimen/main_indent_seekbar_height"
+            android:layout_marginVertical="@dimen/main_indent_seekbar_height"
             android:orientation="vertical">
 
             <TextView
@@ -73,40 +73,38 @@
 
             <SeekBar
                 android:id="@+id/seekBar"
+                style="@style/SeekBarStyle"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:max="5"
                 android:min="1" />
-
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvIngredients"
+            style="@style/RecycleViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/main_indent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_ingredient" />
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
-            android:layout_height="@dimen/half_main_indent_and_corner_radius"
+            android:layout_height="@dimen/half_main_indent_and_corner_radius_seekbar_thumb_width"
             app:dividerColor="@color/background_color" />
 
         <TextView
             style="@style/IngredientHeaderTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/main_indent"
+            android:layout_marginStart="@dimen/main_indent_seekbar_height"
             android:text="@string/fragment_recipe_method_text" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMethod"
+            style="@style/RecycleViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/main_indent"
-            android:layout_marginTop="@dimen/main_indent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginTop="@dimen/main_indent_seekbar_height"
             tools:listitem="@layout/item_method" />
     </LinearLayout>
 
