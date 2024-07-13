@@ -1,5 +1,6 @@
 package com.animus.androidsprint
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -23,6 +24,25 @@ class RecipeFragment : Fragment() {
         get() = _binding
             ?: throw throw IllegalStateException("Binding for FragmentRecipeBinding must not be null")
 
+    private fun saveFavorites(favoriteRecipeId: Set<String>) {
+        val sharedPrefs =
+            activity?.getSharedPreferences(Constants.PREFERENCE_RECIPE_NAME, Context.MODE_PRIVATE)
+                ?: return
+        with(sharedPrefs.edit()) {
+            putStringSet(Constants.PREFERENCE_RECIPE_FAVORITES, favoriteRecipeId)
+            apply()
+        }
+    }
+
+    private fun getFavorites(): MutableSet<String> {
+        val sharedPrefs =
+            activity?.getSharedPreferences(Constants.PREFERENCE_RECIPE_NAME, Context.MODE_PRIVATE)
+        val savedSet =
+            sharedPrefs?.getStringSet(Constants.PREFERENCE_RECIPE_FAVORITES, mutableSetOf())
+                ?: mutableSetOf()
+        return HashSet(savedSet)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,7 +63,7 @@ class RecipeFragment : Fragment() {
             }
         }
         initRecycle()
-        iniUI()
+        initUI()
     }
 
     override fun onDestroyView() {
@@ -101,7 +121,7 @@ class RecipeFragment : Fragment() {
         }
     }
 
-    private fun iniUI() {
+    private fun initUI() {
         recipe?.let { recipe ->
             binding.tvRecipeHeader.text = recipe.title
             binding.ivFragmentRecipeHeader.let {
