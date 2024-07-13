@@ -48,7 +48,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/button_favorites_color"
             android:text="@string/favorites_text"
-            app:icon="@drawable/ic_heart"
+            app:icon="@drawable/ic_heart_empty"
             app:iconGravity="end" />
     </LinearLayout>
 

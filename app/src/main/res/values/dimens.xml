@@ -18,7 +18,6 @@
     <!--    Text Size Dimension -->
     <dimen name="text_header_size">20sp</dimen>
     <dimen name="text_ingredients_size">16sp</dimen>
-
     <dimen name="button_cardview_style_nav_text_size">14sp</dimen>
     <dimen name="cardview_item_description_text_size">12sp</dimen>
 

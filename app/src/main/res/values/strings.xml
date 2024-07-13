@@ -15,4 +15,5 @@
     <string name="category_image_food_categories">Изображение категории: Категории блюд</string>
     <string name="сategory_image_recipe_title">Изображение категории: Название рецепта</string>
     <string name="fragment_recipe_tv_number_of_portion" translatable="false">1</string>
+    <string name="category_image_add_to_favorites">Изображение категории: Добавить в избранное</string>
 </resources>

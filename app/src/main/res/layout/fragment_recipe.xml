@@ -36,6 +36,18 @@
                 app:layout_constraintBottom_toBottomOf="@+id/ivFragmentRecipeHeader"
                 app:layout_constraintStart_toStartOf="@+id/ivFragmentRecipeHeader"
                 tools:text="Recipe Fragment!" />
+
+            <ImageButton
+                android:id="@+id/ivFavoriteRecipe"
+                style="@style/ImageButtonFavoritesStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:contentDescription="@string/category_image_add_to_favorites"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_heart" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout

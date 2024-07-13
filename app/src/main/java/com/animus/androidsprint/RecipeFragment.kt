@@ -56,7 +56,8 @@ class RecipeFragment : Fragment() {
         val contextMethod = binding.rvMethod.context
         recipe?.let {
             val ingredientAdapter = IngredientsAdapter(it.ingredients)
-            val sizeInDp = resources.getDimensionPixelSize(R.dimen.cardview_item_ingredient_divider_horizontal_indent)
+            val sizeInDp =
+                resources.getDimensionPixelSize(R.dimen.cardview_item_ingredient_divider_horizontal_indent)
             binding.rvIngredients.adapter = ingredientAdapter
             val itemDecorationIngredient = MaterialDividerItemDecoration(
                 contextIngredients,
@@ -113,7 +114,16 @@ class RecipeFragment : Fragment() {
                     Log.e("RF.initUI", "Error loading image from assets")
                 }
             }
+            binding.ivFavoriteRecipe.apply {
+                setImageResource(R.drawable.ic_heart_empty_40)
+                var isFavorite = false
+                setOnClickListener {
+                    isFavorite = !isFavorite
+                    setImageResource(if (isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty_40)
+                }
+            }
         }
     }
 }
+
 
