@@ -95,4 +95,13 @@
         <item name="android:layout_marginHorizontal">@dimen/main_indent_seekbar_height</item>
         <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
     </style>
+
+    <style name="ImageButtonFavoritesStyle" parent="Widget.AppCompat.ImageButton">
+        <item name="android:layout_marginTop">@dimen/main_indent_seekbar_height</item>
+        <item name="android:layout_marginEnd">@dimen/main_indent_seekbar_height</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
 </resources>

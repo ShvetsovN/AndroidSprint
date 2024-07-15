@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">AndroidSprint</string>
 
     <string name="category_text">Categories</string>
     <string name="favorites_text">Favorites</string>
@@ -14,4 +13,5 @@
     <string name="category_image_list_of_recipes">Category image: Recipe list</string>
     <string name="category_image_food_categories">Category image: Food categories</string>
     <string name="сategory_image_recipe_title">Category image: Recipe title</string>
+    <string name="button_add_to_favorites">Button: Add to favorites</string>
 </resources>
