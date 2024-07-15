@@ -134,13 +134,12 @@ class RecipeFragment : Fragment() {
                     Log.e("RF.initUI", "Error loading image from assets")
                 }
             }
-            binding.ivFavoriteRecipe.apply {
+            binding.ibFavoriteRecipe.apply {
                 setImageResource(R.drawable.ic_heart_empty)
                 var isFavorite = false
                 setOnClickListener {
                     isFavorite = !isFavorite
                     setImageResource(if (isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty)
-                    saveFavorites(getFavorites())
                 }
             }
         }
