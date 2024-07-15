@@ -54,7 +54,6 @@ class RecipeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         arguments?.let {
             recipe = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                 it.getParcelable(Constants.ARG_RECIPE)
@@ -135,11 +134,19 @@ class RecipeFragment : Fragment() {
                 }
             }
             binding.ibFavoriteRecipe.apply {
-                setImageResource(R.drawable.ic_heart_empty)
-                var isFavorite = false
+                val favorites = getFavorites()
+                val recipeId = recipe.id.toString()
+                var isFavorite = favorites.contains(recipeId)
+                setImageResource(if(isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty)
                 setOnClickListener {
                     isFavorite = !isFavorite
+                    if (isFavorite) {
+                        favorites.add(recipeId)
+                    } else {
+                        favorites.remove(recipeId)
+                    }
                     setImageResource(if (isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty)
+                    saveFavorites(favorites)
                 }
             }
         }
