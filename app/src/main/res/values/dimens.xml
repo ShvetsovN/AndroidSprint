@@ -5,6 +5,7 @@
     <dimen name="cardview_item_tv_ingredient_name_width">175dp</dimen>
     <dimen name="cardview_item_category_iv_height">130dp</dimen>
     <dimen name="cardview_item_recipe_iv_height">100dp</dimen>
+    <dimen name="image_button_size">40dp</dimen>
     <dimen name="seekbar_thumb_height">30dp</dimen>
     <dimen name="fragment_recipe_portion_text_width_25dp">25dp</dimen>
     <dimen name="main_indent_seekbar_height">16dp</dimen>

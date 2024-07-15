@@ -42,11 +42,11 @@
                 style="@style/ImageButtonFavoritesStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:contentDescription="@string/category_image_add_to_favorites"
+                android:background="@drawable/shape_image_button"
+                android:contentDescription="@string/button_add_to_favorites"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_heart" />
+                tools:src="@drawable/ic_heart_empty" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

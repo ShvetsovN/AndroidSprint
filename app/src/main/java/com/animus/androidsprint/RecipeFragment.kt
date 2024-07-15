@@ -135,11 +135,12 @@ class RecipeFragment : Fragment() {
                 }
             }
             binding.ivFavoriteRecipe.apply {
-                setImageResource(R.drawable.ic_heart_empty_40)
+                setImageResource(R.drawable.ic_heart_empty)
                 var isFavorite = false
                 setOnClickListener {
                     isFavorite = !isFavorite
-                    setImageResource(if (isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty_40)
+                    setImageResource(if (isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty)
+                    saveFavorites(getFavorites())
                 }
             }
         }
