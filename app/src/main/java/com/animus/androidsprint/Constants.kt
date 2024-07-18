@@ -6,6 +6,6 @@ object Constants {
     const val ARG_CATEGORY_IMAGE_URL = "ARG_CATEGORY_IMAGE_URL"
     const val ARG_RECIPE = "ARG_RECIPE"
 
-    const val PREFERENCE_RECIPE_NAME = "Recipe Preference"
-    const val PREFERENCE_RECIPE_FAVORITES = "Favorites"
+    const val PREFERENCE_RECIPE_NAME = "recipe_preference"
+    const val PREFERENCE_RECIPE_FAVORITES = "favorites"
 }

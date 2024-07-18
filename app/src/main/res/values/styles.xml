@@ -104,4 +104,14 @@
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="android:scaleType">centerCrop</item>
     </style>
+
+    <style name="TextStyle16" parent="TextAppearance.AppCompat">
+        <item name="marginHorizontal">@dimen/main_indent_seekbar_height</item>
+        <item name="fontFamily">@font/montserrat_regular</item>
+        <item name="android:textSize">@dimen/text_ingredients_size</item>
+        <item name="android:textColor">@color/cardview_description_or_recipe_ingredient_text_color
+        </item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+    </style>
 </resources>

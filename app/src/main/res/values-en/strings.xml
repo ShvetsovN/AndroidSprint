@@ -13,5 +13,7 @@
     <string name="category_image_list_of_recipes">Category image: Recipe list</string>
     <string name="category_image_food_categories">Category image: Food categories</string>
     <string name="сategory_image_recipe_title">Category image: Recipe title</string>
+    <string name="category_image_favorites_recipes">Category image: Favorites recipes</string>
     <string name="button_add_to_favorites">Button: Add to favorites</string>
+    <string name="favorite_empty_text">You haven\'t added any recipes to your favorites yet</string>
 </resources>

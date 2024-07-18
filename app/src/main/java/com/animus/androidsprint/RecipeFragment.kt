@@ -137,7 +137,7 @@ class RecipeFragment : Fragment() {
                 val favorites = getFavorites()
                 val recipeId = recipe.id.toString()
                 var isFavorite = favorites.contains(recipeId)
-                setImageResource(if(isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty)
+                setImageResource(if (isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty)
                 setOnClickListener {
                     isFavorite = !isFavorite
                     if (isFavorite) {
