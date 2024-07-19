@@ -1,10 +1,12 @@
 package com.animus.androidsprint
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -32,17 +34,11 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        val sharedPrefs = activity?.getSharedPreferences(Constants.PREFERENCE_RECIPE_NAME, Context.MODE_PRIVATE)
-        val favorites = sharedPrefs?.getStringSet(Constants.PREFERENCE_RECIPE_FAVORITES, emptySet())
-        val favoritesToInt = favorites?.mapNotNull { it.toIntOrNull() }?.toSet() ?: emptySet()
-        val favoriteRecipes = STUB.getRecipesByIds(favoritesToInt)
+        val favorites = getFavorites()
+        val favoriteRecipes = STUB.getRecipesByIds(favorites.map { it.toInt() }.toSet())
         val adapter = RecipeListAdapter(favoriteRecipes)
         binding.rvFavorites.adapter = adapter
-        if (favoriteRecipes.isEmpty()) {
-           binding.tvEmptyText.visibility = View.VISIBLE
-        } else {
-            binding.tvEmptyText.visibility = View.GONE
-        }
+        binding.tvEmptyText.isVisible = favoriteRecipes.isEmpty()
         adapter.setOnItemClickListener(object : RecipeListAdapter.OnItemClickListener {
             override fun onItemClick(recipeId: Int) {
                 openRecipeByRecipeId(recipeId)
@@ -60,5 +56,14 @@ class FavoritesFragment : Fragment() {
             setReorderingAllowed(true)
             addToBackStack(null)
         }
+    }
+
+    private fun getFavorites(): MutableSet<String> {
+        val sharedPrefs =
+            activity?.getSharedPreferences(Constants.PREFERENCE_RECIPE_NAME, Context.MODE_PRIVATE)
+        val savedSet =
+            sharedPrefs?.getStringSet(Constants.PREFERENCE_RECIPE_FAVORITES, mutableSetOf())
+                ?: mutableSetOf()
+        return HashSet(savedSet)
     }
 }
