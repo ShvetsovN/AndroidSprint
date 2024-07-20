@@ -8,10 +8,7 @@
         <item name="android:textColor">@color/cardview_text_header_color</item>
     </style>
 
-    <style name="StyleTitle14BottomButton" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">@dimen/button_cardview_style_nav_text_size</item>
-        <item name="android:fontFamily">@font/montserrat_alternates_semi_bold</item>
-        <item name="android:textAllCaps">true</item>
+    <style name="StyleTitle14BottomButton" parent="StyleTitle14ItemHeader">
         <item name="android:textColor">@color/white</item>
     </style>
 
@@ -23,12 +20,18 @@
         <item name="android:gravity">left</item>
     </style>
 
-    <!--    Button Style    -->
-    <style name="StyleNavButton" parent="Widget.Material3.Button">
-        <item name="android:textAppearance">@style/StyleTitle14BottomButton</item>
-        <item name="cornerRadius">@dimen/half_main_indent_and_corner_radius_seekbar_thumb_width
+    <!--   Item Method Text Style -->
+    <style name="MethodTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:layout_marginHorizontal">
+            @dimen/cardview_item_ingredient_divider_horizontal_indent
         </item>
-        <item name="android:paddingVertical">@dimen/padding_vertical_horizontal</item>
+        <item name="android:layout_marginVertical">
+            @dimen/half_main_indent_and_corner_radius_seekbar_thumb_width
+        </item>
+        <item name="android:textColor">@color/cardview_description_or_recipe_ingredient_text_color
+        </item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:textSize">@dimen/text_ingredients_size</item>
     </style>
 
     <!--    Text Header Style   -->
@@ -69,19 +72,34 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
-    <!--   Item Method Text Style -->
-    <style name="MethodTextStyle" parent="TextAppearance.AppCompat">
-        <item name="android:layout_marginHorizontal">
-            @dimen/cardview_item_ingredient_divider_horizontal_indent
-        </item>
-        <item name="android:layout_marginVertical">
-            @dimen/half_main_indent_and_corner_radius_seekbar_thumb_width
-        </item>
+    <style name="TextStyle16" parent="TextAppearance.AppCompat">
+        <item name="android:layout_marginHorizontal">@dimen/main_indent_seekbar_height</item>
+        <item name="fontFamily">@font/montserrat_regular</item>
+        <item name="android:textSize">@dimen/text_ingredients_size</item>
         <item name="android:textColor">@color/cardview_description_or_recipe_ingredient_text_color
         </item>
-        <item name="android:fontFamily">@font/montserrat_regular</item>
-        <item name="android:textSize">@dimen/text_ingredients_size</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
     </style>
+
+    <!--    Button Style    -->
+    <style name="StyleNavButton" parent="Widget.Material3.Button">
+        <item name="android:textAppearance">@style/StyleTitle14BottomButton</item>
+        <item name="cornerRadius">@dimen/half_main_indent_and_corner_radius_seekbar_thumb_width
+        </item>
+        <item name="android:paddingVertical">@dimen/padding_vertical_horizontal</item>
+    </style>
+
+    <style name="ImageButtonFavoritesStyle" parent="Widget.AppCompat.ImageButton">
+        <item name="android:layout_marginTop">@dimen/main_indent_seekbar_height</item>
+        <item name="android:layout_marginEnd">@dimen/main_indent_seekbar_height</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <!--    Additional Style-->
 
     <style name="SeekBarStyle">
         <item name="android:thumb">@drawable/shape_seekbar_thumb</item>
@@ -96,22 +114,5 @@
         <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
     </style>
 
-    <style name="ImageButtonFavoritesStyle" parent="Widget.AppCompat.ImageButton">
-        <item name="android:layout_marginTop">@dimen/main_indent_seekbar_height</item>
-        <item name="android:layout_marginEnd">@dimen/main_indent_seekbar_height</item>
-        <item name="android:clickable">true</item>
-        <item name="android:focusable">true</item>
-        <item name="android:foreground">?android:attr/selectableItemBackground</item>
-        <item name="android:scaleType">centerCrop</item>
-    </style>
 
-    <style name="TextStyle16" parent="TextAppearance.AppCompat">
-        <item name="marginHorizontal">@dimen/main_indent_seekbar_height</item>
-        <item name="fontFamily">@font/montserrat_regular</item>
-        <item name="android:textSize">@dimen/text_ingredients_size</item>
-        <item name="android:textColor">@color/cardview_description_or_recipe_ingredient_text_color
-        </item>
-        <item name="android:gravity">center</item>
-        <item name="android:textAlignment">center</item>
-    </style>
 </resources>
