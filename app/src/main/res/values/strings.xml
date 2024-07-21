@@ -14,6 +14,8 @@
     <string name="category_image_list_of_recipes">Изображение категории: Список рецептов</string>
     <string name="category_image_food_categories">Изображение категории: Категории блюд</string>
     <string name="сategory_image_recipe_title">Изображение категории: Название рецепта</string>
+    <string name="category_image_favorites_recipes">Изображение категории: Избранные рецепты</string>
     <string name="fragment_recipe_tv_number_of_portion" translatable="false">1</string>
     <string name="button_add_to_favorites">Кнопка: Добавить в избранное</string>
+    <string name="favorite_empty_text">Вы еще не добавили ни одного рецепта в избранное</string>
 </resources>
