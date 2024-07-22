@@ -1,7 +1,6 @@
-package com.animus.androidsprint
+package com.animus.androidsprint.ui.recipes.favorites
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.animus.androidsprint.Constants
+import com.animus.androidsprint.R
+import com.animus.androidsprint.data.STUB
 import com.animus.androidsprint.databinding.FragmentFavoritesBinding
+import com.animus.androidsprint.ui.recipes.recipe.RecipeFragment
+import com.animus.androidsprint.ui.recipes.recipeList.RecipeListAdapter
 
 class FavoritesFragment : Fragment() {
 

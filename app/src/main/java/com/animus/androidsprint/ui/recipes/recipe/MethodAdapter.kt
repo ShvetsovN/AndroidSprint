@@ -1,9 +1,10 @@
-package com.animus.androidsprint
+package com.animus.androidsprint.ui.recipes.recipe
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.ItemMethodBinding
 
 class MethodAdapter(private val dataSet: List<String>) :

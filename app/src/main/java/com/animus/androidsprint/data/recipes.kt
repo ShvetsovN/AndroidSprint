@@ -1,4 +1,8 @@
-package com.animus.androidsprint
+package com.animus.androidsprint.data
+
+import com.animus.androidsprint.model.Category
+import com.animus.androidsprint.model.Ingredient
+import com.animus.androidsprint.model.Recipe
 
 object STUB {
     private val categories: List<Category> = listOf(

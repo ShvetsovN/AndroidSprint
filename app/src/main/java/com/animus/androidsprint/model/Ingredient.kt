@@ -1,4 +1,4 @@
-package com.animus.androidsprint
+package com.animus.androidsprint.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

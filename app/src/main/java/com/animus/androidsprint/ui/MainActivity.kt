@@ -1,11 +1,14 @@
-package com.animus.androidsprint
+package com.animus.androidsprint.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.ActivityMainBinding
+import com.animus.androidsprint.ui.categories.CategoriesListFragment
+import com.animus.androidsprint.ui.recipes.favorites.FavoritesFragment
 
 class MainActivity : AppCompatActivity() {
 

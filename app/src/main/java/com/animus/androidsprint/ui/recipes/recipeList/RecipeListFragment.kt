@@ -1,4 +1,4 @@
-package com.animus.androidsprint
+package com.animus.androidsprint.ui.recipes.recipeList
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -10,7 +10,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.recyclerview.widget.RecyclerView
+import com.animus.androidsprint.Constants
+import com.animus.androidsprint.R
+import com.animus.androidsprint.data.STUB
 import com.animus.androidsprint.databinding.FragmentRecipeListBinding
+import com.animus.androidsprint.ui.recipes.recipe.RecipeFragment
 import java.io.IOException
 import java.io.InputStream
 
