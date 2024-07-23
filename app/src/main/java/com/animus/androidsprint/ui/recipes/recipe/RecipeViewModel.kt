@@ -4,17 +4,13 @@ import androidx.lifecycle.ViewModel
 import com.animus.androidsprint.model.Ingredient
 
 data class RecipeState(
-    var id: Int? = null,
-    var title: String? = "",
+    var numberOfPortion: Int? = null,
     var ingredients: List<Ingredient>? = listOf(),
-    var method: List<String>? = listOf(),
-    var imageUrl: String? = "",
+    var imageUrl: String? = null,
     )
 
 data class Ingredient(
     val quantity: String? = "",
-    val unitOfMeasure: String? = "",
-    val description: String? = "",
 )
 
 class RecipeViewModel : ViewModel(){
