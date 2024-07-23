@@ -3,8 +3,11 @@ package com.animus.androidsprint.ui.recipes.recipe
 import androidx.lifecycle.ViewModel
 import com.animus.androidsprint.model.Recipe
 
-data class RecipeState(
-    var recipe: Recipe? = null,
-)
+class RecipeViewModel : ViewModel(){
 
-class RecipeViewModel : ViewModel()
+    data class RecipeState(
+        val recipe: Recipe? = null,
+        val portionCount: Int = 1,
+        val isFavorite: Boolean = false,
+    )
+}
