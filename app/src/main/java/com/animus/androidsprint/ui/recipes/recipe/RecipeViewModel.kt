@@ -9,6 +9,7 @@ data class RecipeState(
     var imageUrl: String? = "",
     var title: String? = "",
     var seekBar: Int? = null,
+    var id: Int? = null,
 )
 
 class RecipeViewModel : ViewModel()
