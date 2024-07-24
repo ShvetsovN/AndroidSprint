@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
@@ -21,6 +22,7 @@ import java.io.InputStream
 
 class RecipeFragment : Fragment() {
 
+    private val viewModel: RecipeViewModel by viewModels()
     private var recipe: Recipe? = null
     private var _binding: FragmentRecipeBinding? = null
     private val binding
@@ -63,6 +65,15 @@ class RecipeFragment : Fragment() {
             } else {
                 it.getParcelable(Constants.ARG_RECIPE, Recipe::class.java)
             }
+        }
+        viewModel.recipeLiveData.observe(viewLifecycleOwner){
+
+        }
+        viewModel.portionLiveData.observe(viewLifecycleOwner){
+
+        }
+        viewModel.isFavoriteLiveData.observe(viewLifecycleOwner) {
+            Log.i("!!!", "${viewModel.isFavoriteLiveData.value}")
         }
         initRecycle()
         initUI()
