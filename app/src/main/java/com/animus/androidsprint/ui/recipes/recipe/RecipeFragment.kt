@@ -1,4 +1,4 @@
-package com.animus.androidsprint
+package com.animus.androidsprint.ui.recipes.recipe
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -11,6 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.animus.androidsprint.Constants
+import com.animus.androidsprint.R
+import com.animus.androidsprint.model.Recipe
 import com.animus.androidsprint.databinding.FragmentRecipeBinding
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import java.io.IOException

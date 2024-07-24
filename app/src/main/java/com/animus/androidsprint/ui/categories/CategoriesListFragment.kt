@@ -1,4 +1,4 @@
-package com.animus.androidsprint
+package com.animus.androidsprint.ui.categories
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.recyclerview.widget.RecyclerView
+import com.animus.androidsprint.Constants
+import com.animus.androidsprint.R
+import com.animus.androidsprint.data.STUB
 import com.animus.androidsprint.databinding.FragmentListCategoriesBinding
+import com.animus.androidsprint.ui.recipes.recipeList.RecipeListFragment
 
 class CategoriesListFragment : Fragment() {
 
