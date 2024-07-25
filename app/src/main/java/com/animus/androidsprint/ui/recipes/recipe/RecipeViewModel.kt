@@ -8,8 +8,8 @@ import com.animus.androidsprint.model.Recipe
 
 class RecipeViewModel : ViewModel() {
 
-    private val _recipeLiveData = MutableLiveData<String>()
-    val recipeLiveData: LiveData<String> = _recipeLiveData
+    private val _recipeLiveData = MutableLiveData<RecipeState>()
+    val recipeLiveData: LiveData<RecipeState> = _recipeLiveData
 
     private val _portionCountLiveData = MutableLiveData<Int>()
     val portionLiveData: LiveData<Int> = _portionCountLiveData
@@ -20,7 +20,8 @@ class RecipeViewModel : ViewModel() {
     init {
         Log.i("!!!", "VM created")
 
-        _isFavoriteLiveData.value = true
+        _recipeLiveData.value = RecipeState()
+        _isFavoriteLiveData.value = _recipeLiveData.value?.isFavorite
     }
 
     override fun onCleared() {

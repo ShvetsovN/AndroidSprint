@@ -74,7 +74,7 @@ class RecipeFragment : Fragment() {
 
         }
         viewModel.isFavoriteLiveData.observe(viewLifecycleOwner) {
-            Log.i("!!!", "${viewModel.isFavoriteLiveData.value}")
+            Log.i("!!!", "$it")
         }
         initRecycle()
         initUI()
