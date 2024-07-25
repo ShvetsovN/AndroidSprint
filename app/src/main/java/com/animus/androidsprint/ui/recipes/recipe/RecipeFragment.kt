@@ -67,10 +67,10 @@ class RecipeFragment : Fragment() {
                 it.getParcelable(Constants.ARG_RECIPE, Recipe::class.java)
             }
         }
-        viewModel.recipeLiveData.observe(viewLifecycleOwner){
+        viewModel.recipeLiveData.observe(viewLifecycleOwner) {
 
         }
-        viewModel.portionLiveData.observe(viewLifecycleOwner){
+        viewModel.portionLiveData.observe(viewLifecycleOwner) {
 
         }
         viewModel.isFavoriteLiveData.observe(viewLifecycleOwner) {
