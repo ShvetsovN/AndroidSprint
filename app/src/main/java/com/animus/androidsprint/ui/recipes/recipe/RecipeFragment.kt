@@ -68,14 +68,9 @@ class RecipeFragment : Fragment() {
             }
         }
         viewModel.recipeLiveData.observe(viewLifecycleOwner) {
+            Log.i("!!!", "${it.isFavorite}")
+        }
 
-        }
-        viewModel.portionLiveData.observe(viewLifecycleOwner) {
-
-        }
-        viewModel.isFavoriteLiveData.observe(viewLifecycleOwner) {
-            Log.i("!!!", "$it")
-        }
         initRecycle()
         initUI()
     }
