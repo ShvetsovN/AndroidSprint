@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
@@ -21,6 +22,7 @@ import java.io.InputStream
 
 class RecipeFragment : Fragment() {
 
+    private val viewModel: RecipeViewModel by viewModels()
     private var recipe: Recipe? = null
     private var _binding: FragmentRecipeBinding? = null
     private val binding
@@ -51,6 +53,7 @@ class RecipeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRecipeBinding.inflate(inflater, container, false)
+        Log.i("!!!", "Fragment created")
         val view = binding.root
         return view
     }
@@ -64,6 +67,10 @@ class RecipeFragment : Fragment() {
                 it.getParcelable(Constants.ARG_RECIPE, Recipe::class.java)
             }
         }
+        viewModel.recipeLiveData.observe(viewLifecycleOwner) {
+            Log.i("!!!", "${it.isFavorite}")
+        }
+
         initRecycle()
         initUI()
     }
@@ -71,6 +78,7 @@ class RecipeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        Log.i("!!!", "Fragment destroy")
     }
 
     private fun initRecycle() {
