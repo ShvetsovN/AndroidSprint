@@ -1,6 +1,5 @@
 package com.animus.androidsprint.ui.recipes.recipe
 
-import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -23,30 +22,11 @@ import java.io.InputStream
 class RecipeFragment : Fragment() {
 
     private val viewModel: RecipeViewModel by viewModels()
-    private var recipe: Recipe? = null
+    var recipe: Recipe? = null
     private var _binding: FragmentRecipeBinding? = null
     private val binding
         get() = _binding
             ?: throw throw IllegalStateException("Binding for FragmentRecipeBinding must not be null")
-
-    private fun saveFavorites(favoriteRecipeId: Set<String>) {
-        val sharedPrefs =
-            activity?.getSharedPreferences(Constants.PREFERENCE_RECIPE_NAME, Context.MODE_PRIVATE)
-                ?: return
-        with(sharedPrefs.edit()) {
-            putStringSet(Constants.PREFERENCE_RECIPE_FAVORITES, favoriteRecipeId)
-            apply()
-        }
-    }
-
-    private fun getFavorites(): MutableSet<String> {
-        val sharedPrefs =
-            activity?.getSharedPreferences(Constants.PREFERENCE_RECIPE_NAME, Context.MODE_PRIVATE)
-        val savedSet =
-            sharedPrefs?.getStringSet(Constants.PREFERENCE_RECIPE_FAVORITES, mutableSetOf())
-                ?: mutableSetOf()
-        return HashSet(savedSet)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,10 +47,7 @@ class RecipeFragment : Fragment() {
                 it.getParcelable(Constants.ARG_RECIPE, Recipe::class.java)
             }
         }
-        viewModel.recipeLiveData.observe(viewLifecycleOwner) {
-            Log.i("!!!", "${it.isFavorite}")
-        }
-
+        viewModel.loadRecipe()
         initRecycle()
         initUI()
     }
@@ -132,36 +109,29 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI() {
-        recipe?.let { recipe ->
-            binding.tvRecipeHeader.text = recipe.title
-            binding.ivFragmentRecipeHeader.let {
-                try {
-                    val inputStream: InputStream =
-                        it.context.assets.open(recipe.imageUrl)
-                    val drawable = Drawable.createFromStream(inputStream, null)
-                    it.setImageDrawable(drawable)
-                } catch (ex: IOException) {
-                    Log.e("RF.initUI", "Error loading image from assets")
-                }
-            }
-            binding.ibFavoriteRecipe.apply {
-                val favorites = getFavorites()
-                val recipeId = recipe.id.toString()
-                var isFavorite = favorites.contains(recipeId)
-                setImageResource(if (isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty)
-                setOnClickListener {
-                    isFavorite = !isFavorite
-                    if (isFavorite) {
-                        favorites.add(recipeId)
-                    } else {
-                        favorites.remove(recipeId)
+        viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
+            state?.let { recipeState ->
+                val recipe = recipeState.recipe
+                binding.tvRecipeHeader.text = recipe?.title
+                binding.ivFragmentRecipeHeader.let {
+                    try {
+                        val inputStream: InputStream? =
+                            recipe?.let { it1 -> it.context.assets.open(it1.imageUrl) }
+                        val drawable = Drawable.createFromStream(inputStream, null)
+                        it.setImageDrawable(drawable)
+                    } catch (ex: IOException) {
+                        Log.e("RF.initUI", "Error loading image from assets")
                     }
-                    setImageResource(if (isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty)
-                    saveFavorites(favorites)
+                }
+                binding.ibFavoriteRecipe.apply {
+                    setImageResource(
+                        if (recipeState.isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty
+                    )
+                    setOnClickListener {
+                        viewModel.onFavoritesClicked()
+                    }
                 }
             }
         }
     }
 }
-
-
