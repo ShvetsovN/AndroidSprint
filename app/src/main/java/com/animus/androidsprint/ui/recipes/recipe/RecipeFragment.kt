@@ -24,6 +24,7 @@ class RecipeFragment : Fragment() {
 
     private val viewModel: RecipeViewModel by viewModels()
     private var recipe: Recipe? = null
+    private var recipeId: Int? = null
     private var _binding: FragmentRecipeBinding? = null
     private val binding
         get() = _binding
@@ -42,6 +43,7 @@ class RecipeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
+            recipeId = it.getInt(Constants.ARG_RECIPE_ID)
             recipe = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                 it.getParcelable(Constants.ARG_RECIPE)
             } else {
