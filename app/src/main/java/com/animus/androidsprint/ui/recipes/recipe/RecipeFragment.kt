@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentRecipeBinding
+import com.animus.androidsprint.model.Recipe
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import java.io.IOException
 import java.io.InputStream
@@ -55,33 +56,29 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initRecycle() {
-        val ingredientsAdapter = viewModel.recipeLiveData.value?.recipe?.ingredients?.let {
-            IngredientsAdapter(
-                it
-            )
-        }
-        val recipe = viewModel.recipeLiveData.value?.recipe
-        val contextIngredients = binding.rvIngredients.context
-        val contextMethod = binding.rvMethod.context
+        var ingredientsAdapter: IngredientsAdapter?
         val sizeInDp =
             resources.getDimensionPixelSize(R.dimen.cardview_item_ingredient_divider_horizontal_indent)
-        val itemDecorationIngredient = MaterialDividerItemDecoration(
-            contextIngredients,
-            LinearLayoutManager.VERTICAL
-        )
-        val itemDecorationMethod =
-            MaterialDividerItemDecoration(
-                contextMethod,
-                LinearLayoutManager.VERTICAL
-            )
-        binding.rvIngredients.adapter = ingredientsAdapter
-        binding.rvIngredients.adapter = recipe?.ingredients?.let { IngredientsAdapter(it) }
-        binding.rvIngredients.addItemDecoration(itemDecorationIngredient)
-        binding.rvMethod.adapter = recipe?.method?.let { MethodAdapter(it) }
-        binding.rvMethod.addItemDecoration(itemDecorationMethod)
         viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
-            state?.let {
+            state?.let { it ->
+                val recipe: Recipe? = it.recipe
+                val contextIngredients = binding.rvIngredients.context
+                val contextMethod = binding.rvMethod.context
                 recipe?.let {
+                    ingredientsAdapter = IngredientsAdapter(it.ingredients)
+                    binding.rvIngredients.adapter = ingredientsAdapter
+                    binding.rvMethod.adapter = MethodAdapter(it.method)
+                    val itemDecorationIngredient = MaterialDividerItemDecoration(
+                        contextIngredients,
+                        LinearLayoutManager.VERTICAL
+                    )
+                    binding.rvIngredients.addItemDecoration(itemDecorationIngredient)
+                    val itemDecorationMethod =
+                        MaterialDividerItemDecoration(
+                            contextMethod,
+                            LinearLayoutManager.VERTICAL
+                        )
+                    binding.rvMethod.addItemDecoration(itemDecorationMethod)
                     itemDecorationIngredient.apply {
                         isLastItemDecorated = false
                         dividerInsetStart = sizeInDp
@@ -110,7 +107,6 @@ class RecipeFragment : Fragment() {
                             ingredientsAdapter?.updateIngredients(progress)
                             binding.tvNumberOfPortions.text = progress.toString()
                         }
-
                         override fun onStartTrackingTouch(seekBar: SeekBar?) {}
                         override fun onStopTrackingTouch(seekBar: SeekBar?) {}
                     })
