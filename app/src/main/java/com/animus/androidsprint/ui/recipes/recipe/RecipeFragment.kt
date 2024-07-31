@@ -56,18 +56,25 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initRecycle() {
-        var ingredientsAdapter: IngredientsAdapter?
+        val ingredientsAdapter = viewModel.recipeLiveData.value?.recipe?.ingredients?.let {
+            IngredientsAdapter(
+                it
+            )
+        }
         val sizeInDp =
             resources.getDimensionPixelSize(R.dimen.cardview_item_ingredient_divider_horizontal_indent)
+        binding.rvIngredients.adapter = ingredientsAdapter
+        binding.rvMethod.adapter = viewModel.recipeLiveData.value?.recipe?.method?.let {
+            MethodAdapter(
+                it
+            )
+        }
         viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
             state?.let { it ->
                 val recipe: Recipe? = it.recipe
                 val contextIngredients = binding.rvIngredients.context
                 val contextMethod = binding.rvMethod.context
                 recipe?.let {
-                    ingredientsAdapter = IngredientsAdapter(it.ingredients)
-                    binding.rvIngredients.adapter = ingredientsAdapter
-                    binding.rvMethod.adapter = MethodAdapter(it.method)
                     val itemDecorationIngredient = MaterialDividerItemDecoration(
                         contextIngredients,
                         LinearLayoutManager.VERTICAL
