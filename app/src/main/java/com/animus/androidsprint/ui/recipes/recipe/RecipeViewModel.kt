@@ -41,17 +41,20 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     fun onFavoritesClicked() {
         val favorites = getFavorites()
         val recipeId = recipeLiveData.value?.recipe?.id.toString()
-        var isFavorite = favorites.contains(recipeId)
+        if (recipeId.isNotEmpty()) {
+            var isFavorite = favorites.contains(recipeId)
+            isFavorite = !isFavorite
 
-        isFavorite = !isFavorite
-        if (isFavorite) {
-            favorites.add(recipeId)
-        } else {
-            favorites.remove(recipeId)
+            if (isFavorite) {
+                favorites.add(recipeId)
+            } else {
+                favorites.remove(recipeId)
+            }
+
+            saveFavorites(favorites)
+
+            _recipeLiveData.value = recipeLiveData.value?.copy(isFavorite = isFavorite)
         }
-        saveFavorites(favorites)
-
-        _recipeLiveData.value = recipeLiveData.value?.copy(isFavorite = isFavorite)
     }
 
 

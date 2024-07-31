@@ -55,20 +55,34 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initRecycle() {
+        val ingredientsAdapter = viewModel.recipeLiveData.value?.recipe?.ingredients?.let {
+            IngredientsAdapter(
+                it
+            )
+        }
+        val recipe = viewModel.recipeLiveData.value?.recipe
+        val contextIngredients = binding.rvIngredients.context
+        val contextMethod = binding.rvMethod.context
+        val sizeInDp =
+            resources.getDimensionPixelSize(R.dimen.cardview_item_ingredient_divider_horizontal_indent)
+        val itemDecorationIngredient = MaterialDividerItemDecoration(
+            contextIngredients,
+            LinearLayoutManager.VERTICAL
+        )
+        val itemDecorationMethod =
+            MaterialDividerItemDecoration(
+                contextMethod,
+                LinearLayoutManager.VERTICAL
+            )
+        binding.rvIngredients.adapter = ingredientsAdapter
+        binding.rvIngredients.adapter = recipe?.ingredients?.let { IngredientsAdapter(it) }
+        binding.rvIngredients.addItemDecoration(itemDecorationIngredient)
+        binding.rvMethod.adapter = recipe?.method?.let { MethodAdapter(it) }
+        binding.rvMethod.addItemDecoration(itemDecorationMethod)
         viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
-            state?.let { recipeState ->
-                val recipe = recipeState.recipe
-                val contextIngredients = binding.rvIngredients.context
-                val contextMethod = binding.rvMethod.context
+            state?.let {
                 recipe?.let {
-                    val ingredientAdapter = IngredientsAdapter(it.ingredients)
-                    val sizeInDp =
-                        resources.getDimensionPixelSize(R.dimen.cardview_item_ingredient_divider_horizontal_indent)
-                    binding.rvIngredients.adapter = ingredientAdapter
-                    val itemDecorationIngredient = MaterialDividerItemDecoration(
-                        contextIngredients,
-                        LinearLayoutManager.VERTICAL
-                    ).apply {
+                    itemDecorationIngredient.apply {
                         isLastItemDecorated = false
                         dividerInsetStart = sizeInDp
                         dividerInsetEnd = sizeInDp
@@ -77,22 +91,15 @@ class RecipeFragment : Fragment() {
                             R.color.cardview_item_ingredient_divider_color
                         )
                     }
-                    binding.rvIngredients.addItemDecoration(itemDecorationIngredient)
-                    binding.rvMethod.adapter = MethodAdapter(it.method)
-                    val itemDecorationMethod =
-                        MaterialDividerItemDecoration(
+                    itemDecorationMethod.apply {
+                        isLastItemDecorated = false
+                        dividerInsetStart = sizeInDp
+                        dividerInsetEnd = sizeInDp
+                        setDividerColorResource(
                             contextMethod,
-                            LinearLayoutManager.VERTICAL
-                        ).apply {
-                            isLastItemDecorated = false
-                            dividerInsetStart = sizeInDp
-                            dividerInsetEnd = sizeInDp
-                            setDividerColorResource(
-                                contextMethod,
-                                R.color.cardview_item_ingredient_divider_color
-                            )
-                        }
-                    binding.rvMethod.addItemDecoration(itemDecorationMethod)
+                            R.color.cardview_item_ingredient_divider_color
+                        )
+                    }
                     binding.seekBar.setOnSeekBarChangeListener(object :
                         SeekBar.OnSeekBarChangeListener {
                         override fun onProgressChanged(
@@ -100,7 +107,7 @@ class RecipeFragment : Fragment() {
                             progress: Int,
                             fromUser: Boolean
                         ) {
-                            ingredientAdapter.updateIngredients(progress)
+                            ingredientsAdapter?.updateIngredients(progress)
                             binding.tvNumberOfPortions.text = progress.toString()
                         }
 
@@ -117,23 +124,28 @@ class RecipeFragment : Fragment() {
             Log.i("!!!", "${state.isFavorite}")
 
             state?.let { recipeState ->
-                binding.tvRecipeHeader.text = recipeState.recipe?.title
-                binding.ivFragmentRecipeHeader.let {
-                    try {
-                        val inputStream: InputStream? =
-                            recipeState.recipe?.imageUrl?.let { it1 -> it.context.assets.open(it1) }
-                        val drawable = Drawable.createFromStream(inputStream, null)
-                        it.setImageDrawable(drawable)
-                    } catch (ex: IOException) {
-                        Log.e("RF.initUI", "Error loading image from assets")
-                    }
-                }
                 with(binding) {
+                    tvRecipeHeader.text = recipeState.recipe?.title
+                    ivFragmentRecipeHeader.let {
+                        try {
+                            val inputStream: InputStream? =
+                                recipeState.recipe?.imageUrl?.let { it1 ->
+                                    it.context.assets.open(
+                                        it1
+                                    )
+                                }
+                            val drawable = Drawable.createFromStream(inputStream, null)
+                            it.setImageDrawable(drawable)
+                        } catch (ex: IOException) {
+                            Log.e("RF.initUI", "Error loading image from assets")
+                        }
+                    }
+                    ibFavoriteRecipe.setImageResource(
+                        if (viewModel.recipeLiveData.value?.isFavorite == false) R.drawable.ic_heart_empty else R.drawable.ic_heart
+                    )
                     ibFavoriteRecipe.setOnClickListener {
                         viewModel.onFavoritesClicked()
                     }
-                    ibFavoriteRecipe.setImageResource(
-                        if (viewModel.recipeLiveData.value?.isFavorite == false) R.drawable.ic_heart_empty else R.drawable.ic_heart)
                 }
             }
         }
