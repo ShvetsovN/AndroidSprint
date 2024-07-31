@@ -50,9 +50,8 @@ class RecipeFragment : Fragment() {
                 it.getParcelable(Constants.ARG_RECIPE, Recipe::class.java)
             }
         }
-        val recipeId = recipe?.id
-        if (recipeId != null) {
-            viewModel.loadRecipe(recipeId)
+        recipeId?.let {
+            viewModel.loadRecipe(it)
         }
         initRecycle()
         initUI()
