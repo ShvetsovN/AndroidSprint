@@ -128,17 +128,17 @@ class RecipeFragment : Fragment() {
                         Log.e("RF.initUI", "Error loading image from assets")
                     }
                 }
-                binding.ibFavoriteRecipe.apply {
-                    setImageResource(
-                        if (viewModel.recipeLiveData.value?.isFavorite == false) R.drawable.ic_heart_empty
-                        else R.drawable.ic_heart
-                    )
-                    viewModel.onFavoritesClicked()
-
+                with(binding) {
+                    ibFavoriteRecipe.setOnClickListener {
+                        viewModel.onFavoritesClicked()
+                    }
+                    ibFavoriteRecipe.setImageResource(
+                        if (viewModel.recipeLiveData.value?.isFavorite == false) R.drawable.ic_heart_empty else R.drawable.ic_heart)
                 }
             }
         }
     }
 }
+
 
 
