@@ -1,8 +1,6 @@
 package com.animus.androidsprint.ui.recipes.recipe
 
-import android.content.Context
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
-import com.animus.androidsprint.model.Recipe
 import com.animus.androidsprint.databinding.FragmentRecipeBinding
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import java.io.IOException
@@ -23,7 +20,6 @@ import java.io.InputStream
 class RecipeFragment : Fragment() {
 
     private val viewModel: RecipeViewModel by viewModels()
-    private var recipe: Recipe? = null
     private var recipeId: Int? = null
     private var _binding: FragmentRecipeBinding? = null
     private val binding
@@ -44,11 +40,6 @@ class RecipeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             recipeId = it.getInt(Constants.ARG_RECIPE_ID)
-            recipe = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-                it.getParcelable(Constants.ARG_RECIPE)
-            } else {
-                it.getParcelable(Constants.ARG_RECIPE, Recipe::class.java)
-            }
         }
         recipeId?.let {
             viewModel.loadRecipe(it)
@@ -64,52 +55,60 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initRecycle() {
-        val contextIngredients = binding.rvIngredients.context
-        val contextMethod = binding.rvMethod.context
-        recipe?.let {
-            val ingredientAdapter = IngredientsAdapter(it.ingredients)
-            val sizeInDp =
-                resources.getDimensionPixelSize(R.dimen.cardview_item_ingredient_divider_horizontal_indent)
-            binding.rvIngredients.adapter = ingredientAdapter
-            val itemDecorationIngredient = MaterialDividerItemDecoration(
-                contextIngredients,
-                LinearLayoutManager.VERTICAL
-            ).apply {
-                isLastItemDecorated = false
-                dividerInsetStart = sizeInDp
-                dividerInsetEnd = sizeInDp
-                setDividerColorResource(
-                    contextIngredients,
-                    R.color.cardview_item_ingredient_divider_color
-                )
+        viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
+            state?.let { recipeState ->
+                val recipe = recipeState.recipe
+                val contextIngredients = binding.rvIngredients.context
+                val contextMethod = binding.rvMethod.context
+                recipe?.let {
+                    val ingredientAdapter = IngredientsAdapter(it.ingredients)
+                    val sizeInDp =
+                        resources.getDimensionPixelSize(R.dimen.cardview_item_ingredient_divider_horizontal_indent)
+                    binding.rvIngredients.adapter = ingredientAdapter
+                    val itemDecorationIngredient = MaterialDividerItemDecoration(
+                        contextIngredients,
+                        LinearLayoutManager.VERTICAL
+                    ).apply {
+                        isLastItemDecorated = false
+                        dividerInsetStart = sizeInDp
+                        dividerInsetEnd = sizeInDp
+                        setDividerColorResource(
+                            contextIngredients,
+                            R.color.cardview_item_ingredient_divider_color
+                        )
+                    }
+                    binding.rvIngredients.addItemDecoration(itemDecorationIngredient)
+                    binding.rvMethod.adapter = MethodAdapter(it.method)
+                    val itemDecorationMethod =
+                        MaterialDividerItemDecoration(
+                            contextMethod,
+                            LinearLayoutManager.VERTICAL
+                        ).apply {
+                            isLastItemDecorated = false
+                            dividerInsetStart = sizeInDp
+                            dividerInsetEnd = sizeInDp
+                            setDividerColorResource(
+                                contextMethod,
+                                R.color.cardview_item_ingredient_divider_color
+                            )
+                        }
+                    binding.rvMethod.addItemDecoration(itemDecorationMethod)
+                    binding.seekBar.setOnSeekBarChangeListener(object :
+                        SeekBar.OnSeekBarChangeListener {
+                        override fun onProgressChanged(
+                            seekBar: SeekBar?,
+                            progress: Int,
+                            fromUser: Boolean
+                        ) {
+                            ingredientAdapter.updateIngredients(progress)
+                            binding.tvNumberOfPortions.text = progress.toString()
+                        }
+
+                        override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+                        override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+                    })
+                }
             }
-            binding.rvIngredients.addItemDecoration(itemDecorationIngredient)
-            binding.rvMethod.adapter = MethodAdapter(it.method)
-            val itemDecorationMethod =
-                MaterialDividerItemDecoration(contextMethod, LinearLayoutManager.VERTICAL).apply {
-                    isLastItemDecorated = false
-                    dividerInsetStart = sizeInDp
-                    dividerInsetEnd = sizeInDp
-                    setDividerColorResource(
-                        contextMethod,
-                        R.color.cardview_item_ingredient_divider_color
-                    )
-                }
-            binding.rvMethod.addItemDecoration(itemDecorationMethod)
-            binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(
-                    seekBar: SeekBar?,
-                    progress: Int,
-                    fromUser: Boolean
-                ) {
-                    ingredientAdapter.updateIngredients(progress)
-                    binding.tvNumberOfPortions.text = progress.toString()
-                }
-
-                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-            })
-
         }
     }
 
@@ -130,9 +129,12 @@ class RecipeFragment : Fragment() {
                     }
                 }
                 binding.ibFavoriteRecipe.apply {
+                    setImageResource(
+                        if (viewModel.recipeLiveData.value?.isFavorite == false) R.drawable.ic_heart_empty
+                        else R.drawable.ic_heart
+                    )
                     viewModel.onFavoritesClicked()
-                    setImageResource(if (viewModel.recipeLiveData.value?.isFavorite == false) R.drawable.ic_heart_empty
-                    else R.drawable.ic_heart)
+
                 }
             }
         }
