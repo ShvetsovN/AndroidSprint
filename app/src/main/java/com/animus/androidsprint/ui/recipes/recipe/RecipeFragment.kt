@@ -121,18 +121,7 @@ class RecipeFragment : Fragment() {
         viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
             with(binding) {
                 tvRecipeHeader.text = state.recipe?.title
-                ivFragmentRecipeHeader.let {
-                    try {
-                        val inputStream: InputStream? =
-                            state.recipe?.imageUrl?.let { it1 ->
-                                it.context.assets.open(it1)
-                            }
-                        val drawable = Drawable.createFromStream(inputStream, null)
-                        it.setImageDrawable(drawable)
-                    } catch (ex: IOException) {
-                        Log.e("RF.initUI", "Error loading image from assets")
-                    }
-                }
+                ivFragmentRecipeHeader.setImageDrawable(state.recipeImage)
                 ibFavoriteRecipe.setImageResource(
                     if (!state.isFavorite) R.drawable.ic_heart_empty else R.drawable.ic_heart
                 )
