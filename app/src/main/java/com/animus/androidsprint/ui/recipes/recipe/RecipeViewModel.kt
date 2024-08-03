@@ -16,12 +16,6 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     private val _recipeLiveData = MutableLiveData<RecipeState>()
     val recipeLiveData: LiveData<RecipeState> = _recipeLiveData
 
-    init {
-        Log.i("!!!", "VM created")
-
-        _recipeLiveData.value = RecipeState()
-    }
-
     override fun onCleared() {
         Log.i("!!!", "VM cleared")
         super.onCleared()
