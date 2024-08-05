@@ -2,6 +2,7 @@ package com.animus.androidsprint.ui.recipes.recipe
 
 import android.app.Application
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -10,6 +11,9 @@ import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.data.STUB
 import com.animus.androidsprint.model.Recipe
+import kotlinx.coroutines.withContext
+import java.io.IOException
+import java.io.InputStream
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -23,12 +27,25 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
     fun loadRecipe(recipeId: Int) {
         //TODO ("load from network")
-        val favorites = getFavorites().contains(recipeId.toString())
         val recipe = STUB.getRecipeById(recipeId)
+        val favorites = getFavorites().contains(recipeId.toString())
+        var drawable: Drawable? = null
+        try {
+            val inputStream: InputStream? =
+                recipe?.imageUrl?.let {
+                    getApplication<Application>().assets.open(it)
+                }
+            drawable = Drawable.createFromStream(inputStream, null)
+            inputStream?.close()
+        } catch (ex: IOException) {
+            Log.e("!!!", "Error loading image from assets (RVM.loadRecipe)", ex)
+        }
+
         _recipeLiveData.value = RecipeState(
             recipe = recipe,
             portionCount = recipeLiveData.value?.portionCount ?: 1,
-            isFavorite = favorites
+            isFavorite = favorites,
+            recipeImage = drawable
         )
     }
 
@@ -50,7 +67,6 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
             _recipeLiveData.value = recipeLiveData.value?.copy(isFavorite = isFavorite)
         }
     }
-
 
     private fun saveFavorites(favoriteRecipeId: Set<String>) {
         val sharedPrefs =
@@ -81,5 +97,6 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         val recipe: Recipe? = null,
         val portionCount: Int = 1,
         val isFavorite: Boolean = false,
+        val recipeImage: Drawable?,
     )
 }
