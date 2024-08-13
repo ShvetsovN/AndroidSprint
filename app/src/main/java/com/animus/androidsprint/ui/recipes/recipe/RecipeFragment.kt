@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentRecipeBinding
-import com.animus.androidsprint.model.Recipe
 import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class RecipeFragment : Fragment() {
@@ -120,7 +119,3 @@ class RecipeFragment : Fragment() {
         }
     }
 }
-
-
-
-
