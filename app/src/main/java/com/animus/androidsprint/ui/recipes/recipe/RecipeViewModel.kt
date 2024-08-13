@@ -8,10 +8,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.animus.androidsprint.Constants
-import com.animus.androidsprint.R
 import com.animus.androidsprint.data.STUB
 import com.animus.androidsprint.model.Recipe
-import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.io.InputStream
 
@@ -23,6 +21,10 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     override fun onCleared() {
         Log.i("!!!", "VM cleared")
         super.onCleared()
+    }
+
+    fun updatingPortionCount(portionCount: Int) {
+        _recipeLiveData.value = _recipeLiveData.value?.copy(portionCount = portionCount)
     }
 
     fun loadRecipe(recipeId: Int) {
