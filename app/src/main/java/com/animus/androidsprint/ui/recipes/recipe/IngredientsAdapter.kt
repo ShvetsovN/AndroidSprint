@@ -10,8 +10,13 @@ import com.animus.androidsprint.databinding.ItemIngredientBinding
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class IngredientsAdapter(private val dataSet: List<Ingredient>) :
+class IngredientsAdapter(private var dataSet: List<Ingredient> = listOf()) :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
+
+    fun setData(newData: List<Ingredient>) {
+        dataSet = newData
+        notifyDataSetChanged()
+    }
 
     private var quantity = 1
 

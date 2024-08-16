@@ -7,8 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.ItemMethodBinding
 
-class MethodAdapter(private val dataSet: List<String>) :
+class MethodAdapter(private var dataSet: List<String> = listOf()) :
     RecyclerView.Adapter<MethodAdapter.ViewHolder>() {
+
+    fun setData(newData: List<String>) {
+        dataSet = newData
+        notifyDataSetChanged()
+    }
 
     class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         private val binding = ItemMethodBinding.bind(item)

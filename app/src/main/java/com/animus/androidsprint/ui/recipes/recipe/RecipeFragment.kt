@@ -14,7 +14,7 @@ import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentRecipeBinding
 import com.google.android.material.divider.MaterialDividerItemDecoration
 
-class RecipeFragment : Fragment() {
+class RecipeFragment() : Fragment() {
 
     private val viewModel: RecipeViewModel by viewModels()
     private var recipeId: Int? = null
@@ -22,6 +22,9 @@ class RecipeFragment : Fragment() {
     private val binding
         get() = _binding
             ?: throw throw IllegalStateException("Binding for FragmentRecipeBinding must not be null")
+
+    private val ingredientsAdapter = IngredientsAdapter()
+    private val methodAdapter = MethodAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,10 +54,7 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI() {
-        val ingredientsAdapter = viewModel.recipeLiveData.value?.recipe?.ingredients?.let { IngredientsAdapter(it) }
         binding.rvIngredients.adapter = ingredientsAdapter
-
-        val methodAdapter = viewModel.recipeLiveData.value?.recipe?.method?.let { MethodAdapter(it) }
         binding.rvMethod.adapter = methodAdapter
 
         val sizeInDp =
@@ -116,6 +116,8 @@ class RecipeFragment : Fragment() {
                     viewModel.onFavoritesClicked()
                 }
             }
+            recipeState.recipe?.ingredients?.let { ingredientsAdapter.setData(it)}
+            recipeState.recipe?.method?.let { methodAdapter.setData(it)}
         }
     }
 }
