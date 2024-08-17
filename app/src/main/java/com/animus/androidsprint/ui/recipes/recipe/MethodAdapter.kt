@@ -6,14 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.ItemMethodBinding
+import com.animus.androidsprint.model.Ingredient
 
-class MethodAdapter(private var dataSet: List<String> = listOf()) :
+class MethodAdapter(var dataSet: List<String> = listOf()) :
     RecyclerView.Adapter<MethodAdapter.ViewHolder>() {
-
-    fun setData(newData: List<String>) {
-        dataSet = newData
-        notifyDataSetChanged()
-    }
 
     class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         private val binding = ItemMethodBinding.bind(item)

@@ -99,8 +99,6 @@ class RecipeFragment() : Fragment() {
                     fromUser: Boolean
                 ) {
                     viewModel.updatingPortionCount(progress)
-                    ingredientsAdapter?.updateIngredients(progress)
-                    binding.tvNumberOfPortions.text = progress.toString()
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -115,9 +113,17 @@ class RecipeFragment() : Fragment() {
                 ibFavoriteRecipe.setOnClickListener {
                     viewModel.onFavoritesClicked()
                 }
+
+                recipeState.recipe?.let { recipe ->
+                    ingredientsAdapter.dataSet = recipe.ingredients
+                    methodAdapter.dataSet = recipe.method
+                }
+
+                ingredientsAdapter.updateIngredients(recipeState.portionCount)
+                tvNumberOfPortions.text = recipeState.portionCount.toString()
             }
-            recipeState.recipe?.ingredients?.let { ingredientsAdapter.setData(it)}
-            recipeState.recipe?.method?.let { methodAdapter.setData(it)}
+
+
         }
     }
 }
