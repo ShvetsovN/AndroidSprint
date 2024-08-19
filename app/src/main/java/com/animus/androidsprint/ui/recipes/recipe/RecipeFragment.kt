@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.animus.androidsprint.Constants
@@ -45,6 +46,15 @@ class RecipeFragment() : Fragment() {
             viewModel.loadRecipe(it)
         }
         initUI()
+    }
+
+    class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) : OnSeekBarChangeListener {
+        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            onChangeIngredients(progress)
+        }
+
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+        override fun onStopTrackingTouch(seekBar: SeekBar?) {}
     }
 
     override fun onDestroyView() {
@@ -91,19 +101,11 @@ class RecipeFragment() : Fragment() {
                     R.color.cardview_item_ingredient_divider_color
                 )
             }
-            binding.seekBar.setOnSeekBarChangeListener(object :
-                SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(
-                    seekBar: SeekBar?,
-                    progress: Int,
-                    fromUser: Boolean
-                ) {
-                    viewModel.updatingPortionCount(progress)
-                }
+            val portionSeekBarListener = PortionSeekBarListener { progress ->
+                viewModel.updatingPortionCount(progress)
+            }
+            binding.seekBar.setOnSeekBarChangeListener(portionSeekBarListener)
 
-                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-            })
             with(binding) {
                 tvRecipeHeader.text = recipeState.recipe?.title
                 ivFragmentRecipeHeader.setImageDrawable(recipeState.recipeImage)
@@ -122,8 +124,6 @@ class RecipeFragment() : Fragment() {
                 ingredientsAdapter.updateIngredients(recipeState.portionCount)
                 tvNumberOfPortions.text = recipeState.portionCount.toString()
             }
-
-
         }
     }
 }
