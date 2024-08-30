@@ -12,7 +12,7 @@ import com.animus.androidsprint.databinding.ItemRecipeBinding
 import java.io.IOException
 import java.io.InputStream
 
-class RecipeListAdapter(private val dataSet: List<Recipe>) :
+class RecipeListAdapter(var dataSet: List<Recipe> = listOf()) :
     RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
@@ -52,6 +52,7 @@ class RecipeListAdapter(private val dataSet: List<Recipe>) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val recipe = dataSet[position]
+        Log.d("AAA", "RecipeListAdapter $recipe")
         viewHolder.bind(recipe)
         viewHolder.itemView.setOnClickListener {
             itemClickListener?.onItemClick(recipe.id)
