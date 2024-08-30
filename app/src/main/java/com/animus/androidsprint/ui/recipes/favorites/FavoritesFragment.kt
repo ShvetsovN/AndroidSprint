@@ -47,12 +47,13 @@ class FavoritesFragment : Fragment() {
         binding.rvFavorites.adapter = favoriteAdapter
         viewModel.favoriteLiveData.observe(viewLifecycleOwner) {
             binding.tvEmptyText.isVisible = it.recipeList.isEmpty()
-            favoriteAdapter.setOnItemClickListener(object : RecipeListAdapter.OnItemClickListener {
-                override fun onItemClick(recipeId: Int) {
-                    openRecipeByRecipeId(recipeId)
-                }
-            })
+            favoriteAdapter.dataSet = it.recipeList
         }
+        favoriteAdapter.setOnItemClickListener(object : RecipeListAdapter.OnItemClickListener {
+            override fun onItemClick(recipeId: Int) {
+                openRecipeByRecipeId(recipeId)
+            }
+        })
         viewModel.loadFavorites()
     }
 
