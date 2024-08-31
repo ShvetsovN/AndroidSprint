@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
@@ -16,6 +17,8 @@ import com.animus.androidsprint.ui.recipes.recipeList.RecipeListFragment
 
 class CategoriesListFragment : Fragment() {
 
+    private val viewModel: CategoriesListViewModel by viewModels()
+    private val categoriesListAdapter = CategoriesListAdapter()
     private var _binding: FragmentListCategoriesBinding? = null
     private val binding
         get() = _binding
@@ -32,6 +35,7 @@ class CategoriesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.ivFragmentListCategoriesHeader.setImageResource(R.drawable.bcg_categories)
+        viewModel.loadCategories()
         initRecycle()
     }
 
@@ -41,10 +45,12 @@ class CategoriesListFragment : Fragment() {
     }
 
     private fun initRecycle() {
-        val adapter = CategoriesListAdapter(STUB.getCategories())
         val recyclerView: RecyclerView = binding.rvCategories
-        recyclerView.adapter = adapter
-        adapter.setOnItemClickListener(object : CategoriesListAdapter.OnItemClickListener {
+        recyclerView.adapter = categoriesListAdapter
+        viewModel.categoriesListLiveData.observe(viewLifecycleOwner) {
+            categoriesListAdapter.dataSet = it.category
+        }
+        categoriesListAdapter.setOnItemClickListener(object : CategoriesListAdapter.OnItemClickListener {
             override fun onItemClick(categoryId: Int) {
                 openRecipesByCategoryId(categoryId)
             }
@@ -52,7 +58,7 @@ class CategoriesListFragment : Fragment() {
     }
 
     fun openRecipesByCategoryId(categoryId: Int) {
-        val category = STUB.getCategories().find { it.id == categoryId }
+        val category = STUB.getCategories().find{ it.id == categoryId}
         val categoryName = category?.title
         val categoryImageUrl = category?.imageUrl
         val bundle = Bundle().apply {

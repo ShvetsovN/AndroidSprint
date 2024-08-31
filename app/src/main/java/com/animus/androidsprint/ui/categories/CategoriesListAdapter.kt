@@ -12,7 +12,7 @@ import com.animus.androidsprint.databinding.ItemCategoryBinding
 import java.io.IOException
 import java.io.InputStream
 
-class CategoriesListAdapter(private val dataSet: List<Category>) :
+class CategoriesListAdapter(var dataSet: List<Category> = listOf()) :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
