@@ -19,7 +19,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     val recipeLiveData: LiveData<RecipeState> = _recipeLiveData
 
     override fun onCleared() {
-        Log.i("!!!", "VM cleared")
+        Log.i("!!!", "Recipe VM cleared")
         super.onCleared()
     }
 
