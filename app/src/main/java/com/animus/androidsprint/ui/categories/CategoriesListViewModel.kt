@@ -14,13 +14,18 @@ class CategoriesListViewModel : ViewModel() {
 
     init {
         Log.e("!!!", "Categories VM created")
+        loadCategories()
     }
 
-    fun loadCategories() {
-        val category = STUB.getCategories()
+    private fun loadCategories() {
+        val category: List<Category> = STUB.getCategories()
         _categoriesListLiveData.value = CategoriesListState(
             category = category
         )
+    }
+
+    fun getCategoryById(categoryId: Int): Category? {
+        return _categoriesListLiveData.value?.category?.find { it.id == categoryId }
     }
 
     data class CategoriesListState(

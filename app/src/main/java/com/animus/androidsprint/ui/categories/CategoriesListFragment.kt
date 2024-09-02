@@ -37,7 +37,6 @@ class CategoriesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.ivFragmentListCategoriesHeader.setImageResource(R.drawable.bcg_categories)
-        viewModel.loadCategories()
         initRecycle()
     }
 
@@ -53,21 +52,22 @@ class CategoriesListFragment : Fragment() {
         viewModel.categoriesListLiveData.observe(viewLifecycleOwner) {
             categoriesListAdapter.dataSet = it.category
         }
-        categoriesListAdapter.setOnItemClickListener(object : CategoriesListAdapter.OnItemClickListener {
+        categoriesListAdapter.setOnItemClickListener(object :
+            CategoriesListAdapter.OnItemClickListener {
             override fun onItemClick(categoryId: Int) {
                 openRecipesByCategoryId(categoryId)
             }
         })
     }
 
-    fun openRecipesByCategoryId(categoryId: Int) {
-        val category = STUB.getCategories().find{ it.id == categoryId}
-        val categoryName = category?.title
-        val categoryImageUrl = category?.imageUrl
+    private fun openRecipesByCategoryId(categoryId: Int) {
+        val category = viewModel.getCategoryById(categoryId)
         val bundle = Bundle().apply {
-            putInt(Constants.ARG_CATEGORY_ID, categoryId)
-            putString(Constants.ARG_CATEGORY_NAME, categoryName)
-            putString(Constants.ARG_CATEGORY_IMAGE_URL, categoryImageUrl)
+            category?.id?.let {
+                putInt(Constants.ARG_CATEGORY_ID, it)
+                putString(Constants.ARG_CATEGORY_NAME, category.title)
+                putString(Constants.ARG_CATEGORY_IMAGE_URL, category.imageUrl)
+            }
         }
         parentFragmentManager.commit {
             replace<RecipeListFragment>(R.id.mainContainer, args = bundle)
