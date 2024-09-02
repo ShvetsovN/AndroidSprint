@@ -21,10 +21,13 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
 
     fun loadFavorites() {
         val favorites: MutableSet<String> = getFavorites()
-        val favoritesRecipe: List<Recipe> = STUB.getRecipesByIds(favorites.map { it.toInt() }.toSet())
+        val favoritesRecipe: List<Recipe> =
+            STUB.getRecipesByIds(favorites.map { it.toInt() }.toSet())
         Log.d("!!!", "Loaded favorite recipes: $favoritesRecipe")
         _favoriteLiveData.value = FavoriteState(recipeList = favoritesRecipe)
     }
+
+    fun getRecipeById(recipeId: Int) = STUB.getRecipeById(recipeId)
 
     private fun getFavorites(): MutableSet<String> {
         val sharedPrefs =

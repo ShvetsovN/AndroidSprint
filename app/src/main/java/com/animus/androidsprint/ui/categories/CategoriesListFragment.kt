@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
-import com.animus.androidsprint.data.STUB
 import com.animus.androidsprint.databinding.FragmentListCategoriesBinding
 import com.animus.androidsprint.ui.recipes.recipeList.RecipeListFragment
 

@@ -12,7 +12,6 @@ import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
-import com.animus.androidsprint.data.STUB
 import com.animus.androidsprint.databinding.FragmentFavoritesBinding
 import com.animus.androidsprint.ui.recipes.recipe.RecipeFragment
 import com.animus.androidsprint.ui.recipes.recipeList.RecipeListAdapter
@@ -58,7 +57,7 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {
-        val recipe = STUB.getRecipeById(recipeId)
+        val recipe = viewModel.getRecipeById(recipeId)
         val bundle = Bundle().apply {
             putParcelable(Constants.ARG_RECIPE, recipe)
         }
