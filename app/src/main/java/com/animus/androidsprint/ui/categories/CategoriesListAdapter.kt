@@ -40,7 +40,7 @@ class CategoriesListAdapter(var dataSet: List<Category> = listOf()) :
                 val drawable = Drawable.createFromStream(inputStream, null)
                 binding.ivItemImage.setImageDrawable(drawable)
             } catch (ex: IOException) {
-                Log.e("ViewHolder", Log.getStackTraceString(ex))
+                Log.e("CategoriesListAdapter loadImage", Log.getStackTraceString(ex))
             }
         }
     }

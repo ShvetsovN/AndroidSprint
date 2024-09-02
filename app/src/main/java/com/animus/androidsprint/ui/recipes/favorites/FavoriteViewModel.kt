@@ -16,14 +16,14 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
     val favoriteLiveData: LiveData<FavoriteState> = _favoriteLiveData
 
     init {
-        Log.e("!!!", "VM favorite created")
+        Log.e("FavoriteVM", "VM favorite created")
     }
 
     fun loadFavorites() {
         val favorites: MutableSet<String> = getFavorites()
         val favoritesRecipe: List<Recipe> =
             STUB.getRecipesByIds(favorites.map { it.toInt() }.toSet())
-        Log.d("!!!", "Loaded favorite recipes: $favoritesRecipe")
+        Log.e("FavoriteVM", "Loaded favorite recipes: $favoritesRecipe")
         _favoriteLiveData.value = FavoriteState(recipeList = favoritesRecipe)
     }
 

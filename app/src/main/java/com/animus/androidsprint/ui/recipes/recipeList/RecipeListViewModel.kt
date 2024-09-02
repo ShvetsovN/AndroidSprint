@@ -20,12 +20,12 @@ class RecipeListViewModel : ViewModel() {
     }
 
     override fun onCleared() {
-        Log.e("!!!", "RecipeList VM cleared")
+        Log.e("RecipeList", "VM cleared")
         super.onCleared()
     }
 
     init{
-        Log.e("!!!", "RecipeList VM created")
+        Log.e("RecipeList", "VM created")
     }
 
     data class RecipeListState(

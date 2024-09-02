@@ -19,7 +19,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     val recipeLiveData: LiveData<RecipeState> = _recipeLiveData
 
     override fun onCleared() {
-        Log.i("!!!", "Recipe VM cleared")
+        Log.e("RecipeVM", "cleared")
         super.onCleared()
     }
 
@@ -40,7 +40,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
             drawable = Drawable.createFromStream(inputStream, null)
             inputStream?.close()
         } catch (ex: IOException) {
-            Log.e("!!!", "Error loading image from assets (RVM.loadRecipe)", ex)
+            Log.e("RecipeVM loadRecipe", "Error loading image from assets ", ex)
         }
 
         _recipeLiveData.value = RecipeState(

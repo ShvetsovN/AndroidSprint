@@ -55,7 +55,7 @@ class RecipeListFragment : Fragment() {
                 val drawable = Drawable.createFromStream(inputStream, null)
                 binding.ivFragmentRecipeListHeader.setImageDrawable(drawable)
             } catch (ex: IOException) {
-                Log.e("RLF.onViewCreated", "Error loading image from assets")
+                Log.e("RecipeListFragment onViewCreated", "Error loading image from assets")
             }
         }
         categoryId?.let { viewModel.loadRecipe(it) }
@@ -70,7 +70,7 @@ class RecipeListFragment : Fragment() {
     private fun initRecycle() {
         binding.rvRecipes.adapter = recipeListAdapter
         viewModel.recipeListLiveData.observe(viewLifecycleOwner) {
-           recipeListAdapter.dataSet = it.recipeList
+            recipeListAdapter.dataSet = it.recipeList
         }
         recipeListAdapter.setOnItemClickListener(object : RecipeListAdapter.OnItemClickListener {
             override fun onItemClick(recipeId: Int) {

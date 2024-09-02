@@ -32,7 +32,7 @@ class RecipeFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRecipeBinding.inflate(inflater, container, false)
-        Log.i("!!!", "Fragment created")
+        Log.e("RecipeFragment", "created")
         val view = binding.root
         return view
     }
@@ -60,7 +60,7 @@ class RecipeFragment() : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        Log.i("!!!", "Fragment destroy")
+        Log.e("RecipeFragment", "destroy")
     }
 
     private fun initUI() {

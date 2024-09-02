@@ -39,7 +39,7 @@ class RecipeListAdapter(var dataSet: List<Recipe> = listOf()) :
                 val drawable = Drawable.createFromStream(inputStream, null)
                 binding.ivItemRecipeImage.setImageDrawable(drawable)
             } catch (ex: IOException) {
-                Log.e("ViewHolder", Log.getStackTraceString(ex))
+                Log.e("RecipeListAdapter VH", Log.getStackTraceString(ex))
             }
         }
     }
@@ -52,7 +52,7 @@ class RecipeListAdapter(var dataSet: List<Recipe> = listOf()) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val recipe = dataSet[position]
-        Log.d("AAA", "RecipeListAdapter $recipe")
+        Log.e("RecipeListAdapter onBVH", "$recipe")
         viewHolder.bind(recipe)
         viewHolder.itemView.setOnClickListener {
             itemClickListener?.onItemClick(recipe.id)

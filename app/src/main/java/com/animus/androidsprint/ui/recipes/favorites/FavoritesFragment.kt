@@ -33,7 +33,7 @@ class FavoritesFragment : Fragment() {
     ): View {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         val view = binding.root
-        Log.e("!!!", "Favorites Fragment created")
+        Log.e("FavoriteFragment", "created")
         return view
     }
 

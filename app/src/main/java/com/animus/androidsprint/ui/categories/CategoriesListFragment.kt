@@ -29,7 +29,7 @@ class CategoriesListFragment : Fragment() {
     ): View {
         _binding = FragmentListCategoriesBinding.inflate(inflater, container, false)
         val view = binding.root
-        Log.e("!!!", "CategoriesListFragment create")
+        Log.e("CategoriesListFragment", "create")
         return view
     }
 
@@ -40,7 +40,7 @@ class CategoriesListFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        Log.e("!!!", "CategoriesListFragment destroy")
+        Log.e("CategoriesListFragment", "destroy")
         super.onDestroyView()
         _binding = null
     }

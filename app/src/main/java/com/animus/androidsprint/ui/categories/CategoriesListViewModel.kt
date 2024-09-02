@@ -13,7 +13,7 @@ class CategoriesListViewModel : ViewModel() {
     val categoriesListLiveData: LiveData<CategoriesListState> = _categoriesListLiveData
 
     init {
-        Log.e("!!!", "Categories VM created")
+        Log.e("CategoriesListVM", "VM created")
         loadCategories()
     }
 
