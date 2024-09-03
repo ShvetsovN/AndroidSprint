@@ -29,6 +29,7 @@ class RecipeListAdapter(var dataSet: List<Recipe> = listOf()) :
         RecyclerView.ViewHolder(item) {
         private val binding = ItemRecipeBinding.bind(item)
         fun bind(itemView: Recipe) = with(binding) {
+            Log.e("RecipeListAdapter", "bind - Recipe: ${itemView.title}, ID: ${itemView.id}")
             tvItemRecipeHeader.text = itemView.title
             loadImageFromAsset(itemView.imageUrl)
         }
@@ -39,7 +40,7 @@ class RecipeListAdapter(var dataSet: List<Recipe> = listOf()) :
                 val drawable = Drawable.createFromStream(inputStream, null)
                 binding.ivItemRecipeImage.setImageDrawable(drawable)
             } catch (ex: IOException) {
-                Log.e("RecipeListAdapter VH", Log.getStackTraceString(ex))
+                Log.e("RecipeListAdapter", Log.getStackTraceString(ex))
             }
         }
     }
@@ -52,7 +53,7 @@ class RecipeListAdapter(var dataSet: List<Recipe> = listOf()) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val recipe = dataSet[position]
-        Log.e("RecipeListAdapter onBVH", "$recipe")
+        Log.e("RecipeListAdapter", "on BVH - Position: $position, Recipe: ${recipe.title}, ID: ${recipe.id}")
         viewHolder.bind(recipe)
         viewHolder.itemView.setOnClickListener {
             itemClickListener?.onItemClick(recipe.id)

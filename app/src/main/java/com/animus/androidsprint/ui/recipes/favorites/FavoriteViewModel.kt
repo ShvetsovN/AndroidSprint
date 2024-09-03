@@ -27,7 +27,11 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
         _favoriteLiveData.value = FavoriteState(recipeList = favoritesRecipe)
     }
 
-    fun getRecipeById(recipeId: Int) = STUB.getRecipeById(recipeId)
+    fun getRecipeById(recipeId: Int): Recipe? {
+        val recipe = STUB.getRecipeById(recipeId)
+        Log.e("!!!", "Рецепт $recipe\nID $recipeId")
+        return recipe
+    }
 
     private fun getFavorites(): MutableSet<String> {
         val sharedPrefs =

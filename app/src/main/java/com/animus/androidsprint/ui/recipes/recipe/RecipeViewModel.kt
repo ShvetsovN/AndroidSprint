@@ -40,7 +40,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
             drawable = Drawable.createFromStream(inputStream, null)
             inputStream?.close()
         } catch (ex: IOException) {
-            Log.e("RecipeVM loadRecipe", "Error loading image from assets ", ex)
+            Log.e("RecipeVM", " loadRecipe Error loading image from assets ", ex)
         }
 
         _recipeLiveData.value = RecipeState(
