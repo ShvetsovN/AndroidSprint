@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentListCategoriesBinding
+import com.animus.androidsprint.model.Category
 import com.animus.androidsprint.ui.recipes.recipeList.RecipeListFragment
 
 class CategoriesListFragment : Fragment() {
@@ -48,21 +49,24 @@ class CategoriesListFragment : Fragment() {
     private fun initRecycle() {
         val recyclerView: RecyclerView = binding.rvCategories
         recyclerView.adapter = categoriesListAdapter
-        viewModel.categoriesListLiveData.observe(viewLifecycleOwner) {
-            categoriesListAdapter.dataSet = it.category
+        viewModel.categoriesListLiveData.observe(viewLifecycleOwner) { categoryState ->
+            categoriesListAdapter.dataSet = categoryState.category
+            categoriesListAdapter.setOnItemClickListener(object :
+                CategoriesListAdapter.OnItemClickListener {
+                override fun onItemClick(categoryId: Int) {
+                    val category = viewModel.getCategoryById(categoryId)
+                    category?.let {
+                        openRecipesByCategoryId(category)
+                    }
+                }
+            })
         }
-        categoriesListAdapter.setOnItemClickListener(object :
-            CategoriesListAdapter.OnItemClickListener {
-            override fun onItemClick(categoryId: Int) {
-                openRecipesByCategoryId(categoryId)
-            }
-        })
+
     }
 
-    private fun openRecipesByCategoryId(categoryId: Int) {
-        val category = viewModel.getCategoryById(categoryId)
+    private fun openRecipesByCategoryId(category: Category) {
         val bundle = Bundle().apply {
-            category?.id?.let {
+            category.id.let {
                 putInt(Constants.ARG_CATEGORY_ID, it)
                 putString(Constants.ARG_CATEGORY_NAME, category.title)
                 putString(Constants.ARG_CATEGORY_IMAGE_URL, category.imageUrl)

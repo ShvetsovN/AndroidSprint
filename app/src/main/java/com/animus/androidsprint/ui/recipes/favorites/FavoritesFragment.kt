@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentFavoritesBinding
+import com.animus.androidsprint.model.Recipe
 import com.animus.androidsprint.ui.recipes.recipe.RecipeFragment
 import com.animus.androidsprint.ui.recipes.recipeList.RecipeListAdapter
 
@@ -44,22 +45,23 @@ class FavoritesFragment : Fragment() {
 
     private fun initRecycler() {
         binding.rvFavorites.adapter = favoriteAdapter
-        viewModel.favoriteLiveData.observe(viewLifecycleOwner) {
-            binding.tvEmptyText.isVisible = it.recipeList.isEmpty()
-            favoriteAdapter.dataSet = it.recipeList
+        viewModel.favoriteLiveData.observe(viewLifecycleOwner) { recipeState ->
+            binding.tvEmptyText.isVisible = recipeState.recipeList.isEmpty()
+            favoriteAdapter.dataSet = recipeState.recipeList
+            favoriteAdapter.setOnItemClickListener(object : RecipeListAdapter.OnItemClickListener {
+                override fun onItemClick(recipeId: Int) {
+                    val recipe = viewModel.getRecipeById(recipeId)
+                    Log.e("!!!", "initRecycler $recipeId")
+                    recipe?.let {
+                        openRecipe(recipe)
+                    }
+                }
+            })
         }
-        favoriteAdapter.setOnItemClickListener(object : RecipeListAdapter.OnItemClickListener {
-            override fun onItemClick(recipeId: Int) {
-                Log.e("!!!", "initRecycler $recipeId")
-                openRecipeByRecipeId(recipeId)
-            }
-        })
         viewModel.loadFavorites()
     }
 
-    private fun openRecipeByRecipeId(recipeId: Int) {
-        val recipe = viewModel.getRecipeById(recipeId)
-        Log.e("!!!", "openRecipeByRecipeId $recipeId")
+    private fun openRecipe(recipe: Recipe) {
         val bundle = Bundle().apply {
             putParcelable(Constants.ARG_RECIPE, recipe)
         }
