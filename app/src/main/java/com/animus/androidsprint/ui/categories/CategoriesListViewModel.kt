@@ -18,17 +18,17 @@ class CategoriesListViewModel : ViewModel() {
     }
 
     private fun loadCategories() {
-        val category: List<Category> = STUB.getCategories()
+        val categories: List<Category> = STUB.getCategories()
         _categoriesListLiveData.value = CategoriesListState(
-            category = category
+            categories = categories
         )
     }
 
     fun getCategoryById(categoryId: Int): Category? {
-        return _categoriesListLiveData.value?.category?.find { it.id == categoryId }
+        return _categoriesListLiveData.value?.categories?.find { it.id == categoryId }
     }
 
     data class CategoriesListState(
-        val category: List<Category> = emptyList()
+        val categories: List<Category> = emptyList()
     )
 }

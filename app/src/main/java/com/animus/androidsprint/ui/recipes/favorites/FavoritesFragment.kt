@@ -50,20 +50,17 @@ class FavoritesFragment : Fragment() {
             favoriteAdapter.dataSet = recipeState.recipeList
             favoriteAdapter.setOnItemClickListener(object : RecipeListAdapter.OnItemClickListener {
                 override fun onItemClick(recipeId: Int) {
-                    val recipe = viewModel.getRecipeById(recipeId)
                     Log.e("!!!", "initRecycler $recipeId")
-                    recipe?.let {
-                        openRecipe(recipe)
-                    }
+                    openRecipe(recipeId)
                 }
             })
         }
         viewModel.loadFavorites()
     }
 
-    private fun openRecipe(recipe: Recipe) {
+    private fun openRecipe(recipeId: Int) {
         val bundle = Bundle().apply {
-            putParcelable(Constants.ARG_RECIPE, recipe)
+            putInt(Constants.ARG_RECIPE_ID, recipeId)
         }
         parentFragmentManager.commit {
             replace<RecipeFragment>(R.id.mainContainer, args = bundle)

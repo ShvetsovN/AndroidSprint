@@ -50,14 +50,11 @@ class CategoriesListFragment : Fragment() {
         val recyclerView: RecyclerView = binding.rvCategories
         recyclerView.adapter = categoriesListAdapter
         viewModel.categoriesListLiveData.observe(viewLifecycleOwner) { categoryState ->
-            categoriesListAdapter.dataSet = categoryState.category
+            categoriesListAdapter.dataSet = categoryState.categories
             categoriesListAdapter.setOnItemClickListener(object :
                 CategoriesListAdapter.OnItemClickListener {
-                override fun onItemClick(categoryId: Int) {
-                    val category = viewModel.getCategoryById(categoryId)
-                    category?.let {
-                        openRecipesByCategoryId(category)
-                    }
+                 override fun onItemClick(category: Category) {
+                     openRecipesByCategoryId(category)
                 }
             })
         }

@@ -20,9 +20,8 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun loadFavorites() {
-        val favorites: MutableSet<String> = getFavorites()
         val favoritesRecipe: List<Recipe> =
-            STUB.getRecipesByIds(favorites.map { it.toInt() }.toSet())
+            STUB.getRecipesByIds(getFavorites().map { it.toInt() }.toSet())
         Log.e("FavoriteVM", "Loaded favorite recipes: $favoritesRecipe")
         _favoriteLiveData.value = FavoriteState(recipeList = favoritesRecipe)
     }

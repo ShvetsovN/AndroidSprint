@@ -16,7 +16,7 @@ class CategoriesListAdapter(var dataSet: List<Category> = listOf()) :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
-        fun onItemClick(categoryId: Int)
+        fun onItemClick(category: Category)
     }
 
     private var itemClickListener: OnItemClickListener? = null
@@ -55,7 +55,7 @@ class CategoriesListAdapter(var dataSet: List<Category> = listOf()) :
         val category = dataSet[position]
         viewHolder.bind(category)
         viewHolder.itemView.setOnClickListener {
-            itemClickListener?.onItemClick(category.id)
+            itemClickListener?.onItemClick(category)
         }
     }
 
