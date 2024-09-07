@@ -70,7 +70,7 @@ class CategoriesListFragment : Fragment() {
             }
         }
         parentFragmentManager.commit {
-            replace<RecipeListFragment>(R.id.mainContainer, args = bundle)
+            replace<RecipeListFragment>(R.id.nav_host_fragment, args = bundle)
             setReorderingAllowed(true)
             addToBackStack(null)
         }

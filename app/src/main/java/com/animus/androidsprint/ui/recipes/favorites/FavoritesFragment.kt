@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentFavoritesBinding
-import com.animus.androidsprint.model.Recipe
 import com.animus.androidsprint.ui.recipes.recipe.RecipeFragment
 import com.animus.androidsprint.ui.recipes.recipeList.RecipeListAdapter
 
@@ -63,7 +62,7 @@ class FavoritesFragment : Fragment() {
             putInt(Constants.ARG_RECIPE_ID, recipeId)
         }
         parentFragmentManager.commit {
-            replace<RecipeFragment>(R.id.mainContainer, args = bundle)
+            replace<RecipeFragment>(R.id.nav_host_fragment, args = bundle)
             setReorderingAllowed(true)
             addToBackStack(null)
         }
