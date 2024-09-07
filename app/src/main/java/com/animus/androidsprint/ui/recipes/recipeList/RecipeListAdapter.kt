@@ -12,7 +12,7 @@ import com.animus.androidsprint.databinding.ItemRecipeBinding
 import java.io.IOException
 import java.io.InputStream
 
-class RecipeListAdapter(private val dataSet: List<Recipe>) :
+class RecipeListAdapter(var dataSet: List<Recipe> = listOf()) :
     RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
@@ -29,6 +29,7 @@ class RecipeListAdapter(private val dataSet: List<Recipe>) :
         RecyclerView.ViewHolder(item) {
         private val binding = ItemRecipeBinding.bind(item)
         fun bind(itemView: Recipe) = with(binding) {
+            Log.e("RecipeListAdapter", "bind - Recipe: ${itemView.title}, ID: ${itemView.id}")
             tvItemRecipeHeader.text = itemView.title
             loadImageFromAsset(itemView.imageUrl)
         }
@@ -39,7 +40,7 @@ class RecipeListAdapter(private val dataSet: List<Recipe>) :
                 val drawable = Drawable.createFromStream(inputStream, null)
                 binding.ivItemRecipeImage.setImageDrawable(drawable)
             } catch (ex: IOException) {
-                Log.e("ViewHolder", Log.getStackTraceString(ex))
+                Log.e("RecipeListAdapter", Log.getStackTraceString(ex))
             }
         }
     }
@@ -52,6 +53,7 @@ class RecipeListAdapter(private val dataSet: List<Recipe>) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val recipe = dataSet[position]
+        Log.e("RecipeListAdapter", "on BVH - Position: $position, Recipe: ${recipe.title}, ID: ${recipe.id}")
         viewHolder.bind(recipe)
         viewHolder.itemView.setOnClickListener {
             itemClickListener?.onItemClick(recipe.id)

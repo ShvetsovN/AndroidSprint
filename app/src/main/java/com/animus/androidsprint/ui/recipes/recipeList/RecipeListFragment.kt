@@ -9,10 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.viewModels
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
-import com.animus.androidsprint.data.STUB
 import com.animus.androidsprint.databinding.FragmentRecipeListBinding
 import com.animus.androidsprint.ui.recipes.recipe.RecipeFragment
 import java.io.IOException
@@ -20,6 +19,8 @@ import java.io.InputStream
 
 class RecipeListFragment : Fragment() {
 
+    private val viewModel: RecipeListViewModel by viewModels()
+    private val recipeListAdapter = RecipeListAdapter()
     private var categoryId: Int? = null
     private var categoryName: String? = null
     private var categoryImageUrl: String? = null
@@ -54,9 +55,10 @@ class RecipeListFragment : Fragment() {
                 val drawable = Drawable.createFromStream(inputStream, null)
                 binding.ivFragmentRecipeListHeader.setImageDrawable(drawable)
             } catch (ex: IOException) {
-                Log.e("RLF.onViewCreated", "Error loading image from assets")
+                Log.e("RecipeListFragment onViewCreated", "Error loading image from assets")
             }
         }
+        categoryId?.let { viewModel.loadRecipe(it) }
         initRecycle()
     }
 
@@ -66,11 +68,11 @@ class RecipeListFragment : Fragment() {
     }
 
     private fun initRecycle() {
-        val adapter = categoryId?.let { STUB.getRecipesByCategoryId(it) }
-            ?.let { RecipeListAdapter(it) }
-        val recyclerView: RecyclerView = binding.rvRecipes
-        recyclerView.adapter = adapter
-        adapter?.setOnItemClickListener(object : RecipeListAdapter.OnItemClickListener {
+        binding.rvRecipes.adapter = recipeListAdapter
+        viewModel.recipeListLiveData.observe(viewLifecycleOwner) {
+            recipeListAdapter.dataSet = it.recipeList
+        }
+        recipeListAdapter.setOnItemClickListener(object : RecipeListAdapter.OnItemClickListener {
             override fun onItemClick(recipeId: Int) {
                 openRecipeByRecipeId(recipeId)
             }

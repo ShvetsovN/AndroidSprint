@@ -1,21 +1,25 @@
 package com.animus.androidsprint.ui.categories
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
-import com.animus.androidsprint.data.STUB
 import com.animus.androidsprint.databinding.FragmentListCategoriesBinding
+import com.animus.androidsprint.model.Category
 import com.animus.androidsprint.ui.recipes.recipeList.RecipeListFragment
 
 class CategoriesListFragment : Fragment() {
 
+    private val viewModel: CategoriesListViewModel by viewModels()
+    private val categoriesListAdapter = CategoriesListAdapter()
     private var _binding: FragmentListCategoriesBinding? = null
     private val binding
         get() = _binding
@@ -26,6 +30,7 @@ class CategoriesListFragment : Fragment() {
     ): View {
         _binding = FragmentListCategoriesBinding.inflate(inflater, container, false)
         val view = binding.root
+        Log.e("CategoriesListFragment", "create")
         return view
     }
 
@@ -36,29 +41,33 @@ class CategoriesListFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        Log.e("CategoriesListFragment", "destroy")
         super.onDestroyView()
         _binding = null
     }
 
     private fun initRecycle() {
-        val adapter = CategoriesListAdapter(STUB.getCategories())
         val recyclerView: RecyclerView = binding.rvCategories
-        recyclerView.adapter = adapter
-        adapter.setOnItemClickListener(object : CategoriesListAdapter.OnItemClickListener {
-            override fun onItemClick(categoryId: Int) {
-                openRecipesByCategoryId(categoryId)
-            }
-        })
+        recyclerView.adapter = categoriesListAdapter
+        viewModel.categoriesListLiveData.observe(viewLifecycleOwner) { categoryState ->
+            categoriesListAdapter.dataSet = categoryState.categories
+            categoriesListAdapter.setOnItemClickListener(object :
+                CategoriesListAdapter.OnItemClickListener {
+                 override fun onItemClick(category: Category) {
+                     openRecipesByCategoryId(category)
+                }
+            })
+        }
+
     }
 
-    fun openRecipesByCategoryId(categoryId: Int) {
-        val category = STUB.getCategories().find { it.id == categoryId }
-        val categoryName = category?.title
-        val categoryImageUrl = category?.imageUrl
+    private fun openRecipesByCategoryId(category: Category) {
         val bundle = Bundle().apply {
-            putInt(Constants.ARG_CATEGORY_ID, categoryId)
-            putString(Constants.ARG_CATEGORY_NAME, categoryName)
-            putString(Constants.ARG_CATEGORY_IMAGE_URL, categoryImageUrl)
+            category.id.let {
+                putInt(Constants.ARG_CATEGORY_ID, it)
+                putString(Constants.ARG_CATEGORY_NAME, category.title)
+                putString(Constants.ARG_CATEGORY_IMAGE_URL, category.imageUrl)
+            }
         }
         parentFragmentManager.commit {
             replace<RecipeListFragment>(R.id.mainContainer, args = bundle)

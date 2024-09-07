@@ -12,11 +12,11 @@ import com.animus.androidsprint.databinding.ItemCategoryBinding
 import java.io.IOException
 import java.io.InputStream
 
-class CategoriesListAdapter(private val dataSet: List<Category>) :
+class CategoriesListAdapter(var dataSet: List<Category> = listOf()) :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
-        fun onItemClick(categoryId: Int)
+        fun onItemClick(category: Category)
     }
 
     private var itemClickListener: OnItemClickListener? = null
@@ -40,7 +40,7 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
                 val drawable = Drawable.createFromStream(inputStream, null)
                 binding.ivItemImage.setImageDrawable(drawable)
             } catch (ex: IOException) {
-                Log.e("ViewHolder", Log.getStackTraceString(ex))
+                Log.e("CategoriesListAdapter loadImage", Log.getStackTraceString(ex))
             }
         }
     }
@@ -55,7 +55,7 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
         val category = dataSet[position]
         viewHolder.bind(category)
         viewHolder.itemView.setOnClickListener {
-            itemClickListener?.onItemClick(category.id)
+            itemClickListener?.onItemClick(category)
         }
     }
 

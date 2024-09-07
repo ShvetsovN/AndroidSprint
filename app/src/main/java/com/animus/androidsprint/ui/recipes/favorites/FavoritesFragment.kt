@@ -1,7 +1,7 @@
 package com.animus.androidsprint.ui.recipes.favorites
 
-import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,19 +9,24 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
-import com.animus.androidsprint.data.STUB
 import com.animus.androidsprint.databinding.FragmentFavoritesBinding
+import com.animus.androidsprint.model.Recipe
 import com.animus.androidsprint.ui.recipes.recipe.RecipeFragment
 import com.animus.androidsprint.ui.recipes.recipeList.RecipeListAdapter
 
 class FavoritesFragment : Fragment() {
 
+    private val viewModel: FavoriteViewModel by viewModels()
+
     private var _binding: FragmentFavoritesBinding? = null
     private val binding
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentFavoritesBinding must not be null")
+
+    private val favoriteAdapter = RecipeListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +34,7 @@ class FavoritesFragment : Fragment() {
     ): View {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         val view = binding.root
+        Log.e("FavoriteFragment", "created")
         return view
     }
 
@@ -38,22 +44,23 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        val favorites = getFavorites()
-        val favoriteRecipes = STUB.getRecipesByIds(favorites.map { it.toInt() }.toSet())
-        val adapter = RecipeListAdapter(favoriteRecipes)
-        binding.rvFavorites.adapter = adapter
-        binding.tvEmptyText.isVisible = favoriteRecipes.isEmpty()
-        adapter.setOnItemClickListener(object : RecipeListAdapter.OnItemClickListener {
-            override fun onItemClick(recipeId: Int) {
-                openRecipeByRecipeId(recipeId)
-            }
-        })
+        binding.rvFavorites.adapter = favoriteAdapter
+        viewModel.favoriteLiveData.observe(viewLifecycleOwner) { recipeState ->
+            binding.tvEmptyText.isVisible = recipeState.recipeList.isEmpty()
+            favoriteAdapter.dataSet = recipeState.recipeList
+            favoriteAdapter.setOnItemClickListener(object : RecipeListAdapter.OnItemClickListener {
+                override fun onItemClick(recipeId: Int) {
+                    Log.e("!!!", "initRecycler $recipeId")
+                    openRecipe(recipeId)
+                }
+            })
+        }
+        viewModel.loadFavorites()
     }
 
-    private fun openRecipeByRecipeId(recipeId: Int) {
-        val recipe = STUB.getRecipeById(recipeId)
+    private fun openRecipe(recipeId: Int) {
         val bundle = Bundle().apply {
-            putParcelable(Constants.ARG_RECIPE, recipe)
+            putInt(Constants.ARG_RECIPE_ID, recipeId)
         }
         parentFragmentManager.commit {
             replace<RecipeFragment>(R.id.mainContainer, args = bundle)
@@ -61,13 +68,6 @@ class FavoritesFragment : Fragment() {
             addToBackStack(null)
         }
     }
-
-    private fun getFavorites(): MutableSet<String> {
-        val sharedPrefs =
-            activity?.getSharedPreferences(Constants.PREFERENCE_RECIPE_NAME, Context.MODE_PRIVATE)
-        val savedSet =
-            sharedPrefs?.getStringSet(Constants.PREFERENCE_RECIPE_FAVORITES, mutableSetOf())
-                ?: mutableSetOf()
-        return HashSet(savedSet)
-    }
 }
+
+
