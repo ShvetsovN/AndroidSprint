@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentFavoritesBinding
@@ -61,11 +62,7 @@ class FavoritesFragment : Fragment() {
         val bundle = Bundle().apply {
             putInt(Constants.ARG_RECIPE_ID, recipeId)
         }
-        parentFragmentManager.commit {
-            replace<RecipeFragment>(R.id.nav_host_fragment, args = bundle)
-            setReorderingAllowed(true)
-            addToBackStack(null)
-        }
+        findNavController().navigate(R.id.recipeFragment, bundle)
     }
 }
 

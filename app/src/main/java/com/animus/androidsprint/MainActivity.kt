@@ -2,12 +2,8 @@ package com.animus.androidsprint
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
+import androidx.navigation.findNavController
 import com.animus.androidsprint.databinding.ActivityMainBinding
-import com.animus.androidsprint.ui.categories.CategoriesListFragment
-import com.animus.androidsprint.ui.recipes.favorites.FavoritesFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,27 +17,12 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add<CategoriesListFragment>(R.id.nav_host_fragment)
-            }
-        }
-
         with(binding) {
             btnFavorites.setOnClickListener {
-                supportFragmentManager.commit {
-                    replace<FavoritesFragment>(R.id.nav_host_fragment)
-                    setReorderingAllowed(true)
-                    addToBackStack(null)
-                }
+                findNavController(R.id.nav_host_fragment).navigate(R.id.favoritesFragment)
             }
             btnCategory.setOnClickListener {
-                supportFragmentManager.commit {
-                    replace<CategoriesListFragment>(R.id.nav_host_fragment)
-                    setReorderingAllowed(true)
-                    addToBackStack(null)
-                }
+                findNavController(R.id.nav_host_fragment).navigate(R.id.categoriesListFragment)
             }
         }
     }
