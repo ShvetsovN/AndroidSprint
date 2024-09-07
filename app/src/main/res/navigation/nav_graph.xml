@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/categoriesListFragment">
 
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.animus.androidsprint.ui.recipes.favorites.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+        <action
+            android:id="@+id/categoriesListFragment2"
+            app:destination="@id/categoriesListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoriesListFragment"
+        android:name="com.animus.androidsprint.ui.categories.CategoriesListFragment"
+        android:label="fragment_list_categories"
+        tools:layout="@layout/fragment_list_categories" >
+        <action
+            android:id="@+id/action_categoriesListFragment_to_recipeListFragment"
+            app:destination="@id/recipeListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.animus.androidsprint.ui.recipes.recipe.RecipeFragment"
+        android:label="fragment_recipe"
+        tools:layout="@layout/fragment_recipe" />
+    <fragment
+        android:id="@+id/recipeListFragment"
+        android:name="com.animus.androidsprint.ui.recipes.recipeList.RecipeListFragment"
+        android:label="fragment_recipe_list"
+        tools:layout="@layout/fragment_recipe_list" >
+        <action
+            android:id="@+id/action_recipeListFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+    </fragment>
 </navigation>
