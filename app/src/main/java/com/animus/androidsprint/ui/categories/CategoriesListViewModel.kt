@@ -24,10 +24,6 @@ class CategoriesListViewModel : ViewModel() {
         )
     }
 
-    fun getCategoryById(categoryId: Int): Category? {
-        return _categoriesListLiveData.value?.categories?.find { it.id == categoryId }
-    }
-
     data class CategoriesListState(
         val categories: List<Category> = emptyList()
     )
