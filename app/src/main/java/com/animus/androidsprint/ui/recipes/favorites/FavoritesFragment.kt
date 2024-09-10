@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -38,6 +39,9 @@ class FavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().navigate(R.id.action_favoritesFragment_to_categoriesListFragment)
+        }
     }
 
     private fun initRecycler() {
@@ -59,7 +63,7 @@ class FavoritesFragment : Fragment() {
         val bundle = Bundle().apply {
             putInt(Constants.ARG_RECIPE_ID, recipeId)
         }
-        findNavController().navigate(R.id.recipeFragment, bundle)
+        findNavController().navigate(R.id.action_favoritesFragment_to_recipeFragment, bundle)
     }
 }
 

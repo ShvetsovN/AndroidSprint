@@ -81,6 +81,6 @@ class RecipeListFragment : Fragment() {
         val bundle = Bundle().apply {
             putInt(Constants.ARG_RECIPE_ID, recipeId)
         }
-        findNavController().navigate(R.id.recipeFragment, bundle)
+        findNavController().navigate(R.id.action_recipeListFragment_to_recipeFragment, bundle)
     }
 }

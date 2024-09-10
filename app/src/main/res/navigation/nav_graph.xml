@@ -9,13 +9,16 @@
         android:id="@+id/favoritesFragment"
         android:name="com.animus.androidsprint.ui.recipes.favorites.FavoritesFragment"
         android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" >
+        tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_favoritesFragment_to_recipeFragment"
-            app:destination="@id/recipeFragment" />
+            app:destination="@id/recipeFragment"
+            app:launchSingleTop="true"/>
         <action
-            android:id="@+id/categoriesListFragment2"
-            app:destination="@id/categoriesListFragment" />
+            android:id="@+id/action_favoritesFragment_to_categoriesListFragment"
+            app:destination="@id/categoriesListFragment"
+            app:popUpTo="@id/categoriesListFragment"
+            app:launchSingleTop="true"/>
     </fragment>
     <fragment
         android:id="@+id/categoriesListFragment"
@@ -24,7 +27,8 @@
         tools:layout="@layout/fragment_list_categories" >
         <action
             android:id="@+id/action_categoriesListFragment_to_recipeListFragment"
-            app:destination="@id/recipeListFragment" />
+            app:destination="@id/recipeListFragment"
+            app:launchSingleTop="true"/>
     </fragment>
     <fragment
         android:id="@+id/recipeFragment"
@@ -38,6 +42,7 @@
         tools:layout="@layout/fragment_recipe_list" >
         <action
             android:id="@+id/action_recipeListFragment_to_recipeFragment"
-            app:destination="@id/recipeFragment" />
+            app:destination="@id/recipeFragment"
+            app:launchSingleTop="true"/>
     </fragment>
 </navigation>
