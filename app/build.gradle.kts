@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.navigation.dynamic.features.fragment)
+    implementation(libs.androidx.navigation.navigation.safe.args)
 
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.core.ktx)

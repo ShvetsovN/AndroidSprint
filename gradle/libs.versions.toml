@@ -11,7 +11,7 @@ activity = "1.8.0"
 constraintlayout = "2.1.4"
 fragmentVersion = "1.8.0"
 kotlinPlugin = "2.0.20-Beta1"
-nav_version = "2.8.0"
+nav_version = "2.8.1"
 navigationFragmentKtx = "2.8.0"
 navigationUiKtx = "2.8.0"
 
@@ -31,6 +31,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentVersion" }
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
+androidx-navigation-navigation-safe-args = {group = "androidx.navigation", name = "navigation-safe-args", version.ref = "nav_version"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
