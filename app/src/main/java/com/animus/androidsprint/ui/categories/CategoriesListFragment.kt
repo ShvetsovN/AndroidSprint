@@ -6,15 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentListCategoriesBinding
 import com.animus.androidsprint.model.Category
-import com.animus.androidsprint.ui.recipes.recipeList.RecipeListFragment
 
 class CategoriesListFragment : Fragment() {
 
@@ -53,8 +51,8 @@ class CategoriesListFragment : Fragment() {
             categoriesListAdapter.dataSet = categoryState.categories
             categoriesListAdapter.setOnItemClickListener(object :
                 CategoriesListAdapter.OnItemClickListener {
-                 override fun onItemClick(category: Category) {
-                     openRecipesByCategoryId(category)
+                override fun onItemClick(category: Category) {
+                    openRecipesByCategoryId(category)
                 }
             })
         }
@@ -69,10 +67,6 @@ class CategoriesListFragment : Fragment() {
                 putString(Constants.ARG_CATEGORY_IMAGE_URL, category.imageUrl)
             }
         }
-        parentFragmentManager.commit {
-            replace<RecipeListFragment>(R.id.mainContainer, args = bundle)
-            setReorderingAllowed(true)
-            addToBackStack(null)
-        }
+        findNavController().navigate(R.id.action_categoriesListFragment_to_recipeListFragment, bundle)
     }
 }

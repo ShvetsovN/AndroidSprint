@@ -7,13 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentRecipeListBinding
-import com.animus.androidsprint.ui.recipes.recipe.RecipeFragment
 import java.io.IOException
 import java.io.InputStream
 
@@ -83,10 +81,6 @@ class RecipeListFragment : Fragment() {
         val bundle = Bundle().apply {
             putInt(Constants.ARG_RECIPE_ID, recipeId)
         }
-        parentFragmentManager.commit {
-            replace<RecipeFragment>(R.id.mainContainer, args = bundle)
-            setReorderingAllowed(true)
-            addToBackStack(null)
-        }
+        findNavController().navigate(R.id.action_recipeListFragment_to_recipeFragment, bundle)
     }
 }
