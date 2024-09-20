@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.animus.androidsprint.Constants
-import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentRecipeListBinding
 import java.io.IOException
 import java.io.InputStream
@@ -78,9 +77,6 @@ class RecipeListFragment : Fragment() {
     }
 
     fun openRecipeByRecipeId(recipeId: Int) {
-        val bundle = Bundle().apply {
-            putInt(Constants.ARG_RECIPE_ID, recipeId)
-        }
-        findNavController().navigate(R.id.action_recipeListFragment_to_recipeFragment, bundle)
+        findNavController().navigate(RecipeListFragmentDirections.actionRecipeListFragmentToRecipeFragment(recipeId))
     }
 }
