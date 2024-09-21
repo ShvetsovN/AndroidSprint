@@ -9,18 +9,16 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentRecipeBinding
-import com.animus.androidsprint.model.Recipe
 import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class RecipeFragment() : Fragment() {
 
     private val viewModel: RecipeViewModel by viewModels()
-    private var recipe: Recipe? = null
-    private var recipeId: Int? = null
+    private val args: RecipeFragmentArgs by navArgs()
     private var _binding: FragmentRecipeBinding? = null
     private val binding
         get() = _binding
@@ -41,12 +39,7 @@ class RecipeFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.let {
-            recipeId = it.getInt(Constants.ARG_RECIPE_ID)
-        }
-        recipeId?.let {
-            viewModel.loadRecipe(it)
-        }
+        viewModel.loadRecipe(args.recipeId)
         initUI()
     }
 
