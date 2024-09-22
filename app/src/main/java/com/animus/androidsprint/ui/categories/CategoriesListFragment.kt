@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentListCategoriesBinding
 import com.animus.androidsprint.model.Category
@@ -56,17 +55,13 @@ class CategoriesListFragment : Fragment() {
                 }
             })
         }
-
     }
 
     private fun openRecipesByCategoryId(category: Category) {
-        val bundle = Bundle().apply {
-            category.id.let {
-                putInt(Constants.ARG_CATEGORY_ID, it)
-                putString(Constants.ARG_CATEGORY_NAME, category.title)
-                putString(Constants.ARG_CATEGORY_IMAGE_URL, category.imageUrl)
-            }
-        }
-        findNavController().navigate(R.id.action_categoriesListFragment_to_recipeListFragment, bundle)
+        findNavController().navigate(
+            CategoriesListFragmentDirections.actionCategoriesListFragmentToRecipeListFragment(
+                category
+            )
+        )
     }
 }

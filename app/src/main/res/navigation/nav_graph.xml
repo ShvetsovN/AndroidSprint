@@ -48,5 +48,8 @@
             android:id="@+id/action_recipeListFragment_to_recipeFragment"
             app:destination="@id/recipeFragment"
             app:launchSingleTop="true"/>
+        <argument
+            android:name="category"
+            app:argType="com.animus.androidsprint.model.Category" />
     </fragment>
 </navigation>
