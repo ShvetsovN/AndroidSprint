@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.animus.androidsprint.Constants
+import androidx.navigation.fragment.navArgs
 import com.animus.androidsprint.databinding.FragmentRecipeListBinding
 import java.io.IOException
 import java.io.InputStream
@@ -17,10 +17,8 @@ import java.io.InputStream
 class RecipeListFragment : Fragment() {
 
     private val viewModel: RecipeListViewModel by viewModels()
+    private val args: RecipeListFragmentArgs by navArgs()
     private val recipeListAdapter = RecipeListAdapter()
-    private var categoryId: Int? = null
-    private var categoryName: String? = null
-    private var categoryImageUrl: String? = null
     private var _binding: FragmentRecipeListBinding? = null
     private val binding
         get() = _binding
@@ -37,25 +35,18 @@ class RecipeListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.let {
-            categoryId = it.getInt(Constants.ARG_CATEGORY_ID)
-            categoryName = it.getString(Constants.ARG_CATEGORY_NAME)
-            categoryImageUrl = it.getString(Constants.ARG_CATEGORY_IMAGE_URL)
+        val category = args.category
+        binding.tvHeaderRecipeList.text = category.title
+        try {
+            val inputStream: InputStream =
+                binding.ivFragmentRecipeListHeader.context.assets.open(category.imageUrl)
+            val drawable = Drawable.createFromStream(inputStream, null)
+            binding.ivFragmentRecipeListHeader.setImageDrawable(drawable)
+        } catch (ex: IOException) {
+            Log.e("RecipeListFragment onViewCreated", "Error loading image from assets")
         }
-        categoryName?.let {
-            binding.tvHeaderRecipeList.text = it
-        }
-        categoryImageUrl?.let { imageUrl ->
-            try {
-                val inputStream: InputStream =
-                    binding.ivFragmentRecipeListHeader.context.assets.open(imageUrl)
-                val drawable = Drawable.createFromStream(inputStream, null)
-                binding.ivFragmentRecipeListHeader.setImageDrawable(drawable)
-            } catch (ex: IOException) {
-                Log.e("RecipeListFragment onViewCreated", "Error loading image from assets")
-            }
-        }
-        categoryId?.let { viewModel.loadRecipe(it) }
+
+        viewModel.loadRecipe(category.id)
         initRecycle()
     }
 
@@ -77,6 +68,10 @@ class RecipeListFragment : Fragment() {
     }
 
     fun openRecipeByRecipeId(recipeId: Int) {
-        findNavController().navigate(RecipeListFragmentDirections.actionRecipeListFragmentToRecipeFragment(recipeId))
+        findNavController().navigate(
+            RecipeListFragmentDirections.actionRecipeListFragmentToRecipeFragment(
+                recipeId
+            )
+        )
     }
 }
