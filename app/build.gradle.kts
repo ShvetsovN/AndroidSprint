@@ -47,7 +47,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.navigation.dynamic.features.fragment)
-    implementation(libs.com.google.code.gson)
+    implementation(libs.gson)
 
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.core.ktx)

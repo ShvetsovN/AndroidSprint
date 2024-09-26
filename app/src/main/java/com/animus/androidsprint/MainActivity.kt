@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import com.animus.androidsprint.databinding.ActivityMainBinding
+import com.google.gson.Gson
 import java.net.HttpURLConnection
 import java.net.URL
-import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
             val url = URL("https://recipes.androidsprint.ru/api/category")
             val connection = url.openConnection() as HttpURLConnection
             connection.connect()
+
 
             Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
             Log.i("!!!", "Body: ${connection.inputStream.bufferedReader().readText()}")
