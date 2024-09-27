@@ -11,9 +11,11 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
 
+    private val threadPool = Executors.newFixedThreadPool(10)
     private var _binding: ActivityMainBinding? = null
     private val binding
         get() = _binding
@@ -46,8 +48,17 @@ class MainActivity : AppCompatActivity() {
             )
 
             Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
-            categories.forEach { category ->
-                Log.i("!!!", "Название категории: ${category.title}")
+            val categoryIds = categories.map { it.id }
+            categoryIds.forEach { categoryId ->
+                threadPool.execute {
+                    val recipeUrl =
+                        URL("https://recipes.androidsprint.ru/api/category/$categoryId/recipes")
+                    val recipeConnection = recipeUrl.openConnection() as HttpURLConnection
+                    recipeConnection.connect()
+
+                    val recipeResponse = recipeConnection.inputStream.bufferedReader().readText()
+                    Log.i("!!!", "Для категории с id:$categoryId получены рецепты: $recipeResponse")
+                }
             }
         }
         thread.start()
