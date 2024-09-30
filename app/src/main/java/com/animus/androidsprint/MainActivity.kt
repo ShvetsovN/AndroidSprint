@@ -36,7 +36,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val thread = Thread {
-            val client = OkHttpClient()
+            val loggingInterceptor = HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }
+            val client = OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build()
             val request: Request = Request.Builder()
                 .url("https://recipes.androidsprint.ru/api/category")
                 .build()
