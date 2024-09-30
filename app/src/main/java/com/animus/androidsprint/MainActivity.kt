@@ -46,26 +46,23 @@ class MainActivity : AppCompatActivity() {
                 .url("https://recipes.androidsprint.ru/api/category")
                 .build()
 
-            client.newCall(request).execute().use { response ->
-                val gson = Gson()
-                val listType = object : TypeToken<List<Category>>() {}.type
-                val categories: List<Category> = gson.fromJson(response.body?.string(), listType)
+            val responseBody = client.newCall(request).execute().body?.string()
+            val gson = Gson()
+            val listType = object : TypeToken<List<Category>>() {}.type
+            val categories: List<Category> = gson.fromJson(responseBody, listType)
 
-                Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
-                val categoryIds = categories.map { it.id }
-                categoryIds.forEach { categoryId ->
-                    threadPool.execute {
-                        val recipeRequest = Request.Builder()
-                            .url("https://recipes.androidsprint.ru/api/category/$categoryId/recipes")
-                            .build()
-                        client.newCall(recipeRequest).execute().use { recipeResponse ->
-                            val recipeResponseBody = recipeResponse.body?.string()
-                            Log.i(
-                                "!!!",
-                                "Для категории с id:$categoryId получены рецепты: $recipeResponseBody"
-                            )
-                        }
-                    }
+            Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
+            val categoryIds = categories.map { it.id }
+            categoryIds.forEach { categoryId ->
+                threadPool.execute {
+                    val recipeRequest = Request.Builder()
+                        .url("https://recipes.androidsprint.ru/api/category/$categoryId/recipes")
+                        .build()
+                    val recipeResponseBody = client.newCall(recipeRequest).execute().body?.string()
+                    Log.i(
+                        "!!!",
+                        "Для категории с id:$categoryId получены рецепты: $recipeResponseBody"
+                    )
                 }
             }
         }
@@ -73,7 +70,8 @@ class MainActivity : AppCompatActivity() {
 
         Log.i("!!!", "Метод onCreate() выполняется на потоке: ${Thread.currentThread().name}")
 
-        with(binding) {
+        with(binding)
+        {
             btnFavorites.setOnClickListener {
                 findNavController(R.id.nav_host_fragment).navigate(
                     R.id.favoritesFragment,
