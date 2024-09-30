@@ -9,8 +9,8 @@ import com.animus.androidsprint.databinding.ActivityMainBinding
 import com.animus.androidsprint.model.Category
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.net.HttpURLConnection
-import java.net.URL
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
@@ -35,29 +35,31 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val thread = Thread {
-            val url = URL("https://recipes.androidsprint.ru/api/category")
-            val connection = url.openConnection() as HttpURLConnection
-            connection.connect()
+            val client = OkHttpClient()
+            val request: Request = Request.Builder()
+                .url("https://recipes.androidsprint.ru/api/category")
+                .build()
 
-            val gson = Gson()
-            val listType = object : TypeToken<List<Category>>() {}.type
+            client.newCall(request).execute().use { response ->
+                val gson = Gson()
+                val listType = object : TypeToken<List<Category>>() {}.type
+                val categories: List<Category> = gson.fromJson(response.body?.string(), listType)
 
-            val categories: List<Category> = gson.fromJson(
-                connection.inputStream.bufferedReader().readText(),
-                listType
-            )
-
-            Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
-            val categoryIds = categories.map { it.id }
-            categoryIds.forEach { categoryId ->
-                threadPool.execute {
-                    val recipeUrl =
-                        URL("https://recipes.androidsprint.ru/api/category/$categoryId/recipes")
-                    val recipeConnection = recipeUrl.openConnection() as HttpURLConnection
-                    recipeConnection.connect()
-
-                    val recipeResponse = recipeConnection.inputStream.bufferedReader().readText()
-                    Log.i("!!!", "Для категории с id:$categoryId получены рецепты: $recipeResponse")
+                Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
+                val categoryIds = categories.map { it.id }
+                categoryIds.forEach { categoryId ->
+                    threadPool.execute {
+                        val recipeRequest = Request.Builder()
+                            .url("https://recipes.androidsprint.ru/api/category/$categoryId/recipes")
+                            .build()
+                        client.newCall(recipeRequest).execute().use { recipeResponse ->
+                            val recipeResponseBody = recipeResponse.body?.string()
+                            Log.i(
+                                "!!!",
+                                "Для категории с id:$categoryId получены рецепты: $recipeResponseBody"
+                            )
+                        }
+                    }
                 }
             }
         }
