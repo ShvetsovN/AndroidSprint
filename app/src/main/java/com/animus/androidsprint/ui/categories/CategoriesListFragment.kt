@@ -52,6 +52,7 @@ class CategoriesListFragment : Fragment() {
                 Toast.makeText(context, "Ошибка типа данных", Toast.LENGTH_SHORT).show()
             } else {
                 categoriesListAdapter.dataSet = categoryState.categories
+                categoriesListAdapter.notifyDataSetChanged()
                 categoriesListAdapter.setOnItemClickListener(object :
                     CategoriesListAdapter.OnItemClickListener {
                     override fun onItemClick(category: Category) {

@@ -28,7 +28,7 @@ class CategoriesListViewModel : ViewModel() {
             {
                 _categoriesListLiveData.postValue(CategoriesListState(isError = true))
             } else {
-                _categoriesListLiveData.value = CategoriesListState(categories = categories)
+                _categoriesListLiveData.postValue(CategoriesListState(categories = categories))
             }
         }
     }
