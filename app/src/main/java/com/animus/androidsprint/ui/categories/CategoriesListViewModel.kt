@@ -1,7 +1,6 @@
 package com.animus.androidsprint.ui.categories
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,8 +24,9 @@ class CategoriesListViewModel : ViewModel() {
     private fun loadCategories() {
         threadPool.execute {
             val categories = repository.getCategories()
-            if (categories == null) {
-                Toast.makeText(context, "Ошибка получения данных", Toast.LENGTH_SHORT).show()
+            if (categories == null)
+            {
+                _categoriesListLiveData.postValue(CategoriesListState(isError = true))
             } else {
                 _categoriesListLiveData.value = CategoriesListState(categories = categories)
             }
@@ -34,6 +34,7 @@ class CategoriesListViewModel : ViewModel() {
     }
 
     data class CategoriesListState(
-        val categories: List<Category> = emptyList()
+        val categories: List<Category> = emptyList(),
+        val isError: Boolean = false
     )
 }

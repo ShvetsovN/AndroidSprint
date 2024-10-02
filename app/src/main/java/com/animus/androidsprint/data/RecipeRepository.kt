@@ -1,5 +1,6 @@
 package com.animus.androidsprint.data
 
+import com.animus.androidsprint.Constants
 import com.animus.androidsprint.model.Category
 import com.animus.androidsprint.model.Recipe
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -9,9 +10,9 @@ import retrofit2.Retrofit
 
 class RecipeRepository {
 
-    private val contentType = "application/json".toMediaType()
+    private val contentType = Constants.CONTENT_TYPE.toMediaType()
     private var retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("https://recipes.androidsprint.ru/api/")
+        .baseUrl(Constants.BASE_URL)
         .addConverterFactory(Json.asConverterFactory(contentType))
         .build()
 

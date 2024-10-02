@@ -6,6 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import com.animus.androidsprint.databinding.ActivityMainBinding
+import com.animus.androidsprint.model.Category
+import kotlinx.serialization.json.Json
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +35,35 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val thread = Thread {
+            val loggingInterceptor = HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }
+            val client = OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build()
+            val request: Request = Request.Builder()
+                .url("https://recipes.androidsprint.ru/api/category")
+                .build()
 
+            val responseBody = client.newCall(request).execute().body?.string()
+            val categories: List<Category> = responseBody?.let {
+                Json.decodeFromString<List<Category>>(it)
+            } ?: emptyList()
+
+            Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
+            val categoryIds = categories.map { it.id }
+            categoryIds.forEach { categoryId ->
+                threadPool.execute {
+                    val recipeRequest = Request.Builder()
+                        .url("https://recipes.androidsprint.ru/api/category/$categoryId/recipes")
+                        .build()
+                    val recipeResponseBody = client.newCall(recipeRequest).execute().body?.string()
+                    Log.i(
+                        "!!!",
+                        "Для категории с id:$categoryId получены рецепты: $recipeResponseBody"
+                    )
+                }
+            }
         }
         thread.start()
 

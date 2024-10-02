@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -47,13 +48,17 @@ class CategoriesListFragment : Fragment() {
         val recyclerView: RecyclerView = binding.rvCategories
         recyclerView.adapter = categoriesListAdapter
         viewModel.categoriesListLiveData.observe(viewLifecycleOwner) { categoryState ->
-            categoriesListAdapter.dataSet = categoryState.categories
-            categoriesListAdapter.setOnItemClickListener(object :
-                CategoriesListAdapter.OnItemClickListener {
-                override fun onItemClick(category: Category) {
-                    openRecipesByCategoryId(category)
-                }
-            })
+            if (categoryState.isError) {
+                Toast.makeText(context, "Ошибка типа данных", Toast.LENGTH_SHORT).show()
+            } else {
+                categoriesListAdapter.dataSet = categoryState.categories
+                categoriesListAdapter.setOnItemClickListener(object :
+                    CategoriesListAdapter.OnItemClickListener {
+                    override fun onItemClick(category: Category) {
+                        openRecipesByCategoryId(category)
+                    }
+                })
+            }
         }
     }
 
