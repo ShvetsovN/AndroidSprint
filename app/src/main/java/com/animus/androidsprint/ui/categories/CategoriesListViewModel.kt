@@ -23,12 +23,15 @@ class CategoriesListViewModel : ViewModel() {
 
     private fun loadCategories() {
         threadPool.execute {
+            val currentState = _categoriesListLiveData.value ?: CategoriesListState()
             val categories = repository.getCategories()
+
             if (categories == null)
             {
                 _categoriesListLiveData.postValue(CategoriesListState(isError = true))
             } else {
-                _categoriesListLiveData.postValue(CategoriesListState(categories = categories))
+                val newState = currentState.copy(categories = categories)
+                _categoriesListLiveData.postValue(newState)
             }
         }
     }

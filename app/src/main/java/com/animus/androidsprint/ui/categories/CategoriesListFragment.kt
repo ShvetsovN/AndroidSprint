@@ -1,5 +1,6 @@
 package com.animus.androidsprint.ui.categories
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentListCategoriesBinding
 import com.animus.androidsprint.model.Category
@@ -47,20 +49,25 @@ class CategoriesListFragment : Fragment() {
     private fun initRecycle() {
         val recyclerView: RecyclerView = binding.rvCategories
         recyclerView.adapter = categoriesListAdapter
+        categoriesListAdapter.setOnItemClickListener(object :
+            CategoriesListAdapter.OnItemClickListener {
+            override fun onItemClick(category: Category) {
+                openRecipesByCategoryId(category)
+            }
+        })
         viewModel.categoriesListLiveData.observe(viewLifecycleOwner) { categoryState ->
             if (categoryState.isError) {
-                Toast.makeText(context, "Ошибка типа данных", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, Constants.TOAST_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()
             } else {
-                categoriesListAdapter.dataSet = categoryState.categories
-                categoriesListAdapter.notifyDataSetChanged()
-                categoriesListAdapter.setOnItemClickListener(object :
-                    CategoriesListAdapter.OnItemClickListener {
-                    override fun onItemClick(category: Category) {
-                        openRecipesByCategoryId(category)
-                    }
-                })
+                updateAdapter(categoryState.categories)
             }
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun updateAdapter(categories: List<Category>) {
+        categoriesListAdapter.dataSet = categories
+        categoriesListAdapter.notifyDataSetChanged()
     }
 
     private fun openRecipesByCategoryId(category: Category) {

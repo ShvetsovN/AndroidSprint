@@ -1,5 +1,6 @@
 package com.animus.androidsprint.data
 
+import android.util.Log
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.model.Category
 import com.animus.androidsprint.model.Recipe
@@ -23,6 +24,7 @@ class RecipeRepository {
             val response = service.getRecipeById(recipeId).execute()
             if (response.isSuccessful) response.body() else null
         } catch (e: Exception) {
+            Log.i("RecipeRepository", "getRecipesByCategoryId error: ${e.message}")
             null
         }
     }
@@ -30,8 +32,10 @@ class RecipeRepository {
     fun getRecipesByCategoryId(categoryId: Int): List<Recipe>? {
         return try {
             val response = service.getRecipesByCategoryId(categoryId).execute()
+            Log.i("RecipeRepository", "Response code: ${response.code()}")
             if (response.isSuccessful) response.body() else null
         } catch (e: Exception) {
+            Log.i("RecipeRepository", "getRecipesByCategoryId error: ${e.message}")
             null
         }
     }
@@ -41,15 +45,17 @@ class RecipeRepository {
             val response = service.getCategoryById(categoryId).execute()
             if (response.isSuccessful) response.body() else null
         } catch (e: Exception) {
+            Log.i("RecipeRepository", "getCategoryById error: ${e.message}")
             null
         }
     }
 
-    fun getRecipesByIds(categoryId: Int, recipeIds: Set<Int>): List<Recipe>? {
+    fun getRecipesByIds(categoryId: Set<Int>): List<Recipe>? {
         return try {
-            val response = service.getRecipesByIds(categoryId, recipeIds).execute()
+            val response = service.getRecipesByIds(categoryId).execute()
             if (response.isSuccessful) response.body() else null
         } catch (e: Exception) {
+            Log.i("RecipeRepository", "getRecipesByIds error: ${e.message}")
             null
         }
     }
@@ -59,6 +65,7 @@ class RecipeRepository {
             val response = service.getCategories().execute()
             if (response.isSuccessful) response.body() else null
         } catch (e: Exception) {
+            Log.i("RecipeRepository", "getCategories error: ${e.message}")
             null
         }
     }

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -43,14 +44,18 @@ class FavoritesFragment : Fragment() {
     private fun initRecycler() {
         binding.rvFavorites.adapter = favoriteAdapter
         viewModel.favoriteLiveData.observe(viewLifecycleOwner) { recipeState ->
-            binding.tvEmptyText.isVisible = recipeState.recipeList.isEmpty()
-            favoriteAdapter.dataSet = recipeState.recipeList
-            favoriteAdapter.setOnItemClickListener(object : RecipeListAdapter.OnItemClickListener {
-                override fun onItemClick(recipeId: Int) {
-                    Log.e("!!!", "initRecycler $recipeId")
-                    openRecipe(recipeId)
-                }
-            })
+            if(recipeState.isError) {
+                Toast.makeText(context, Constants.TOAST_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()
+            } else {
+                binding.tvEmptyText.isVisible = recipeState.recipeList.isEmpty()
+                favoriteAdapter.dataSet = recipeState.recipeList
+                favoriteAdapter.setOnItemClickListener(object : RecipeListAdapter.OnItemClickListener {
+                    override fun onItemClick(recipeId: Int) {
+                        Log.e("!!!", "initRecycler $recipeId")
+                        openRecipe(recipeId)
+                    }
+                })
+            }
         }
         viewModel.loadFavorites()
     }

@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentRecipeBinding
 import com.google.android.material.divider.MaterialDividerItemDecoration
@@ -78,46 +80,50 @@ class RecipeFragment() : Fragment() {
         binding.rvMethod.addItemDecoration(itemDecorationMethod)
 
         viewModel.recipeLiveData.observe(viewLifecycleOwner) { recipeState ->
-            itemDecorationIngredient.apply {
-                isLastItemDecorated = false
-                dividerInsetStart = sizeInDp
-                dividerInsetEnd = sizeInDp
-                setDividerColorResource(
-                    requireContext(),
-                    R.color.cardview_item_ingredient_divider_color
-                )
-            }
-            itemDecorationMethod.apply {
-                isLastItemDecorated = false
-                dividerInsetStart = sizeInDp
-                dividerInsetEnd = sizeInDp
-                setDividerColorResource(
-                    requireContext(),
-                    R.color.cardview_item_ingredient_divider_color
-                )
-            }
-            val portionSeekBarListener = PortionSeekBarListener { progress ->
-                viewModel.updatingPortionCount(progress)
-            }
-            binding.seekBar.setOnSeekBarChangeListener(portionSeekBarListener)
-
-            with(binding) {
-                tvRecipeHeader.text = recipeState.recipe?.title
-                ivFragmentRecipeHeader.setImageDrawable(recipeState.recipeImage)
-                ibFavoriteRecipe.setImageResource(
-                    if (!recipeState.isFavorite) R.drawable.ic_heart_empty else R.drawable.ic_heart
-                )
-                ibFavoriteRecipe.setOnClickListener {
-                    viewModel.onFavoritesClicked()
+            if (recipeState.isError) {
+                Toast.makeText(context, Constants.TOAST_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()
+            } else {
+                itemDecorationIngredient.apply {
+                    isLastItemDecorated = false
+                    dividerInsetStart = sizeInDp
+                    dividerInsetEnd = sizeInDp
+                    setDividerColorResource(
+                        requireContext(),
+                        R.color.cardview_item_ingredient_divider_color
+                    )
                 }
-
-                recipeState.recipe?.let { recipe ->
-                    ingredientsAdapter.dataSet = recipe.ingredients
-                    methodAdapter.dataSet = recipe.method
+                itemDecorationMethod.apply {
+                    isLastItemDecorated = false
+                    dividerInsetStart = sizeInDp
+                    dividerInsetEnd = sizeInDp
+                    setDividerColorResource(
+                        requireContext(),
+                        R.color.cardview_item_ingredient_divider_color
+                    )
                 }
+                val portionSeekBarListener = PortionSeekBarListener { progress ->
+                    viewModel.updatingPortionCount(progress)
+                }
+                binding.seekBar.setOnSeekBarChangeListener(portionSeekBarListener)
 
-                ingredientsAdapter.updateIngredients(recipeState.portionCount)
-                tvNumberOfPortions.text = recipeState.portionCount.toString()
+                with(binding) {
+                    tvRecipeHeader.text = recipeState.recipe?.title
+                    ivFragmentRecipeHeader.setImageDrawable(recipeState.recipeImage)
+                    ibFavoriteRecipe.setImageResource(
+                        if (!recipeState.isFavorite) R.drawable.ic_heart_empty else R.drawable.ic_heart
+                    )
+                    ibFavoriteRecipe.setOnClickListener {
+                        viewModel.onFavoritesClicked()
+                    }
+
+                    recipeState.recipe?.let { recipe ->
+                        ingredientsAdapter.dataSet = recipe.ingredients
+                        methodAdapter.dataSet = recipe.method
+                    }
+
+                    ingredientsAdapter.updateIngredients(recipeState.portionCount)
+                    tvNumberOfPortions.text = recipeState.portionCount.toString()
+                }
             }
         }
     }
