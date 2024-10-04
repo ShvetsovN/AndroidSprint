@@ -1,5 +1,6 @@
 package com.animus.androidsprint.ui.recipes.recipeList
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -11,8 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.animus.androidsprint.Constants
+import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentRecipeListBinding
+import com.animus.androidsprint.model.Recipe
 import java.io.IOException
 import java.io.InputStream
 
@@ -65,11 +67,18 @@ class RecipeListFragment : Fragment() {
         })
         viewModel.recipeListLiveData.observe(viewLifecycleOwner) { recipeState ->
             if (recipeState.isError) {
-                Toast.makeText(context, Constants.TOAST_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.toast_error_message), Toast.LENGTH_SHORT)
+                    .show()
             } else {
-                recipeListAdapter.dataSet = recipeState.recipeList
+                updateAdapter(recipeState.recipeList)
             }
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun updateAdapter(recipeList: List<Recipe>) {
+        recipeListAdapter.dataSet = recipeList
+        recipeListAdapter.notifyDataSetChanged()
     }
 
     fun openRecipeByRecipeId(recipeId: Int) {

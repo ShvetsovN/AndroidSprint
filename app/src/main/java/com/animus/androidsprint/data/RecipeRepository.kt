@@ -29,10 +29,11 @@ class RecipeRepository {
         }
     }
 
-    fun getRecipesByCategoryId(categoryId: Int): List<Recipe>? {
+    fun getRecipesByCategoryId(recipeIdsSet: Set<String>): List<Recipe>? {
         return try {
-            val response = service.getRecipesByCategoryId(categoryId).execute()
-            Log.i("RecipeRepository", "Response code: ${response.code()}")
+            val recipeIdsString = recipeIdsSet.joinToString(",")
+            val response = service.getRecipesByCategoryId(recipeIdsString).execute()
+            Log.i("RecipeRepository", "Response getRecipesByCategoryId code: ${response.code()}")
             if (response.isSuccessful) response.body() else null
         } catch (e: Exception) {
             Log.i("RecipeRepository", "getRecipesByCategoryId error: ${e.message}")
@@ -50,7 +51,7 @@ class RecipeRepository {
         }
     }
 
-    fun getRecipesByIds(categoryId: Set<Int>): List<Recipe>? {
+    fun getRecipesByIds(categoryId: Int): List<Recipe>? {
         return try {
             val response = service.getRecipesByIds(categoryId).execute()
             if (response.isSuccessful) response.body() else null

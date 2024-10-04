@@ -53,7 +53,10 @@ class RecipeListAdapter(var dataSet: List<Recipe> = listOf()) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val recipe = dataSet[position]
-        Log.e("RecipeListAdapter", "on BVH - Position: $position, Recipe: ${recipe.title}, ID: ${recipe.id}")
+        Log.e(
+            "RecipeListAdapter",
+            "on BVH - Position: $position, Recipe: ${recipe.title}, ID: ${recipe.id}"
+        )
         viewHolder.bind(recipe)
         viewHolder.itemView.setOnClickListener {
             itemClickListener?.onItemClick(recipe.id)

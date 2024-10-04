@@ -18,19 +18,17 @@ class CategoriesListViewModel : ViewModel() {
 
     init {
         Log.e("CategoriesListVM", "VM created")
-        loadCategories()
     }
 
-    private fun loadCategories() {
+    fun loadCategories() {
         threadPool.execute {
             val currentState = _categoriesListLiveData.value ?: CategoriesListState()
             val categories = repository.getCategories()
 
-            if (categories == null)
-            {
+            if (categories == null) {
                 _categoriesListLiveData.postValue(CategoriesListState(isError = true))
             } else {
-                val newState = currentState.copy(categories = categories)
+                val newState = currentState.copy(categories = categories, isError = false)
                 _categoriesListLiveData.postValue(newState)
             }
         }

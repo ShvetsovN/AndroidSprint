@@ -1,5 +1,6 @@
 package com.animus.androidsprint.ui.recipes.favorites
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentFavoritesBinding
+import com.animus.androidsprint.model.Recipe
 import com.animus.androidsprint.ui.recipes.recipeList.RecipeListAdapter
 
 class FavoritesFragment : Fragment() {
@@ -44,12 +46,14 @@ class FavoritesFragment : Fragment() {
     private fun initRecycler() {
         binding.rvFavorites.adapter = favoriteAdapter
         viewModel.favoriteLiveData.observe(viewLifecycleOwner) { recipeState ->
-            if(recipeState.isError) {
-                Toast.makeText(context, Constants.TOAST_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()
+            if (recipeState.isError) {
+                Toast.makeText(context, getString(R.string.toast_error_message), Toast.LENGTH_SHORT)
+                    .show()
             } else {
                 binding.tvEmptyText.isVisible = recipeState.recipeList.isEmpty()
-                favoriteAdapter.dataSet = recipeState.recipeList
-                favoriteAdapter.setOnItemClickListener(object : RecipeListAdapter.OnItemClickListener {
+                updateAdapter(recipeState.recipeList)
+                favoriteAdapter.setOnItemClickListener(object :
+                    RecipeListAdapter.OnItemClickListener {
                     override fun onItemClick(recipeId: Int) {
                         Log.e("!!!", "initRecycler $recipeId")
                         openRecipe(recipeId)
@@ -58,6 +62,12 @@ class FavoritesFragment : Fragment() {
             }
         }
         viewModel.loadFavorites()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun updateAdapter(recipeList: List<Recipe>) {
+        favoriteAdapter.dataSet = recipeList
+        favoriteAdapter.notifyDataSetChanged()
     }
 
     private fun openRecipe(recipeId: Int) {

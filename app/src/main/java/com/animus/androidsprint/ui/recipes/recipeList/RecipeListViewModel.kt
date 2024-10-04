@@ -18,10 +18,10 @@ class RecipeListViewModel : ViewModel() {
 
     fun loadRecipe(categoryId: Int) {
         threadPool.execute {
-            val recipe = repository.getRecipesByCategoryId(categoryId)
+            val recipe = repository.getRecipesByIds(categoryId)
             Log.i("RecipeListViewModel", "Loading recipes for categoryId: $categoryId")
             _recipeListLiveData.postValue(recipe?.let {
-                RecipeListState(recipeList = it)
+                RecipeListState(recipeList = it, isError = false)
             } ?: RecipeListState(isError = true))
         }
     }

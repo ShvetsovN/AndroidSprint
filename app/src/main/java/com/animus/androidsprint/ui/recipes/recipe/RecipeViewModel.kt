@@ -46,12 +46,14 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
                 Log.e("RecipeVM", " loadRecipe Error loading image from assets ", ex)
             }
 
-            _recipeLiveData.postValue(RecipeState(
-                recipe = recipe,
-                portionCount = recipeLiveData.value?.portionCount ?: 1,
-                isFavorite = favorites,
-                recipeImage = drawable
-            ))
+            _recipeLiveData.postValue(
+                RecipeState(
+                    recipe = recipe,
+                    portionCount = recipeLiveData.value?.portionCount ?: 1,
+                    isFavorite = favorites,
+                    recipeImage = drawable
+                )
+            )
         }
     }
 

@@ -16,4 +16,5 @@
     <string name="category_image_favorites_recipes">Category image: Favorites recipes</string>
     <string name="button_add_to_favorites">Button: Add to favorites</string>
     <string name="favorite_empty_text">You haven\'t added any recipes to your favorites yet</string>
+    <string name="toast_error_message">Data type error</string>
 </resources>

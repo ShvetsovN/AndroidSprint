@@ -1,5 +1,6 @@
 package com.animus.androidsprint.ui.recipes.recipe
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,9 +13,9 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentRecipeBinding
+import com.animus.androidsprint.model.Ingredient
 import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class RecipeFragment() : Fragment() {
@@ -78,53 +79,62 @@ class RecipeFragment() : Fragment() {
 
         binding.rvIngredients.addItemDecoration(itemDecorationIngredient)
         binding.rvMethod.addItemDecoration(itemDecorationMethod)
-
+        itemDecorationIngredient.apply {
+            isLastItemDecorated = false
+            dividerInsetStart = sizeInDp
+            dividerInsetEnd = sizeInDp
+            setDividerColorResource(
+                requireContext(),
+                R.color.cardview_item_ingredient_divider_color
+            )
+        }
+        itemDecorationMethod.apply {
+            isLastItemDecorated = false
+            dividerInsetStart = sizeInDp
+            dividerInsetEnd = sizeInDp
+            setDividerColorResource(
+                requireContext(),
+                R.color.cardview_item_ingredient_divider_color
+            )
+        }
+        val portionSeekBarListener = PortionSeekBarListener { progress ->
+            viewModel.updatingPortionCount(progress)
+        }
+        binding.seekBar.setOnSeekBarChangeListener(portionSeekBarListener)
+        binding.ibFavoriteRecipe.setOnClickListener {
+            viewModel.onFavoritesClicked()
+        }
         viewModel.recipeLiveData.observe(viewLifecycleOwner) { recipeState ->
             if (recipeState.isError) {
-                Toast.makeText(context, Constants.TOAST_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.toast_error_message), Toast.LENGTH_SHORT)
+                    .show()
             } else {
-                itemDecorationIngredient.apply {
-                    isLastItemDecorated = false
-                    dividerInsetStart = sizeInDp
-                    dividerInsetEnd = sizeInDp
-                    setDividerColorResource(
-                        requireContext(),
-                        R.color.cardview_item_ingredient_divider_color
-                    )
-                }
-                itemDecorationMethod.apply {
-                    isLastItemDecorated = false
-                    dividerInsetStart = sizeInDp
-                    dividerInsetEnd = sizeInDp
-                    setDividerColorResource(
-                        requireContext(),
-                        R.color.cardview_item_ingredient_divider_color
-                    )
-                }
-                val portionSeekBarListener = PortionSeekBarListener { progress ->
-                    viewModel.updatingPortionCount(progress)
-                }
-                binding.seekBar.setOnSeekBarChangeListener(portionSeekBarListener)
-
                 with(binding) {
                     tvRecipeHeader.text = recipeState.recipe?.title
                     ivFragmentRecipeHeader.setImageDrawable(recipeState.recipeImage)
                     ibFavoriteRecipe.setImageResource(
                         if (!recipeState.isFavorite) R.drawable.ic_heart_empty else R.drawable.ic_heart
                     )
-                    ibFavoriteRecipe.setOnClickListener {
-                        viewModel.onFavoritesClicked()
-                    }
-
                     recipeState.recipe?.let { recipe ->
-                        ingredientsAdapter.dataSet = recipe.ingredients
-                        methodAdapter.dataSet = recipe.method
+                        updateIngredientAdapter(recipe.ingredients)
+                        updateMethodAdapter(recipe.method)
                     }
-
                     ingredientsAdapter.updateIngredients(recipeState.portionCount)
                     tvNumberOfPortions.text = recipeState.portionCount.toString()
                 }
             }
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun updateIngredientAdapter(ingredients: List<Ingredient>) {
+        ingredientsAdapter.dataSet = ingredients
+        ingredientsAdapter.notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun updateMethodAdapter(description: List<String>) {
+        methodAdapter.dataSet = description
+        methodAdapter.notifyDataSetChanged()
     }
 }

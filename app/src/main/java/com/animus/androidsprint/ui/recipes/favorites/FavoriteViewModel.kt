@@ -25,12 +25,13 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
     fun loadFavorites() {
         threadPool.execute {
             val currentState = _favoriteLiveData.value ?: FavoriteState()
+            val favoritesIds = getFavorites()
             val favoritesRecipe: List<Recipe>? =
-                repository.getRecipesByIds(getFavorites().map { it.toInt() }.toSet())
-            Log.e("FavoriteVM", "Loaded favorite recipes: $favoritesRecipe")
+                repository.getRecipesByCategoryId(favoritesIds)
+            Log.i("FavoriteVM", "Loaded favorite recipes: $favoritesRecipe")
 
             val newState = if (favoritesRecipe != null) {
-                currentState.copy(recipeList = favoritesRecipe)
+                currentState.copy(recipeList = favoritesRecipe, isError = false)
             } else {
                 currentState.copy(isError = true)
             }

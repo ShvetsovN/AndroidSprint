@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentListCategoriesBinding
 import com.animus.androidsprint.model.Category
@@ -47,6 +46,7 @@ class CategoriesListFragment : Fragment() {
     }
 
     private fun initRecycle() {
+        viewModel.loadCategories()
         val recyclerView: RecyclerView = binding.rvCategories
         recyclerView.adapter = categoriesListAdapter
         categoriesListAdapter.setOnItemClickListener(object :
@@ -57,7 +57,8 @@ class CategoriesListFragment : Fragment() {
         })
         viewModel.categoriesListLiveData.observe(viewLifecycleOwner) { categoryState ->
             if (categoryState.isError) {
-                Toast.makeText(context, Constants.TOAST_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.toast_error_message), Toast.LENGTH_SHORT)
+                    .show()
             } else {
                 updateAdapter(categoryState.categories)
             }

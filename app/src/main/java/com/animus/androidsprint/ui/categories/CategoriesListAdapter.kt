@@ -60,7 +60,6 @@ class CategoriesListAdapter(var dataSet: List<Category> = listOf()) :
     }
 
     override fun getItemCount() = dataSet.size
-
 }
 
 

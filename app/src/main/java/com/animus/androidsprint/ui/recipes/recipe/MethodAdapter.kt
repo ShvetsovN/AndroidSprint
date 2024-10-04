@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.ItemMethodBinding
-import com.animus.androidsprint.model.Ingredient
 
 class MethodAdapter(var dataSet: List<String> = listOf()) :
     RecyclerView.Adapter<MethodAdapter.ViewHolder>() {
