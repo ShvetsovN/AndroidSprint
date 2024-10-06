@@ -71,10 +71,11 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun openRecipe(recipeId: Int) {
-        val bundle = Bundle().apply {
-            putInt(Constants.ARG_RECIPE_ID, recipeId)
-        }
-        findNavController().navigate(R.id.action_favoritesFragment_to_recipeFragment, bundle)
+        findNavController().navigate(
+            FavoritesFragmentDirections.actionFavoritesFragmentToRecipeFragment(
+                recipeId
+            )
+        )
     }
 }
 

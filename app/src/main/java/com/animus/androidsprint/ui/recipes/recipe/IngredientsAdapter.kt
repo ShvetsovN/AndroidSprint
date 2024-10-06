@@ -1,5 +1,6 @@
 package com.animus.androidsprint.ui.recipes.recipe
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,12 +25,17 @@ class IngredientsAdapter(var dataSet: List<Ingredient> = listOf()) :
         private val binding = ItemIngredientBinding.bind(item)
         fun bind(itemView: Ingredient, quantity: Int) = with(binding) {
             tvIngredientDescription.text = itemView.description
-            val totalQuantity = BigDecimal(itemView.quantity) * BigDecimal(quantity)
-            val displayQuantity: String = totalQuantity
-                .setScale(1, RoundingMode.HALF_UP)
-                .stripTrailingZeros()
-                .toPlainString()
-            tvIngredientQuantity.text = "$displayQuantity ${itemView.unitOfMeasure}"
+            try {
+                val totalQuantity = BigDecimal(itemView.quantity) * BigDecimal(quantity)
+                val displayQuantity: String = totalQuantity
+                    .setScale(1, RoundingMode.HALF_UP)
+                    .stripTrailingZeros()
+                    .toPlainString()
+                tvIngredientQuantity.text = "$displayQuantity ${itemView.unitOfMeasure}"
+            } catch (e: NumberFormatException) {
+                tvIngredientQuantity.text = "по вкусу"
+                Log.e("IngredientAdapter", "Ошибка: ${e.message}")
+            }
         }
     }
 
