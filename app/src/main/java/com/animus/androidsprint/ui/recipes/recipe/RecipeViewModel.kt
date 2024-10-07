@@ -2,7 +2,6 @@ package com.animus.androidsprint.ui.recipes.recipe
 
 import android.app.Application
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -10,8 +9,6 @@ import androidx.lifecycle.MutableLiveData
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.data.RecipeRepository
 import com.animus.androidsprint.model.Recipe
-import java.io.IOException
-import java.io.InputStream
 import java.util.concurrent.Executors
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
@@ -34,24 +31,14 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         threadPool.execute {
             val recipe = repository.getRecipeById(recipeId)
             val favorites = getFavorites().contains(recipeId.toString())
-            var drawable: Drawable? = null
-            try {
-                val inputStream: InputStream? =
-                    recipe?.imageUrl?.let {
-                        getApplication<Application>().assets.open(it)
-                    }
-                drawable = Drawable.createFromStream(inputStream, null)
-                inputStream?.close()
-            } catch (ex: IOException) {
-                Log.e("RecipeVM", " loadRecipe Error loading image from assets ", ex)
-            }
+            val imageUrl = Constants.BASE_URL + "image/" + recipe?.imageUrl
 
             _recipeLiveData.postValue(
                 RecipeState(
                     recipe = recipe,
                     portionCount = recipeLiveData.value?.portionCount ?: 1,
                     isFavorite = favorites,
-                    recipeImage = drawable
+                    recipeImage = imageUrl
                 )
             )
         }
@@ -105,7 +92,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         val recipe: Recipe? = null,
         val portionCount: Int = 1,
         val isFavorite: Boolean = false,
-        val recipeImage: Drawable?,
+        val recipeImage: String?,
         val isError: Boolean = false,
     )
 }
