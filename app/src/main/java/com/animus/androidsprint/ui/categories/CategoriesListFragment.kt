@@ -1,11 +1,13 @@
 package com.animus.androidsprint.ui.categories
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -44,17 +46,29 @@ class CategoriesListFragment : Fragment() {
     }
 
     private fun initRecycle() {
+        viewModel.loadCategories()
         val recyclerView: RecyclerView = binding.rvCategories
         recyclerView.adapter = categoriesListAdapter
+        categoriesListAdapter.setOnItemClickListener(object :
+            CategoriesListAdapter.OnItemClickListener {
+            override fun onItemClick(category: Category) {
+                openRecipesByCategoryId(category)
+            }
+        })
         viewModel.categoriesListLiveData.observe(viewLifecycleOwner) { categoryState ->
-            categoriesListAdapter.dataSet = categoryState.categories
-            categoriesListAdapter.setOnItemClickListener(object :
-                CategoriesListAdapter.OnItemClickListener {
-                override fun onItemClick(category: Category) {
-                    openRecipesByCategoryId(category)
-                }
-            })
+            if (categoryState.isError) {
+                Toast.makeText(context, getString(R.string.toast_error_message), Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                updateAdapter(categoryState.categories)
+            }
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun updateAdapter(categories: List<Category>) {
+        categoriesListAdapter.dataSet = categories
+        categoriesListAdapter.notifyDataSetChanged()
     }
 
     private fun openRecipesByCategoryId(category: Category) {

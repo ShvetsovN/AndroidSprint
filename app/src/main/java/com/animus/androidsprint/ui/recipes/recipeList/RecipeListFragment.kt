@@ -1,16 +1,20 @@
 package com.animus.androidsprint.ui.recipes.recipeList
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentRecipeListBinding
+import com.animus.androidsprint.model.Recipe
 import java.io.IOException
 import java.io.InputStream
 
@@ -45,7 +49,6 @@ class RecipeListFragment : Fragment() {
         } catch (ex: IOException) {
             Log.e("RecipeListFragment onViewCreated", "Error loading image from assets")
         }
-
         viewModel.loadRecipe(category.id)
         initRecycle()
     }
@@ -57,14 +60,25 @@ class RecipeListFragment : Fragment() {
 
     private fun initRecycle() {
         binding.rvRecipes.adapter = recipeListAdapter
-        viewModel.recipeListLiveData.observe(viewLifecycleOwner) {
-            recipeListAdapter.dataSet = it.recipeList
-        }
         recipeListAdapter.setOnItemClickListener(object : RecipeListAdapter.OnItemClickListener {
             override fun onItemClick(recipeId: Int) {
                 openRecipeByRecipeId(recipeId)
             }
         })
+        viewModel.recipeListLiveData.observe(viewLifecycleOwner) { recipeState ->
+            if (recipeState.isError) {
+                Toast.makeText(context, getString(R.string.toast_error_message), Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                updateAdapter(recipeState.recipeList)
+            }
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun updateAdapter(recipeList: List<Recipe>) {
+        recipeListAdapter.dataSet = recipeList
+        recipeListAdapter.notifyDataSetChanged()
     }
 
     fun openRecipeByRecipeId(recipeId: Int) {

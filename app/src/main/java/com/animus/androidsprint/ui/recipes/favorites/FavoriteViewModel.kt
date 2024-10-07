@@ -7,11 +7,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.animus.androidsprint.Constants
-import com.animus.androidsprint.data.STUB
+import com.animus.androidsprint.data.RecipeRepository
 import com.animus.androidsprint.model.Recipe
+import java.util.concurrent.Executors
 
 class FavoriteViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val repository = RecipeRepository()
+    private val threadPool = Executors.newFixedThreadPool(2)
     private val _favoriteLiveData = MutableLiveData<FavoriteState>()
     val favoriteLiveData: LiveData<FavoriteState> = _favoriteLiveData
 
@@ -20,10 +23,20 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun loadFavorites() {
-        val favoritesRecipe: List<Recipe> =
-            STUB.getRecipesByIds(getFavorites().map { it.toInt() }.toSet())
-        Log.e("FavoriteVM", "Loaded favorite recipes: $favoritesRecipe")
-        _favoriteLiveData.value = FavoriteState(recipeList = favoritesRecipe)
+        threadPool.execute {
+            val currentState = _favoriteLiveData.value ?: FavoriteState()
+            val favoritesIds = getFavorites()
+            val favoritesRecipe: List<Recipe>? =
+                repository.getRecipesByCategoryId(favoritesIds)
+            Log.i("FavoriteVM", "Loaded favorite recipes: $favoritesRecipe")
+
+            val newState = if (favoritesRecipe != null) {
+                currentState.copy(recipeList = favoritesRecipe, isError = false)
+            } else {
+                currentState.copy(isError = true)
+            }
+            _favoriteLiveData.postValue(newState)
+        }
     }
 
     private fun getFavorites(): MutableSet<String> {
@@ -39,6 +52,7 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
     }
 
     data class FavoriteState(
-        val recipeList: List<Recipe> = emptyList()
+        val recipeList: List<Recipe> = emptyList(),
+        val isError: Boolean = false,
     )
 }

@@ -1,10 +1,12 @@
 package com.animus.androidsprint.ui.recipes.favorites
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentFavoritesBinding
+import com.animus.androidsprint.model.Recipe
 import com.animus.androidsprint.ui.recipes.recipeList.RecipeListAdapter
 
 class FavoritesFragment : Fragment() {
@@ -43,23 +46,36 @@ class FavoritesFragment : Fragment() {
     private fun initRecycler() {
         binding.rvFavorites.adapter = favoriteAdapter
         viewModel.favoriteLiveData.observe(viewLifecycleOwner) { recipeState ->
-            binding.tvEmptyText.isVisible = recipeState.recipeList.isEmpty()
-            favoriteAdapter.dataSet = recipeState.recipeList
-            favoriteAdapter.setOnItemClickListener(object : RecipeListAdapter.OnItemClickListener {
-                override fun onItemClick(recipeId: Int) {
-                    Log.e("!!!", "initRecycler $recipeId")
-                    openRecipe(recipeId)
-                }
-            })
+            if (recipeState.isError) {
+                Toast.makeText(context, getString(R.string.toast_error_message), Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                binding.tvEmptyText.isVisible = recipeState.recipeList.isEmpty()
+                updateAdapter(recipeState.recipeList)
+                favoriteAdapter.setOnItemClickListener(object :
+                    RecipeListAdapter.OnItemClickListener {
+                    override fun onItemClick(recipeId: Int) {
+                        Log.e("!!!", "initRecycler $recipeId")
+                        openRecipe(recipeId)
+                    }
+                })
+            }
         }
         viewModel.loadFavorites()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    private fun updateAdapter(recipeList: List<Recipe>) {
+        favoriteAdapter.dataSet = recipeList
+        favoriteAdapter.notifyDataSetChanged()
+    }
+
     private fun openRecipe(recipeId: Int) {
-        val bundle = Bundle().apply {
-            putInt(Constants.ARG_RECIPE_ID, recipeId)
-        }
-        findNavController().navigate(R.id.action_favoritesFragment_to_recipeFragment, bundle)
+        findNavController().navigate(
+            FavoritesFragmentDirections.actionFavoritesFragmentToRecipeFragment(
+                recipeId
+            )
+        )
     }
 }
 

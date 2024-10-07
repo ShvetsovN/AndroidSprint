@@ -18,4 +18,5 @@
     <string name="fragment_recipe_tv_number_of_portion" translatable="false">1</string>
     <string name="button_add_to_favorites">Кнопка: Добавить в избранное</string>
     <string name="favorite_empty_text">Вы еще не добавили ни одного рецепта в избранное</string>
+    <string name="toast_error_message">Ошибка типа данных</string>
 </resources>
