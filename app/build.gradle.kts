@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
+    implementation(libs.glide)
 
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.core.ktx)
