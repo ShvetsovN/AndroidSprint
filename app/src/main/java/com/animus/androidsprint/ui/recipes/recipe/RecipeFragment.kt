@@ -13,9 +13,11 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentRecipeBinding
 import com.animus.androidsprint.model.Ingredient
+import com.bumptech.glide.Glide
 import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class RecipeFragment() : Fragment() {
@@ -111,7 +113,10 @@ class RecipeFragment() : Fragment() {
             } else {
                 with(binding) {
                     tvRecipeHeader.text = recipeState.recipe?.title
-                    ivFragmentRecipeHeader.setImageDrawable(recipeState.recipeImage)
+                    val imageHeaderUrl =
+                        Constants.BASE_URL + "images/" + recipeState.recipe?.imageUrl
+                    loadImageHeader(imageHeaderUrl)
+
                     ibFavoriteRecipe.setImageResource(
                         if (!recipeState.isFavorite) R.drawable.ic_heart_empty else R.drawable.ic_heart
                     )
@@ -124,6 +129,14 @@ class RecipeFragment() : Fragment() {
                 }
             }
         }
+    }
+
+    private fun loadImageHeader(imageUrl: String) {
+        Glide.with(this)
+            .load(imageUrl)
+            .placeholder(R.drawable.img_placeholder)
+            .error(R.drawable.img_error)
+            .into(binding.ivFragmentRecipeHeader)
     }
 
     @SuppressLint("NotifyDataSetChanged")
