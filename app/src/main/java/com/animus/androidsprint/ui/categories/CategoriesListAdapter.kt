@@ -1,16 +1,15 @@
 package com.animus.androidsprint.ui.categories
 
-import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.animus.androidsprint.Constants
 import com.animus.androidsprint.model.Category
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.ItemCategoryBinding
-import java.io.IOException
-import java.io.InputStream
+import com.bumptech.glide.Glide
 
 class CategoriesListAdapter(var dataSet: List<Category> = listOf()) :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
@@ -31,17 +30,17 @@ class CategoriesListAdapter(var dataSet: List<Category> = listOf()) :
         fun bind(itemView: Category) = with(binding) {
             tvItemHeader.text = itemView.title
             tvItemDescription.text = itemView.description
-            loadImageFromAsset(itemView.imageUrl)
+            loadImage(itemView.imageUrl)
         }
 
-        private fun loadImageFromAsset(imageUrl: String) {
-            try {
-                val inputStream: InputStream = itemView.context.assets.open(imageUrl)
-                val drawable = Drawable.createFromStream(inputStream, null)
-                binding.ivItemImage.setImageDrawable(drawable)
-            } catch (ex: IOException) {
-                Log.e("CategoriesListAdapter loadImage", Log.getStackTraceString(ex))
-            }
+        private fun loadImage(imageUrl: String) {
+            val fullImageUrl = Constants.BASE_URL + "images/" + imageUrl
+            Log.e("!!!", "CategoryListAdapter Loading image from URL: $fullImageUrl")
+            Glide.with(itemView.context)
+                .load(fullImageUrl)
+                .placeholder(R.drawable.img_placeholder)
+                .error(R.drawable.img_error)
+                .into(binding.ivItemImage)
         }
     }
 
