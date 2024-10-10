@@ -33,7 +33,7 @@ class IngredientsAdapter(var dataSet: List<Ingredient> = listOf()) :
                     .toPlainString()
                 tvIngredientQuantity.text = "$displayQuantity ${itemView.unitOfMeasure}"
             } catch (e: NumberFormatException) {
-                tvIngredientQuantity.text = "по вкусу"
+                tvIngredientQuantity.text = itemView.quantity
                 Log.e("IngredientAdapter", "Ошибка: ${e.message}")
             }
         }

@@ -1,16 +1,15 @@
 package com.animus.androidsprint.ui.recipes.recipeList
 
-import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.model.Recipe
 import com.animus.androidsprint.databinding.ItemRecipeBinding
-import java.io.IOException
-import java.io.InputStream
+import com.bumptech.glide.Glide
 
 class RecipeListAdapter(var dataSet: List<Recipe> = listOf()) :
     RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
@@ -31,17 +30,16 @@ class RecipeListAdapter(var dataSet: List<Recipe> = listOf()) :
         fun bind(itemView: Recipe) = with(binding) {
             Log.e("RecipeListAdapter", "bind - Recipe: ${itemView.title}, ID: ${itemView.id}")
             tvItemRecipeHeader.text = itemView.title
-            loadImageFromAsset(itemView.imageUrl)
+            loadImage(itemView.imageUrl)
         }
 
-        private fun loadImageFromAsset(imageUrl: String) {
-            try {
-                val inputStream: InputStream = itemView.context.assets.open(imageUrl)
-                val drawable = Drawable.createFromStream(inputStream, null)
-                binding.ivItemRecipeImage.setImageDrawable(drawable)
-            } catch (ex: IOException) {
-                Log.e("RecipeListAdapter", Log.getStackTraceString(ex))
-            }
+        private fun loadImage(imageUrl: String) {
+            val fullImageUrl = Constants.BASE_URL + "images/" + imageUrl
+            Glide.with(itemView.context)
+                .load(fullImageUrl)
+                .placeholder(R.drawable.img_placeholder)
+                .error(R.drawable.img_error)
+                .into(binding.ivItemRecipeImage)
         }
     }
 

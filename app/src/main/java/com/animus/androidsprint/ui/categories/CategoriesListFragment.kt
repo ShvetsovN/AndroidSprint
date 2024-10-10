@@ -8,12 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.compose.ui.unit.Constraints
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentListCategoriesBinding
 import com.animus.androidsprint.model.Category
+import com.bumptech.glide.Glide
 
 class CategoriesListFragment : Fragment() {
 
@@ -35,7 +38,6 @@ class CategoriesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ivFragmentListCategoriesHeader.setImageResource(R.drawable.bcg_categories)
         initRecycle()
     }
 
@@ -61,8 +63,18 @@ class CategoriesListFragment : Fragment() {
                     .show()
             } else {
                 updateAdapter(categoryState.categories)
+                val imageHeaderUrl = Constants.BASE_URL + "images/" + categoryState.categories.first().imageUrl
+                loadImageHeader(imageHeaderUrl)
             }
         }
+    }
+
+    private fun loadImageHeader(imageUrl: String) {
+        Glide.with(this)
+            .load(imageUrl)
+            .placeholder(R.drawable.img_placeholder)
+            .error(R.drawable.img_error)
+            .into(binding.ivFragmentListCategoriesHeader)
     }
 
     @SuppressLint("NotifyDataSetChanged")

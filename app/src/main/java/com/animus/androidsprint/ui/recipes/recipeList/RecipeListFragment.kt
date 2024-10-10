@@ -1,7 +1,6 @@
 package com.animus.androidsprint.ui.recipes.recipeList
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,11 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
 import com.animus.androidsprint.databinding.FragmentRecipeListBinding
 import com.animus.androidsprint.model.Recipe
-import java.io.IOException
-import java.io.InputStream
+import com.bumptech.glide.Glide
 
 class RecipeListFragment : Fragment() {
 
@@ -41,14 +40,6 @@ class RecipeListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val category = args.category
         binding.tvHeaderRecipeList.text = category.title
-        try {
-            val inputStream: InputStream =
-                binding.ivFragmentRecipeListHeader.context.assets.open(category.imageUrl)
-            val drawable = Drawable.createFromStream(inputStream, null)
-            binding.ivFragmentRecipeListHeader.setImageDrawable(drawable)
-        } catch (ex: IOException) {
-            Log.e("RecipeListFragment onViewCreated", "Error loading image from assets")
-        }
         viewModel.loadRecipe(category.id)
         initRecycle()
     }
@@ -71,8 +62,18 @@ class RecipeListFragment : Fragment() {
                     .show()
             } else {
                 updateAdapter(recipeState.recipeList)
+                val imageHeaderUrl = Constants.BASE_URL + "images/" + recipeState.recipeList.first().imageUrl
+                loadHeaderImage(imageHeaderUrl)
             }
         }
+    }
+
+    private fun loadHeaderImage(imageUrl: String){
+        Glide.with(this)
+            .load(imageUrl)
+            .placeholder(R.drawable.img_placeholder)
+            .error(R.drawable.img_error)
+            .into(binding.ivFragmentRecipeListHeader)
     }
 
     @SuppressLint("NotifyDataSetChanged")
