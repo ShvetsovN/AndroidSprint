@@ -34,7 +34,7 @@ class CategoriesListAdapter(var dataSet: List<Category> = listOf()) :
         }
 
         private fun loadImage(imageUrl: String) {
-            val fullImageUrl = Constants.BASE_URL + "images/" + imageUrl
+            val fullImageUrl = Constants.IMAGE_URL + imageUrl
             Log.e("!!!", "CategoryListAdapter Loading image from URL: $fullImageUrl")
             Glide.with(itemView.context)
                 .load(fullImageUrl)

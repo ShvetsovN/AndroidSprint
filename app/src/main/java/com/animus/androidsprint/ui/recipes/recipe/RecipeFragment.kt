@@ -114,7 +114,7 @@ class RecipeFragment() : Fragment() {
                 with(binding) {
                     tvRecipeHeader.text = recipeState.recipe?.title
                     val imageHeaderUrl =
-                        Constants.BASE_URL + "images/" + recipeState.recipe?.imageUrl
+                        Constants.IMAGE_URL + recipeState.recipe?.imageUrl
                     loadImageHeader(imageHeaderUrl)
 
                     ibFavoriteRecipe.setImageResource(

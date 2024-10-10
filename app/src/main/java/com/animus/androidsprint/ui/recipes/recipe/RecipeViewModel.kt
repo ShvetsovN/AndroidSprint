@@ -32,7 +32,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         viewModelScope.launch(Dispatchers.IO) {
             val recipe = repository.getRecipeById(recipeId)
             val favorites = getFavorites().contains(recipeId.toString())
-            val imageUrl = Constants.BASE_URL + "image/" + recipe?.imageUrl
+            val imageUrl = Constants.IMAGE_URL + recipe?.imageUrl
 
             _recipeLiveData.postValue(
                 RecipeState(
