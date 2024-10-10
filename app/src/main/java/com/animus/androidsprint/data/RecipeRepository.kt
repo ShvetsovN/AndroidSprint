@@ -19,7 +19,7 @@ class RecipeRepository {
 
     private var service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
 
-    fun getRecipeById(recipeId: Int): Recipe? {
+    suspend fun getRecipeById(recipeId: Int): Recipe? {
         return try {
             val response = service.getRecipeById(recipeId).execute()
             if (response.isSuccessful) response.body() else null
@@ -29,11 +29,14 @@ class RecipeRepository {
         }
     }
 
-    fun getRecipesByCategoryId(recipeIdsSet: Set<String>): List<Recipe>? {
+    suspend fun getRecipesByCategoryId(recipeIdsSet: Set<String>): List<Recipe>? {
         return try {
             val recipeIdsString = recipeIdsSet.joinToString(",")
             val response = service.getRecipesByCategoryId(recipeIdsString).execute()
-            Log.i("RecipeRepository", "Response getRecipesByCategoryId code: ${response.code()}")
+            Log.i(
+                "RecipeRepository",
+                "Response getRecipesByCategoryId code: ${response.code()}"
+            )
             if (response.isSuccessful) response.body() else null
         } catch (e: Exception) {
             Log.i("RecipeRepository", "getRecipesByCategoryId error: ${e.message}")
@@ -41,7 +44,8 @@ class RecipeRepository {
         }
     }
 
-    fun getCategoryById(categoryId: Int): Category? {
+
+    suspend fun getCategoryById(categoryId: Int): Category? {
         return try {
             val response = service.getCategoryById(categoryId).execute()
             if (response.isSuccessful) response.body() else null
@@ -51,7 +55,7 @@ class RecipeRepository {
         }
     }
 
-    fun getRecipesByIds(categoryId: Int): List<Recipe>? {
+    suspend fun getRecipesByIds(categoryId: Int): List<Recipe>? {
         return try {
             val response = service.getRecipesByIds(categoryId).execute()
             if (response.isSuccessful) response.body() else null
@@ -61,7 +65,7 @@ class RecipeRepository {
         }
     }
 
-    fun getCategories(): List<Category>? {
+    suspend fun getCategories(): List<Category>? {
         return try {
             val response = service.getCategories().execute()
             if (response.isSuccessful) response.body() else null
