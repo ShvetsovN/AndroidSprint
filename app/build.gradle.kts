@@ -54,6 +54,8 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.glide)
+    implementation(libs.room.runtime)
+    implementation(libs.room.compiler)
 
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.core.ktx)
