@@ -34,7 +34,7 @@ class RecipeListAdapter(var dataSet: List<Recipe> = listOf()) :
         }
 
         private fun loadImage(imageUrl: String) {
-            val fullImageUrl = Constants.BASE_URL + "images/" + imageUrl
+            val fullImageUrl = Constants.IMAGE_URL + imageUrl
             Glide.with(itemView.context)
                 .load(fullImageUrl)
                 .placeholder(R.drawable.img_placeholder)

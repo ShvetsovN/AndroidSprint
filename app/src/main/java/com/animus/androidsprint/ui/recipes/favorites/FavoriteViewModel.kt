@@ -6,15 +6,16 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.data.RecipeRepository
 import com.animus.androidsprint.model.Recipe
-import java.util.concurrent.Executors
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class FavoriteViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = RecipeRepository()
-    private val threadPool = Executors.newFixedThreadPool(2)
     private val _favoriteLiveData = MutableLiveData<FavoriteState>()
     val favoriteLiveData: LiveData<FavoriteState> = _favoriteLiveData
 
@@ -23,7 +24,7 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun loadFavorites() {
-        threadPool.execute {
+        viewModelScope.launch(Dispatchers.IO) {
             val currentState = _favoriteLiveData.value ?: FavoriteState()
             val favoritesIds = getFavorites()
             val favoritesRecipe: List<Recipe>? =

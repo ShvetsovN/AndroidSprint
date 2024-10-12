@@ -4,20 +4,21 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.animus.androidsprint.data.RecipeRepository
 import com.animus.androidsprint.model.Recipe
-import java.util.concurrent.Executors
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class RecipeListViewModel : ViewModel() {
 
     private val repository = RecipeRepository()
-    private val threadPool = Executors.newFixedThreadPool(2)
 
     private val _recipeListLiveData = MutableLiveData<RecipeListState>()
     val recipeListLiveData: LiveData<RecipeListState> = _recipeListLiveData
 
     fun loadRecipe(categoryId: Int) {
-        threadPool.execute {
+        viewModelScope.launch(Dispatchers.IO) {
             val recipe = repository.getRecipesByIds(categoryId)
             Log.i("RecipeListViewModel", "Loading recipes for categoryId: $categoryId")
             _recipeListLiveData.postValue(recipe?.let {

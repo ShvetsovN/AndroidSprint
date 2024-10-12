@@ -62,7 +62,7 @@ class RecipeListFragment : Fragment() {
                     .show()
             } else {
                 updateAdapter(recipeState.recipeList)
-                val imageHeaderUrl = Constants.BASE_URL + "images/" + recipeState.recipeList.first().imageUrl
+                val imageHeaderUrl = Constants.IMAGE_URL + recipeState.recipeList.first().imageUrl
                 loadHeaderImage(imageHeaderUrl)
             }
         }

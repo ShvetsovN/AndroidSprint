@@ -4,9 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.animus.androidsprint.data.RecipeRepository
 import com.animus.androidsprint.model.Category
-import java.util.concurrent.Executors
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class CategoriesListViewModel : ViewModel() {
 
@@ -14,14 +16,13 @@ class CategoriesListViewModel : ViewModel() {
     val categoriesListLiveData: LiveData<CategoriesListState> = _categoriesListLiveData
 
     private val repository = RecipeRepository()
-    private val threadPool = Executors.newFixedThreadPool(2)
 
     init {
         Log.e("CategoriesListVM", "VM created")
     }
 
     fun loadCategories() {
-        threadPool.execute {
+        viewModelScope.launch(Dispatchers.IO) {
             val currentState = _categoriesListLiveData.value ?: CategoriesListState()
             val categories = repository.getCategories()
 
