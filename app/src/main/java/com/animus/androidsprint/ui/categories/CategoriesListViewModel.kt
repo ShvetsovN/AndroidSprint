@@ -22,7 +22,7 @@ class CategoriesListViewModel : ViewModel() {
     }
 
     fun loadCategories() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val currentState = _categoriesListLiveData.value ?: CategoriesListState()
             val categories = repository.getCategories()
 
