@@ -24,7 +24,7 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun loadFavorites() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Default) {
             val currentState = _favoriteLiveData.value ?: FavoriteState()
             val favoritesIds = getFavorites()
             val favoritesRecipe: List<Recipe>? =

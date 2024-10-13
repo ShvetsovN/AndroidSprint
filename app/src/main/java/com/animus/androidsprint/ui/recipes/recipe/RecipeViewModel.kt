@@ -29,7 +29,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun loadRecipe(recipeId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Default) {
             val recipe = repository.getRecipeById(recipeId)
             val favorites = getFavorites().contains(recipeId.toString())
             val imageUrl = Constants.IMAGE_URL + recipe?.imageUrl
