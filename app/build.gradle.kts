@@ -55,8 +55,8 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.glide)
-    implementation(libs.room.runtime) { exclude(group = "com.intellij", module = "annotations") }
-    implementation(libs.room.compiler) { exclude(group = "com.intellij", module = "annotations") }
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
 
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.core.ktx)
