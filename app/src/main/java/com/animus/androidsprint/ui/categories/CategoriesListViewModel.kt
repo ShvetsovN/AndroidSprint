@@ -24,13 +24,18 @@ class CategoriesListViewModel(application: Application) : AndroidViewModel(appli
     fun loadCategories() {
         viewModelScope.launch {
             val currentState = _categoriesListLiveData.value ?: CategoriesListState()
-            val categories = repository.getCategories()
 
-            if (categories == null) {
+            val cacheCategories = repository.getCategoriesFromCache()
+            _categoriesListLiveData.postValue(currentState.copy(categories = cacheCategories))
+
+            val categoriesFromServer = repository.getCategories()
+
+            if (categoriesFromServer == null) {
                 _categoriesListLiveData.postValue(CategoriesListState(isError = true))
             } else {
-                val newState = currentState.copy(categories = categories, isError = false)
+                val newState = currentState.copy(categories = categoriesFromServer, isError = false)
                 _categoriesListLiveData.postValue(newState)
+                repository.saveCategoriesToCache(categoriesFromServer)
             }
         }
     }

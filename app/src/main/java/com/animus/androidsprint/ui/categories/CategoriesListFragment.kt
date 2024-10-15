@@ -62,7 +62,8 @@ class CategoriesListFragment : Fragment() {
                     .show()
             } else {
                 updateAdapter(categoryState.categories)
-                val imageHeaderUrl = Constants.IMAGE_URL + categoryState.categories.first().imageUrl
+                val imageHeaderUrl =
+                    (Constants.IMAGE_URL + categoryState.categories.firstOrNull()?.imageUrl)
                 loadImageHeader(imageHeaderUrl)
             }
         }

@@ -44,6 +44,16 @@ class RecipeRepository (context: Context) {
         }
     }
 
+    suspend fun saveCategoriesToCache(categories: List<Category>) {
+        withContext(Dispatchers.IO) {
+            try {
+                categoriesDao.insertAll(categories)
+            } catch (e: Exception) {
+                Log.e("RecipeRepository", "Error saving categories to cache: ${e.message}")
+            }
+        }
+    }
+
     suspend fun getRecipeById(recipeId: Int): Recipe? {
         return withContext(Dispatchers.IO) {
             try {
