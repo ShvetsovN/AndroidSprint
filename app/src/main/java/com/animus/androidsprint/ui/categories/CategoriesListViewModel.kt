@@ -28,17 +28,17 @@ class CategoriesListViewModel(application: Application) : AndroidViewModel(appli
             val cacheCategories = repository.getCategoriesFromCache()
             if (cacheCategories.isNotEmpty()) {
                 _categoriesListLiveData.postValue(currentState.copy(categories = cacheCategories))
-                return@launch
-            }
-
-            val categoriesFromServer = repository.getCategories()
-
-            if (categoriesFromServer == null) {
-                _categoriesListLiveData.postValue(CategoriesListState(isError = true))
             } else {
-                val newState = currentState.copy(categories = categoriesFromServer, isError = false)
-                _categoriesListLiveData.postValue(newState)
-                repository.saveCategoriesToCache(categoriesFromServer)
+                val categoriesFromServer = repository.getCategories()
+
+                if (categoriesFromServer == null) {
+                    _categoriesListLiveData.postValue(CategoriesListState(isError = true))
+                } else {
+                    val newState =
+                        currentState.copy(categories = categoriesFromServer, isError = false)
+                    _categoriesListLiveData.postValue(newState)
+                    repository.saveCategoriesToCache(categoriesFromServer)
+                }
             }
         }
     }

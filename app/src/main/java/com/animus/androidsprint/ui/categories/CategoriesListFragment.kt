@@ -53,6 +53,8 @@ class CategoriesListFragment : Fragment() {
         categoriesListAdapter.setOnItemClickListener(object :
             CategoriesListAdapter.OnItemClickListener {
             override fun onItemClick(category: Category) {
+                val imageHeaderUrl = Constants.IMAGE_URL + category.imageUrl
+                loadImageHeader(imageHeaderUrl)
                 openRecipesByCategoryId(category)
             }
         })
@@ -62,9 +64,6 @@ class CategoriesListFragment : Fragment() {
                     .show()
             } else {
                 updateAdapter(categoryState.categories)
-                val imageHeaderUrl =
-                    (Constants.IMAGE_URL + categoryState.categories.firstOrNull()?.imageUrl)
-                loadImageHeader(imageHeaderUrl)
             }
         }
     }
@@ -86,7 +85,8 @@ class CategoriesListFragment : Fragment() {
     private fun openRecipesByCategoryId(category: Category) {
         findNavController().navigate(
             CategoriesListFragmentDirections.actionCategoriesListFragmentToRecipeListFragment(
-                category
+                category,
+                Constants.IMAGE_URL + category.imageUrl
             )
         )
     }

@@ -40,6 +40,10 @@ class RecipeListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val category = args.category
         binding.tvHeaderRecipeList.text = category.title
+
+        val imageHeaderUrl = Constants.IMAGE_URL + category.imageUrl
+        loadHeaderImage(imageHeaderUrl)
+
         viewModel.loadRecipe(category.id)
         initRecycle()
     }
@@ -62,13 +66,12 @@ class RecipeListFragment : Fragment() {
                     .show()
             } else {
                 updateAdapter(recipeState.recipeList)
-                val imageHeaderUrl = Constants.IMAGE_URL + recipeState.recipeList.first().imageUrl
-                loadHeaderImage(imageHeaderUrl)
             }
         }
     }
 
-    private fun loadHeaderImage(imageUrl: String){
+    private fun loadHeaderImage(imageUrl: String) {
+        binding.ivFragmentRecipeListHeader.setImageDrawable(null)
         Glide.with(this)
             .load(imageUrl)
             .placeholder(R.drawable.img_placeholder)

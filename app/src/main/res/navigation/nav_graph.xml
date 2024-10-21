@@ -67,5 +67,8 @@
         <argument
             android:name="category"
             app:argType="com.animus.androidsprint.model.Category" />
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
     </fragment>
 </navigation>
