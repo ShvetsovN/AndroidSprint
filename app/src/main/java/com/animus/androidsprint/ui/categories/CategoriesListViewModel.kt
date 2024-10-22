@@ -17,10 +17,6 @@ class CategoriesListViewModel(application: Application) : AndroidViewModel(appli
 
     private val repository = RecipeRepository(application)
 
-    init {
-        Log.e("CategoriesListVM", "VM created")
-    }
-
     fun loadCategories() {
         viewModelScope.launch {
             val currentState = _categoriesListLiveData.value ?: CategoriesListState()
@@ -29,7 +25,7 @@ class CategoriesListViewModel(application: Application) : AndroidViewModel(appli
             if (cacheCategories.isNotEmpty()) {
                 _categoriesListLiveData.postValue(currentState.copy(categories = cacheCategories))
             } else {
-                val categoriesFromServer = repository.getCategories()
+                val categoriesFromServer: List<Category>? = repository.getCategories()
 
                 if (categoriesFromServer == null) {
                     _categoriesListLiveData.postValue(CategoriesListState(isError = true))

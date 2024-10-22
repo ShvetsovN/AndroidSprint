@@ -13,18 +13,29 @@ import kotlinx.coroutines.launch
 
 class RecipeListViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository = RecipeRepository(application)
-
     private val _recipeListLiveData = MutableLiveData<RecipeListState>()
     val recipeListLiveData: LiveData<RecipeListState> = _recipeListLiveData
 
+    private val repository = RecipeRepository(application)
+
     fun loadRecipe(categoryId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val recipe = repository.getRecipesByIds(categoryId)
-            Log.i("RecipeListViewModel", "Loading recipes for categoryId: $categoryId")
-            _recipeListLiveData.postValue(recipe?.let {
-                RecipeListState(recipeList = it, isError = false)
-            } ?: RecipeListState(isError = true))
+            val currentState = _recipeListLiveData.value ?: RecipeListState()
+
+            val cacheRecipe = repository.getRecipesFromCache()
+            if(cacheRecipe.isNotEmpty()) {
+                _recipeListLiveData.postValue(currentState.copy(recipeList = cacheRecipe))
+            } else {
+                val recipesFromServer = repository.getRecipesByIds(categoryId)
+
+                if(recipesFromServer == null) {
+                    _recipeListLiveData.postValue(RecipeListState(isError = true))
+                } else {
+                    val newState = currentState.copy(recipeList = recipesFromServer, isError = false)
+                    _recipeListLiveData.postValue(newState)
+                    repository.saveRecipesToCache(recipesFromServer)
+                }
+            }
         }
     }
 
