@@ -1,6 +1,9 @@
 package com.animus.androidsprint.data
 
+import android.content.Context
 import android.util.Log
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.room.Room
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.model.Category
 import com.animus.androidsprint.model.Recipe
@@ -11,8 +14,9 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 
-class RecipeRepository {
+class RecipeRepository (context: Context) {
 
+    private val appContext = context.applicationContext
     private val contentType = Constants.CONTENT_TYPE.toMediaType()
     private var retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)
@@ -20,6 +24,35 @@ class RecipeRepository {
         .build()
 
     private var service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
+
+    private val db: AppDatabase = Room.databaseBuilder(
+        appContext,
+        AppDatabase::class.java,
+        "database-categories"
+    ).build()
+
+    private val categoriesDao = db.categoryDao()
+
+    suspend fun getCategoriesFromCache(): List<Category> {
+        return withContext(Dispatchers.IO) {
+            try {
+                categoriesDao.getAll()
+            } catch (e: Exception) {
+                Log.e("RecipeRepository", "Error fetching categories from cache: ${e.message}")
+                emptyList()
+            }
+        }
+    }
+
+    suspend fun saveCategoriesToCache(categories: List<Category>) {
+        withContext(Dispatchers.IO) {
+            try {
+                categoriesDao.insertAll(categories)
+            } catch (e: Exception) {
+                Log.e("RecipeRepository", "Error saving categories to cache: ${e.message}")
+            }
+        }
+    }
 
     suspend fun getRecipeById(recipeId: Int): Recipe? {
         return withContext(Dispatchers.IO) {

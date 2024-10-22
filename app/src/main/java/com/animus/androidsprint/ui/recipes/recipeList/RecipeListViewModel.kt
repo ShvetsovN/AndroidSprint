@@ -1,18 +1,19 @@
 package com.animus.androidsprint.ui.recipes.recipeList
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.animus.androidsprint.data.RecipeRepository
 import com.animus.androidsprint.model.Recipe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class RecipeListViewModel : ViewModel() {
+class RecipeListViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository = RecipeRepository()
+    private val repository = RecipeRepository(application)
 
     private val _recipeListLiveData = MutableLiveData<RecipeListState>()
     val recipeListLiveData: LiveData<RecipeListState> = _recipeListLiveData

@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.compose.ui.unit.Constraints
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -54,6 +53,8 @@ class CategoriesListFragment : Fragment() {
         categoriesListAdapter.setOnItemClickListener(object :
             CategoriesListAdapter.OnItemClickListener {
             override fun onItemClick(category: Category) {
+                val imageHeaderUrl = Constants.IMAGE_URL + category.imageUrl
+                loadImageHeader(imageHeaderUrl)
                 openRecipesByCategoryId(category)
             }
         })
@@ -63,8 +64,6 @@ class CategoriesListFragment : Fragment() {
                     .show()
             } else {
                 updateAdapter(categoryState.categories)
-                val imageHeaderUrl = Constants.IMAGE_URL + categoryState.categories.first().imageUrl
-                loadImageHeader(imageHeaderUrl)
             }
         }
     }
@@ -86,7 +85,8 @@ class CategoriesListFragment : Fragment() {
     private fun openRecipesByCategoryId(category: Category) {
         findNavController().navigate(
             CategoriesListFragmentDirections.actionCategoriesListFragmentToRecipeListFragment(
-                category
+                category,
+                Constants.IMAGE_URL + category.imageUrl
             )
         )
     }
