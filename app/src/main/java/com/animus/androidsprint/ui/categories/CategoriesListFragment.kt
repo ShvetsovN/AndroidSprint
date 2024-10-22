@@ -85,8 +85,7 @@ class CategoriesListFragment : Fragment() {
     private fun openRecipesByCategoryId(category: Category) {
         findNavController().navigate(
             CategoriesListFragmentDirections.actionCategoriesListFragmentToRecipeListFragment(
-                category,
-                Constants.IMAGE_URL + category.imageUrl
+                category
             )
         )
     }
