@@ -6,7 +6,10 @@ import androidx.room.TypeConverters
 import com.animus.androidsprint.model.Category
 import com.animus.androidsprint.model.Recipe
 
-@Database(entities = [Category::class,Recipe::class],version = 1)
+@Database(
+    entities = [Category::class, Recipe::class],
+    version = 2,
+)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 

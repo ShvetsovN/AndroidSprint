@@ -22,18 +22,19 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
         viewModelScope.launch(Dispatchers.IO) {
             val currentState = _recipeListLiveData.value ?: RecipeListState()
 
-            val cacheRecipe = repository.getRecipesFromCache()
-            if(cacheRecipe.isNotEmpty()) {
+            val cacheRecipe = repository.getRecipesFromCacheByCategoryId(categoryId)
+            if (cacheRecipe.isNotEmpty()) {
                 _recipeListLiveData.postValue(currentState.copy(recipeList = cacheRecipe))
             } else {
                 val recipesFromServer = repository.getRecipesByIds(categoryId)
 
-                if(recipesFromServer == null) {
+                if (recipesFromServer == null) {
                     _recipeListLiveData.postValue(RecipeListState(isError = true))
                 } else {
                     val newState = currentState.copy(recipeList = recipesFromServer, isError = false)
                     _recipeListLiveData.postValue(newState)
-                    repository.saveRecipesToCache(recipesFromServer)
+
+                    repository.saveRecipesToCache(recipesFromServer, categoryId)
                 }
             }
         }

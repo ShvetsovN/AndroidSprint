@@ -33,6 +33,16 @@ class RecipeRepository (context: Context) {
     private val categoriesDao = db.categoryDao()
     private val recipeDao = db.recipeDao()
 
+    suspend fun getRecipesFromCacheByCategoryId(categoryId: Int): List<Recipe> {
+        return withContext(Dispatchers.IO) {
+            try {
+                recipeDao.getRecipesByCategoryId(categoryId)
+            } catch (e: Exception) {
+                emptyList()
+            }
+        }
+    }
+
     suspend fun getRecipesFromCache(): List<Recipe> {
         return withContext(Dispatchers.IO) {
             try {
@@ -44,10 +54,11 @@ class RecipeRepository (context: Context) {
         }
     }
 
-    suspend fun saveRecipesToCache(recipe: List<Recipe>) {
+    suspend fun saveRecipesToCache(recipes: List<Recipe>, categoryId: Int) {
+        val updatedRecipes = recipes.map { it.copy(categoryId = categoryId) }
         withContext(Dispatchers.IO) {
             try {
-                recipeDao.insertAll(recipe)
+                recipeDao.insertAll(updatedRecipes)
             } catch (e: Exception) {
                 Log.e("RecipeRepository", "Error saving categories to cache: ${e.message}")
             }
@@ -74,8 +85,6 @@ class RecipeRepository (context: Context) {
             }
         }
     }
-
-
 
     suspend fun getRecipeById(recipeId: Int): Recipe? {
         return withContext(Dispatchers.IO) {

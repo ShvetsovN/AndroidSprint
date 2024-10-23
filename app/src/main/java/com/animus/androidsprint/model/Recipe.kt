@@ -12,4 +12,5 @@ data class Recipe(
     @ColumnInfo("ingredients") val ingredients: List<Ingredient>,
     @ColumnInfo("method") val method: List<String>,
     @ColumnInfo("imageUrl") val imageUrl: String,
+    @ColumnInfo("categoryId") val categoryId: Int = -1,
 ) : java.io.Serializable

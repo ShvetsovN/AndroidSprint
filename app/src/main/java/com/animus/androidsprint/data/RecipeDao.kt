@@ -11,6 +11,9 @@ interface RecipeDao {
     @Query("SELECT * FROM recipe")
     fun getAll(): List<Recipe>
 
+    @Query("SELECT * FROM Recipe WHERE categoryId = :categoryId")
+    fun getRecipesByCategoryId(categoryId: Int): List<Recipe>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(categories: List<Recipe>)
 }
