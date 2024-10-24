@@ -13,4 +13,5 @@ data class Recipe(
     @ColumnInfo("method") val method: List<String>,
     @ColumnInfo("imageUrl") val imageUrl: String,
     @ColumnInfo("categoryId") val categoryId: Int = -1,
+    @ColumnInfo("isFavorite") val isFavorite: Boolean,
 ) : java.io.Serializable
