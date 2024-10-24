@@ -2,7 +2,6 @@ package com.animus.androidsprint.data
 
 import android.content.Context
 import android.util.Log
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.room.Room
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.model.Category
@@ -32,6 +31,39 @@ class RecipeRepository (context: Context) {
     ).build()
 
     private val categoriesDao = db.categoryDao()
+    private val recipeDao = db.recipeDao()
+
+    suspend fun getRecipesFromCacheByCategoryId(categoryId: Int): List<Recipe> {
+        return withContext(Dispatchers.IO) {
+            try {
+                recipeDao.getRecipesByCategoryId(categoryId)
+            } catch (e: Exception) {
+                emptyList()
+            }
+        }
+    }
+
+    suspend fun getRecipesFromCache(): List<Recipe> {
+        return withContext(Dispatchers.IO) {
+            try {
+                recipeDao.getAll()
+            } catch (e: Exception) {
+                Log.e("RecipeRepository", "Error fetching recipe from cache: ${e.message}")
+                emptyList()
+            }
+        }
+    }
+
+    suspend fun saveRecipesToCache(recipes: List<Recipe>, categoryId: Int) {
+        val updatedRecipes = recipes.map { it.copy(categoryId = categoryId) }
+        withContext(Dispatchers.IO) {
+            try {
+                recipeDao.insertAll(updatedRecipes)
+            } catch (e: Exception) {
+                Log.e("RecipeRepository", "Error saving categories to cache: ${e.message}")
+            }
+        }
+    }
 
     suspend fun getCategoriesFromCache(): List<Category> {
         return withContext(Dispatchers.IO) {
