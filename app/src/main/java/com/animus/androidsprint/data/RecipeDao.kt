@@ -8,6 +8,9 @@ import com.animus.androidsprint.model.Recipe
 
 @Dao
 interface RecipeDao {
+    @Query("SELECT * FROM Recipe WHERE isFavorite = 1 ")
+    fun getFavoriteRecipes(): List<Recipe>
+
     @Query("SELECT * FROM recipe")
     fun getAll(): List<Recipe>
 

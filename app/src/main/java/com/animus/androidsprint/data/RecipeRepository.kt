@@ -33,6 +33,16 @@ class RecipeRepository (context: Context) {
     private val categoriesDao = db.categoryDao()
     private val recipeDao = db.recipeDao()
 
+    suspend fun getFavoriteRecipes(): List<Recipe>?{
+        return withContext(Dispatchers.IO) {
+            try {
+                recipeDao.getFavoriteRecipes()
+            } catch (e: Exception) {
+                emptyList()
+            }
+        }
+    }
+
     suspend fun getRecipesFromCacheByCategoryId(categoryId: Int): List<Recipe> {
         return withContext(Dispatchers.IO) {
             try {
