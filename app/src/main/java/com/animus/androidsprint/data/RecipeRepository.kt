@@ -43,6 +43,16 @@ class RecipeRepository (context: Context) {
         }
     }
 
+    suspend fun updateFavoriteStatus(recipeId: Int, isFavorite: Boolean) {
+        return withContext(Dispatchers.IO) {
+            try {
+                recipeDao.updateFavoriteStatus(recipeId, isFavorite)
+            } catch (e: Exception) {
+                Log.e("RecipeRepository", "Error updating favorite status: ${e.message}")
+            }
+        }
+    }
+
     suspend fun getRecipesFromCacheByCategoryId(categoryId: Int): List<Recipe> {
         return withContext(Dispatchers.IO) {
             try {
