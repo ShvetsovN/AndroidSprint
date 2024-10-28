@@ -13,7 +13,7 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 
-class RecipeRepository (context: Context) {
+class RecipeRepository(context: Context) {
 
     private val appContext = context.applicationContext
     private val contentType = Constants.CONTENT_TYPE.toMediaType()
@@ -33,7 +33,7 @@ class RecipeRepository (context: Context) {
     private val categoriesDao = db.categoryDao()
     private val recipeDao = db.recipeDao()
 
-    suspend fun getFavoriteRecipes(): List<Recipe>?{
+    suspend fun getFavoriteRecipes(): List<Recipe>? {
         return withContext(Dispatchers.IO) {
             try {
                 recipeDao.getFavoriteRecipes()
@@ -58,17 +58,6 @@ class RecipeRepository (context: Context) {
             try {
                 recipeDao.getRecipesByCategoryId(categoryId)
             } catch (e: Exception) {
-                emptyList()
-            }
-        }
-    }
-
-    suspend fun getRecipesFromCache(): List<Recipe> {
-        return withContext(Dispatchers.IO) {
-            try {
-                recipeDao.getAll()
-            } catch (e: Exception) {
-                Log.e("RecipeRepository", "Error fetching recipe from cache: ${e.message}")
                 emptyList()
             }
         }
@@ -109,39 +98,24 @@ class RecipeRepository (context: Context) {
     suspend fun getRecipeById(recipeId: Int): Recipe? {
         return withContext(Dispatchers.IO) {
             try {
+                recipeDao.getRecipeById(recipeId)
+            } catch (e: Exception) {
+                Log.i("RecipeRepository", "getRecipesByCategoryId error: ${e.message}")
+                null
+            }
+        }
+    }
+
+    suspend fun getRecipeFromServerById(recipeId: Int): Recipe? {
+        return withContext(Dispatchers.IO) {
+            try {
                 val response = service.getRecipeById(recipeId).execute()
-                if (response.isSuccessful) response.body() else null
+                if (response.isSuccessful) {
+                    response.body()
+                } else {
+                    null
+                }
             } catch (e: Exception) {
-                Log.i("RecipeRepository", "getRecipesByCategoryId error: ${e.message}")
-                null
-            }
-        }
-    }
-
-    suspend fun getRecipesByCategoryId(recipeIdsSet: Set<String>): List<Recipe>? {
-        return withContext(Dispatchers.IO) {
-            try {
-                val recipeIdsString = recipeIdsSet.joinToString(",")
-                val response = service.getRecipesByCategoryId(recipeIdsString).execute()
-                Log.i(
-                    "RecipeRepository",
-                    "Response getRecipesByCategoryId code: ${response.code()}"
-                )
-                if (response.isSuccessful) response.body() else null
-            } catch (e: Exception) {
-                Log.i("RecipeRepository", "getRecipesByCategoryId error: ${e.message}")
-                null
-            }
-        }
-    }
-
-    suspend fun getCategoryById(categoryId: Int): Category? {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = service.getCategoryById(categoryId).execute()
-                if (response.isSuccessful) response.body() else null
-            } catch (e: Exception) {
-                Log.i("RecipeRepository", "getCategoryById error: ${e.message}")
                 null
             }
         }

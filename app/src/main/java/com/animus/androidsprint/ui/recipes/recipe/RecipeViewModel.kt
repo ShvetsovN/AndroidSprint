@@ -29,9 +29,17 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
     fun loadRecipe(recipeId: Int) {
         viewModelScope.launch(Dispatchers.Default) {
-            val recipe = repository.getRecipeById(recipeId)
+            var recipe = repository.getRecipeById(recipeId)
+            if (recipe == null) {
+                recipe = repository.getRecipeFromServerById(recipeId)
+
+                recipe?.let {
+                    repository.saveRecipesToCache(listOf(it), it.categoryId)
+                }
+            }
             val favoriteRecipeIds = repository.getFavoriteRecipes()?.map { it.id }
             val isFavorite = favoriteRecipeIds?.contains(recipeId)
+
             val imageUrl = Constants.IMAGE_URL + recipe?.imageUrl
 
             _recipeLiveData.postValue(

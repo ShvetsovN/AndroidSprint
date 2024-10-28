@@ -11,6 +11,9 @@ interface RecipeDao {
     @Query("SELECT * FROM Recipe WHERE isFavorite = 1 ")
     fun getFavoriteRecipes(): List<Recipe>
 
+    @Query("SELECT * FROM Recipe WHERE id = :recipeId")
+    fun getRecipeById(recipeId: Int): Recipe?
+
     @Query("UPDATE recipe SET isFavorite = :isFavorite WHERE id = :recipeId")
     fun updateFavoriteStatus(recipeId: Int, isFavorite: Boolean)
 
