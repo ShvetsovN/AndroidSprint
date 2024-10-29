@@ -21,7 +21,7 @@ class CategoriesListViewModel(application: Application) : AndroidViewModel(appli
         viewModelScope.launch {
             val currentState = _categoriesListLiveData.value ?: CategoriesListState()
 
-            val cacheCategories = repository.getCategoriesFromCache()
+            val cacheCategories: List<Category> = repository.getCategoriesFromCache()
             if (cacheCategories.isNotEmpty()) {
                 _categoriesListLiveData.postValue(currentState.copy(categories = cacheCategories))
             } else {
