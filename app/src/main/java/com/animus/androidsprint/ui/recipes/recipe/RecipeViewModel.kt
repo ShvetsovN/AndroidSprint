@@ -29,7 +29,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
     fun loadRecipe(recipeId: Int) {
         viewModelScope.launch(Dispatchers.Default) {
-            var recipe = repository.getRecipeById(recipeId)
+            var recipe = repository.getRecipeByIdFromCache(recipeId)
             if (recipe == null) {
                 recipe = repository.getRecipeFromServerById(recipeId)
 

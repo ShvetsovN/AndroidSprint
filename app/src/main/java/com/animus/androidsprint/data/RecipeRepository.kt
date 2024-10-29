@@ -95,7 +95,7 @@ class RecipeRepository(context: Context) {
         }
     }
 
-    suspend fun getRecipeById(recipeId: Int): Recipe? {
+    suspend fun getRecipeByIdFromCache(recipeId: Int): Recipe? {
         return withContext(Dispatchers.IO) {
             try {
                 recipeDao.getRecipeById(recipeId)
