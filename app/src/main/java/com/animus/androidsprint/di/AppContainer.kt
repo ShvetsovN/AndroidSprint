@@ -36,7 +36,7 @@ class AppContainer(context: Context) {
     private val repository = RecipeRepository(
         recipeDao = recipeDao,
         categoriesDao = categoriesDao,
-        service = recipeApiService,
+        recipeApiService = recipeApiService,
         ioDispatcher = ioDispatcher,
     )
 

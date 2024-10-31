@@ -1,40 +1,20 @@
 package com.animus.androidsprint.data
 
-import android.content.Context
 import android.util.Log
-import androidx.room.Room
-import com.animus.androidsprint.Constants
 import com.animus.androidsprint.model.Category
 import com.animus.androidsprint.model.Recipe
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.Json
-import okhttp3.MediaType.Companion.toMediaType
-import retrofit2.Retrofit
 
-class RecipeRepository(context: Context) {
-
-    private val appContext = context.applicationContext
-    private val contentType = Constants.CONTENT_TYPE.toMediaType()
-    private var retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(Constants.BASE_URL)
-        .addConverterFactory(Json.asConverterFactory(contentType))
-        .build()
-
-    private var service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
-
-    private val db: AppDatabase = Room.databaseBuilder(
-        appContext,
-        AppDatabase::class.java,
-        "database-categories"
-    ).build()
-
-    private val categoriesDao = db.categoryDao()
-    private val recipeDao = db.recipeDao()
+class RecipeRepository(
+    private val recipeDao: RecipeDao,
+    private val categoriesDao: CategoriesDao,
+    private val recipeApiService: RecipeApiService,
+    private val ioDispatcher: CoroutineDispatcher,
+) {
 
     suspend fun getFavoriteRecipes(): List<Recipe>? {
-        return withContext(Dispatchers.IO) {
+        return withContext(ioDispatcher) {
             try {
                 recipeDao.getFavoriteRecipes()
             } catch (e: Exception) {
@@ -44,7 +24,7 @@ class RecipeRepository(context: Context) {
     }
 
     suspend fun updateFavoriteStatus(recipeId: Int, isFavorite: Boolean) {
-        return withContext(Dispatchers.IO) {
+        return withContext(ioDispatcher) {
             try {
                 recipeDao.updateFavoriteStatus(recipeId, isFavorite)
             } catch (e: Exception) {
@@ -54,7 +34,7 @@ class RecipeRepository(context: Context) {
     }
 
     suspend fun getRecipesFromCacheByCategoryId(categoryId: Int): List<Recipe> {
-        return withContext(Dispatchers.IO) {
+        return withContext(ioDispatcher) {
             try {
                 recipeDao.getRecipesByCategoryId(categoryId)
             } catch (e: Exception) {
@@ -65,7 +45,7 @@ class RecipeRepository(context: Context) {
 
     suspend fun saveRecipesToCache(recipes: List<Recipe>, categoryId: Int) {
         val updatedRecipes = recipes.map { it.copy(categoryId = categoryId) }
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             try {
                 recipeDao.insertAll(updatedRecipes)
             } catch (e: Exception) {
@@ -75,7 +55,7 @@ class RecipeRepository(context: Context) {
     }
 
     suspend fun getCategoriesFromCache(): List<Category> {
-        return withContext(Dispatchers.IO) {
+        return withContext(ioDispatcher) {
             try {
                 categoriesDao.getAll()
             } catch (e: Exception) {
@@ -86,7 +66,7 @@ class RecipeRepository(context: Context) {
     }
 
     suspend fun saveCategoriesToCache(categories: List<Category>) {
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             try {
                 categoriesDao.insertAll(categories)
             } catch (e: Exception) {
@@ -96,7 +76,7 @@ class RecipeRepository(context: Context) {
     }
 
     suspend fun getRecipeByIdFromCache(recipeId: Int): Recipe? {
-        return withContext(Dispatchers.IO) {
+        return withContext(ioDispatcher) {
             try {
                 recipeDao.getRecipeById(recipeId)
             } catch (e: Exception) {
@@ -107,9 +87,9 @@ class RecipeRepository(context: Context) {
     }
 
     suspend fun getRecipeFromServerById(recipeId: Int): Recipe? {
-        return withContext(Dispatchers.IO) {
+        return withContext(ioDispatcher) {
             try {
-                val response = service.getRecipeById(recipeId).execute()
+                val response = recipeApiService.getRecipeById(recipeId).execute()
                 if (response.isSuccessful) {
                     response.body()
                 } else {
@@ -122,9 +102,9 @@ class RecipeRepository(context: Context) {
     }
 
     suspend fun getRecipesByIds(categoryId: Int): List<Recipe>? {
-        return withContext(Dispatchers.IO) {
+        return withContext(ioDispatcher) {
             try {
-                val response = service.getRecipesByIds(categoryId).execute()
+                val response = recipeApiService.getRecipesByIds(categoryId).execute()
                 if (response.isSuccessful) response.body() else null
             } catch (e: Exception) {
                 Log.i("RecipeRepository", "getRecipesByIds error: ${e.message}")
@@ -134,9 +114,9 @@ class RecipeRepository(context: Context) {
     }
 
     suspend fun getCategories(): List<Category>? {
-        return withContext(Dispatchers.IO) {
+        return withContext(ioDispatcher) {
             try {
-                val response = service.getCategories().execute()
+                val response = recipeApiService.getCategories().execute()
                 if (response.isSuccessful) response.body() else null
             } catch (e: Exception) {
                 Log.i("RecipeRepository", "getCategories error: ${e.message}")
