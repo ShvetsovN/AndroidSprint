@@ -11,7 +11,9 @@ import com.animus.androidsprint.model.Recipe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class RecipeViewModel(private val recipeRepository: RecipeRepository) : ViewModel() {
+class RecipeViewModel(
+    private val recipeRepository: RecipeRepository,
+) : ViewModel() {
 
     private val _recipeLiveData = MutableLiveData<RecipeState>()
     val recipeLiveData: LiveData<RecipeState> = _recipeLiveData
@@ -25,6 +27,10 @@ class RecipeViewModel(private val recipeRepository: RecipeRepository) : ViewMode
         _recipeLiveData.value = _recipeLiveData.value?.copy(portionCount = portionCount)
     }
 
+    fun resetPortionCount(){
+        updatingPortionCount(1)
+    }
+
     fun loadRecipe(recipeId: Int) {
         viewModelScope.launch(Dispatchers.Default) {
             var recipe = recipeRepository.getRecipeByIdFromCache(recipeId)
@@ -35,20 +41,19 @@ class RecipeViewModel(private val recipeRepository: RecipeRepository) : ViewMode
                     recipeRepository.saveRecipesToCache(listOf(it), it.categoryId)
                 }
             }
-            val favoriteRecipeIds = recipeRepository.getFavoriteRecipes()?.map { it.id }
-            val isFavorite = favoriteRecipeIds?.contains(recipeId)
-
+            val favoriteRecipeIds = recipeRepository.getFavoriteRecipes().map { it.id }
+            val isFavorite = favoriteRecipeIds.contains(recipeId)
             val imageUrl = Constants.IMAGE_URL + recipe?.imageUrl
 
+            val currentPortionCount = _recipeLiveData.value?.portionCount ?: 1
+
             _recipeLiveData.postValue(
-                isFavorite?.let {
-                    RecipeState(
-                        recipe = recipe,
-                        portionCount = recipeLiveData.value?.portionCount ?: 1,
-                        isFavorite = it,
-                        recipeImage = imageUrl
-                    )
-                }
+                RecipeState(
+                    recipe = recipe,
+                    portionCount = currentPortionCount,
+                    isFavorite = isFavorite,
+                    recipeImage = imageUrl
+                )
             )
         }
     }

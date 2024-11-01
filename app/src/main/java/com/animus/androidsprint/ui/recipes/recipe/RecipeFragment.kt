@@ -20,7 +20,7 @@ import com.animus.androidsprint.model.Ingredient
 import com.bumptech.glide.Glide
 import com.google.android.material.divider.MaterialDividerItemDecoration
 
-class RecipeFragment() : Fragment() {
+class RecipeFragment : Fragment() {
 
     private lateinit var recipeViewModel: RecipeViewModel
     private val args: RecipeFragmentArgs by navArgs()
@@ -51,6 +51,7 @@ class RecipeFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recipeViewModel.resetPortionCount()
         recipeViewModel.loadRecipe(args.recipeId)
         initUI()
     }
@@ -114,25 +115,27 @@ class RecipeFragment() : Fragment() {
             recipeViewModel.onFavoritesClicked()
         }
         recipeViewModel.recipeLiveData.observe(viewLifecycleOwner) { recipeState ->
-            if (recipeState.isError) {
-                Toast.makeText(context, getString(R.string.toast_error_message), Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                with(binding) {
-                    tvRecipeHeader.text = recipeState.recipe?.title
-                    val imageHeaderUrl =
-                        Constants.IMAGE_URL + recipeState.recipe?.imageUrl
-                    loadImageHeader(imageHeaderUrl)
+            recipeState?.let {
+                if (it.isError) {
+                    Toast.makeText(context, getString(R.string.toast_error_message), Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    with(binding) {
+                        tvRecipeHeader.text = recipeState.recipe?.title
+                        val imageHeaderUrl =
+                            Constants.IMAGE_URL + recipeState.recipe?.imageUrl
+                        loadImageHeader(imageHeaderUrl)
 
-                    ibFavoriteRecipe.setImageResource(
-                        if (!recipeState.isFavorite) R.drawable.ic_heart_empty else R.drawable.ic_heart
-                    )
-                    recipeState.recipe?.let { recipe ->
-                        updateIngredientAdapter(recipe.ingredients)
-                        updateMethodAdapter(recipe.method)
+                        ibFavoriteRecipe.setImageResource(
+                            if (!recipeState.isFavorite) R.drawable.ic_heart_empty else R.drawable.ic_heart
+                        )
+                        recipeState.recipe?.let { recipe ->
+                            updateIngredientAdapter(recipe.ingredients)
+                            updateMethodAdapter(recipe.method)
+                        }
+                        ingredientsAdapter.updateIngredients(recipeState.portionCount)
+                        tvNumberOfPortions.text = recipeState.portionCount.toString()
                     }
-                    ingredientsAdapter.updateIngredients(recipeState.portionCount)
-                    tvNumberOfPortions.text = recipeState.portionCount.toString()
                 }
             }
         }

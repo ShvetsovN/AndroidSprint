@@ -13,7 +13,7 @@ class RecipeRepository(
     private val ioDispatcher: CoroutineDispatcher,
 ) {
 
-    suspend fun getFavoriteRecipes(): List<Recipe>? {
+    suspend fun getFavoriteRecipes(): List<Recipe> {
         return withContext(ioDispatcher) {
             try {
                 recipeDao.getFavoriteRecipes()

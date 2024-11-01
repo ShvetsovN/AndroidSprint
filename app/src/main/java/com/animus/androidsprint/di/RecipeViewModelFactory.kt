@@ -6,7 +6,11 @@ import com.animus.androidsprint.ui.recipes.recipe.RecipeViewModel
 class RecipeViewModelFactory(
     private val recipeRepository: RecipeRepository
 ): Factory<RecipeViewModel> {
+
+    private var recipeViewModel : RecipeViewModel? = null
+
     override fun create(): RecipeViewModel {
-        return RecipeViewModel(recipeRepository)
+        if(recipeViewModel == null) recipeViewModel = RecipeViewModel(recipeRepository)
+        return recipeViewModel as RecipeViewModel
     }
 }
