@@ -1,19 +1,17 @@
 package com.animus.androidsprint.ui.recipes.favorites
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.animus.androidsprint.data.RecipeRepository
 import com.animus.androidsprint.model.Recipe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class FavoriteViewModel(application: Application) : AndroidViewModel(application) {
+class FavoriteViewModel(private val recipeRepository: RecipeRepository) : ViewModel() {
 
-    private val repository = RecipeRepository(application)
     private val _favoriteLiveData = MutableLiveData<FavoriteState>()
     val favoriteLiveData: LiveData<FavoriteState> = _favoriteLiveData
 
@@ -25,7 +23,7 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
     fun loadFavorites() {
         viewModelScope.launch(Dispatchers.Default) {
             val currentState = _favoriteLiveData.value ?: FavoriteState()
-            val favoritesRecipe: List<Recipe>? = repository.getFavoriteRecipes()
+            val favoritesRecipe: List<Recipe>? = recipeRepository.getFavoriteRecipes()
             Log.i("FavoriteVM", "Loaded favorite recipes: $favoritesRecipe")
 
             val newState = if (favoritesRecipe != null) {

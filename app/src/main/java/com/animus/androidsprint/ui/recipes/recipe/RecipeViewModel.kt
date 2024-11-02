@@ -1,10 +1,9 @@
 package com.animus.androidsprint.ui.recipes.recipe
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.data.RecipeRepository
@@ -12,9 +11,10 @@ import com.animus.androidsprint.model.Recipe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class RecipeViewModel(application: Application) : AndroidViewModel(application) {
+class RecipeViewModel(
+    private val recipeRepository: RecipeRepository,
+) : ViewModel() {
 
-    private val repository = RecipeRepository(application)
     private val _recipeLiveData = MutableLiveData<RecipeState>()
     val recipeLiveData: LiveData<RecipeState> = _recipeLiveData
 
@@ -27,30 +27,33 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         _recipeLiveData.value = _recipeLiveData.value?.copy(portionCount = portionCount)
     }
 
+    fun resetPortionCount(){
+        updatingPortionCount(1)
+    }
+
     fun loadRecipe(recipeId: Int) {
         viewModelScope.launch(Dispatchers.Default) {
-            var recipe = repository.getRecipeById(recipeId)
+            var recipe = recipeRepository.getRecipeByIdFromCache(recipeId)
             if (recipe == null) {
-                recipe = repository.getRecipeFromServerById(recipeId)
+                recipe = recipeRepository.getRecipeFromServerById(recipeId)
 
                 recipe?.let {
-                    repository.saveRecipesToCache(listOf(it), it.categoryId)
+                    recipeRepository.saveRecipesToCache(listOf(it), it.categoryId)
                 }
             }
-            val favoriteRecipeIds = repository.getFavoriteRecipes()?.map { it.id }
-            val isFavorite = favoriteRecipeIds?.contains(recipeId)
-
+            val favoriteRecipeIds = recipeRepository.getFavoriteRecipes().map { it.id }
+            val isFavorite = favoriteRecipeIds.contains(recipeId)
             val imageUrl = Constants.IMAGE_URL + recipe?.imageUrl
 
+            val currentPortionCount = _recipeLiveData.value?.portionCount ?: 1
+
             _recipeLiveData.postValue(
-                isFavorite?.let {
-                    RecipeState(
-                        recipe = recipe,
-                        portionCount = recipeLiveData.value?.portionCount ?: 1,
-                        isFavorite = it,
-                        recipeImage = imageUrl
-                    )
-                }
+                RecipeState(
+                    recipe = recipe,
+                    portionCount = currentPortionCount,
+                    isFavorite = isFavorite,
+                    recipeImage = imageUrl
+                )
             )
         }
     }
@@ -60,7 +63,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         val isFavorite = recipeLiveData.value?.isFavorite?.not() ?: return
 
         viewModelScope.launch {
-            repository.updateFavoriteStatus(recipeId, isFavorite)
+            recipeRepository.updateFavoriteStatus(recipeId, isFavorite)
             _recipeLiveData.value = recipeLiveData.value?.copy(isFavorite = isFavorite)
         }
     }

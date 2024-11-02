@@ -1,32 +1,29 @@
 package com.animus.androidsprint.ui.recipes.recipeList
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.animus.androidsprint.data.RecipeRepository
 import com.animus.androidsprint.model.Recipe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class RecipeListViewModel(application: Application) : AndroidViewModel(application) {
+class RecipeListViewModel(private val recipeRepository: RecipeRepository) : ViewModel() {
 
     private val _recipeListLiveData = MutableLiveData<RecipeListState>()
     val recipeListLiveData: LiveData<RecipeListState> = _recipeListLiveData
-
-    private val repository = RecipeRepository(application)
 
     fun loadRecipe(categoryId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val currentState = _recipeListLiveData.value ?: RecipeListState()
 
-            val cacheRecipe = repository.getRecipesFromCacheByCategoryId(categoryId)
+            val cacheRecipe = recipeRepository.getRecipesFromCacheByCategoryId(categoryId)
             if (cacheRecipe.isNotEmpty()) {
                 _recipeListLiveData.postValue(currentState.copy(recipeList = cacheRecipe))
             } else {
-                val recipesFromServer = repository.getRecipesByIds(categoryId)
+                val recipesFromServer = recipeRepository.getRecipesByIds(categoryId)
 
                 if (recipesFromServer == null) {
                     _recipeListLiveData.postValue(RecipeListState(isError = true))
@@ -34,7 +31,7 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
                     val newState = currentState.copy(recipeList = recipesFromServer, isError = false)
                     _recipeListLiveData.postValue(newState)
 
-                    repository.saveRecipesToCache(recipesFromServer, categoryId)
+                    recipeRepository.saveRecipesToCache(recipesFromServer, categoryId)
                 }
             }
         }

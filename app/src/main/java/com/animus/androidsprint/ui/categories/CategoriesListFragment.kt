@@ -8,23 +8,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
+import com.animus.androidsprint.RecipesApplication
 import com.animus.androidsprint.databinding.FragmentListCategoriesBinding
 import com.animus.androidsprint.model.Category
 import com.bumptech.glide.Glide
 
 class CategoriesListFragment : Fragment() {
 
-    private val viewModel: CategoriesListViewModel by viewModels()
+    private lateinit var categoriesListViewModel: CategoriesListViewModel
     private val categoriesListAdapter = CategoriesListAdapter()
     private var _binding: FragmentListCategoriesBinding? = null
     private val binding
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentListCategoriesBinding must not be null")
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val appContainer = (requireActivity().application as RecipesApplication).appConteiner
+        categoriesListViewModel = appContainer.categoriesListViewModelFactory.create()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -47,7 +54,7 @@ class CategoriesListFragment : Fragment() {
     }
 
     private fun initRecycle() {
-        viewModel.loadCategories()
+        categoriesListViewModel.loadCategories()
         val recyclerView: RecyclerView = binding.rvCategories
         recyclerView.adapter = categoriesListAdapter
         categoriesListAdapter.setOnItemClickListener(object :
@@ -58,7 +65,7 @@ class CategoriesListFragment : Fragment() {
                 openRecipesByCategoryId(category)
             }
         })
-        viewModel.categoriesListLiveData.observe(viewLifecycleOwner) { categoryState ->
+        categoriesListViewModel.categoriesListLiveData.observe(viewLifecycleOwner) { categoryState ->
             if (categoryState.isError) {
                 Toast.makeText(context, getString(R.string.toast_error_message), Toast.LENGTH_SHORT)
                     .show()

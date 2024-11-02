@@ -1,31 +1,27 @@
 package com.animus.androidsprint.ui.categories
 
-import android.app.Application
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.animus.androidsprint.data.RecipeRepository
 import com.animus.androidsprint.model.Category
 import kotlinx.coroutines.launch
 
-class CategoriesListViewModel(application: Application) : AndroidViewModel(application) {
+class CategoriesListViewModel(private val recipeRepository: RecipeRepository) : ViewModel() {
 
     private val _categoriesListLiveData = MutableLiveData<CategoriesListState>()
     val categoriesListLiveData: LiveData<CategoriesListState> = _categoriesListLiveData
-
-    private val repository = RecipeRepository(application)
 
     fun loadCategories() {
         viewModelScope.launch {
             val currentState = _categoriesListLiveData.value ?: CategoriesListState()
 
-            val cacheCategories: List<Category> = repository.getCategoriesFromCache()
+            val cacheCategories: List<Category> = recipeRepository.getCategoriesFromCache()
             if (cacheCategories.isNotEmpty()) {
                 _categoriesListLiveData.postValue(currentState.copy(categories = cacheCategories))
             } else {
-                val categoriesFromServer: List<Category>? = repository.getCategories()
+                val categoriesFromServer: List<Category>? = recipeRepository.getCategories()
 
                 if (categoriesFromServer == null) {
                     _categoriesListLiveData.postValue(CategoriesListState(isError = true))
@@ -33,7 +29,7 @@ class CategoriesListViewModel(application: Application) : AndroidViewModel(appli
                     val newState =
                         currentState.copy(categories = categoriesFromServer, isError = false)
                     _categoriesListLiveData.postValue(newState)
-                    repository.saveCategoriesToCache(categoriesFromServer)
+                    recipeRepository.saveCategoriesToCache(categoriesFromServer)
                 }
             }
         }

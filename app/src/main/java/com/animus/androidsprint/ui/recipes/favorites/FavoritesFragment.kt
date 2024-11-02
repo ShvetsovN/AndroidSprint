@@ -9,16 +9,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.animus.androidsprint.R
+import com.animus.androidsprint.RecipesApplication
 import com.animus.androidsprint.databinding.FragmentFavoritesBinding
 import com.animus.androidsprint.model.Recipe
 import com.animus.androidsprint.ui.recipes.recipeList.RecipeListAdapter
 
 class FavoritesFragment : Fragment() {
 
-    private val viewModel: FavoriteViewModel by viewModels()
+    private lateinit var favoriteViewModel: FavoriteViewModel
 
     private var _binding: FragmentFavoritesBinding? = null
     private val binding
@@ -27,6 +27,12 @@ class FavoritesFragment : Fragment() {
 
     private val favoriteAdapter = RecipeListAdapter()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val appContainer = (requireActivity().application as RecipesApplication).appConteiner
+        favoriteViewModel = appContainer.favoritesViewModelFactory.create()
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,7 +50,7 @@ class FavoritesFragment : Fragment() {
 
     private fun initRecycler() {
         binding.rvFavorites.adapter = favoriteAdapter
-        viewModel.favoriteLiveData.observe(viewLifecycleOwner) { recipeState ->
+        favoriteViewModel.favoriteLiveData.observe(viewLifecycleOwner) { recipeState ->
             if (recipeState.isError) {
                 Toast.makeText(context, getString(R.string.toast_error_message), Toast.LENGTH_SHORT)
                     .show()
@@ -60,7 +66,7 @@ class FavoritesFragment : Fragment() {
                 })
             }
         }
-        viewModel.loadFavorites()
+        favoriteViewModel.loadFavorites()
     }
 
     @SuppressLint("NotifyDataSetChanged")
