@@ -14,5 +14,5 @@ import com.animus.androidsprint.model.Recipe
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun categoryDao(): CategoriesDao
-    abstract fun recipeDao(): RecipeDao
+    abstract fun recipesDao(): RecipesDao
 }

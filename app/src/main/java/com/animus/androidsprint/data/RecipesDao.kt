@@ -7,7 +7,7 @@ import androidx.room.Query
 import com.animus.androidsprint.model.Recipe
 
 @Dao
-interface RecipeDao {
+interface RecipesDao {
     @Query("SELECT * FROM Recipe WHERE isFavorite = 1 ")
     fun getFavoriteRecipes(): List<Recipe>
 

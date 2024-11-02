@@ -9,16 +9,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.animus.androidsprint.R
-import com.animus.androidsprint.RecipesApplication
 import com.animus.androidsprint.databinding.FragmentFavoritesBinding
 import com.animus.androidsprint.model.Recipe
 import com.animus.androidsprint.ui.recipes.recipeList.RecipeListAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FavoritesFragment : Fragment() {
 
-    private lateinit var favoriteViewModel: FavoriteViewModel
+    private val favoriteViewModel: FavoriteViewModel by viewModels()
 
     private var _binding: FragmentFavoritesBinding? = null
     private val binding
@@ -27,12 +29,6 @@ class FavoritesFragment : Fragment() {
 
     private val favoriteAdapter = RecipeListAdapter()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val appContainer = (requireActivity().application as RecipesApplication).appConteiner
-        favoriteViewModel = appContainer.favoritesViewModelFactory.create()
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

@@ -10,19 +10,22 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.animus.androidsprint.Constants
 import com.animus.androidsprint.R
-import com.animus.androidsprint.RecipesApplication
 import com.animus.androidsprint.databinding.FragmentRecipeBinding
 import com.animus.androidsprint.model.Ingredient
 import com.bumptech.glide.Glide
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipeFragment : Fragment() {
 
-    private lateinit var recipeViewModel: RecipeViewModel
+    private val recipeViewModel: RecipeViewModel by viewModels()
+
     private val args: RecipeFragmentArgs by navArgs()
     private var _binding: FragmentRecipeBinding? = null
     private val binding
@@ -31,13 +34,6 @@ class RecipeFragment : Fragment() {
 
     private val ingredientsAdapter = IngredientsAdapter()
     private val methodAdapter = MethodAdapter()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val appContainer = (requireActivity().application as RecipesApplication).appConteiner
-        recipeViewModel = appContainer.recipeViewModelFactory.create()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
