@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.androidx.navigation.safeargs)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -57,6 +58,8 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
 
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.core.ktx)
