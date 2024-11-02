@@ -156,8 +156,11 @@ class RecipeFragment : Fragment() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun updateMethodAdapter(description: List<String>) {
-        methodAdapter.dataSet = description
+    private fun updateMethodAdapter(descriptions: List<String>) {
+        val descriptionWithIndex = descriptions.mapIndexed { index, description ->
+            "${index + 1}. $description"
+        }
+        methodAdapter.dataSet = descriptionWithIndex
         methodAdapter.notifyDataSetChanged()
     }
 }
