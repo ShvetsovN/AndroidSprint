@@ -4,19 +4,23 @@ import android.util.Log
 import com.animus.androidsprint.model.Category
 import com.animus.androidsprint.model.Recipe
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class RecipeRepository(
-    private val recipeDao: RecipeDao,
+class RecipeRepository @Inject constructor(
+    private val recipesDao: RecipesDao,
     private val categoriesDao: CategoriesDao,
     private val recipeApiService: RecipeApiService,
-    private val ioDispatcher: CoroutineDispatcher,
+
 ) {
+
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 
     suspend fun getFavoriteRecipes(): List<Recipe> {
         return withContext(ioDispatcher) {
             try {
-                recipeDao.getFavoriteRecipes()
+                recipesDao.getFavoriteRecipes()
             } catch (e: Exception) {
                 emptyList()
             }
@@ -26,7 +30,7 @@ class RecipeRepository(
     suspend fun updateFavoriteStatus(recipeId: Int, isFavorite: Boolean) {
         return withContext(ioDispatcher) {
             try {
-                recipeDao.updateFavoriteStatus(recipeId, isFavorite)
+                recipesDao.updateFavoriteStatus(recipeId, isFavorite)
             } catch (e: Exception) {
                 Log.e("RecipeRepository", "Error updating favorite status: ${e.message}")
             }
@@ -36,7 +40,7 @@ class RecipeRepository(
     suspend fun getRecipesFromCacheByCategoryId(categoryId: Int): List<Recipe> {
         return withContext(ioDispatcher) {
             try {
-                recipeDao.getRecipesByCategoryId(categoryId)
+                recipesDao.getRecipesByCategoryId(categoryId)
             } catch (e: Exception) {
                 emptyList()
             }
@@ -47,7 +51,7 @@ class RecipeRepository(
         val updatedRecipes = recipes.map { it.copy(categoryId = categoryId) }
         withContext(ioDispatcher) {
             try {
-                recipeDao.insertAll(updatedRecipes)
+                recipesDao.insertAll(updatedRecipes)
             } catch (e: Exception) {
                 Log.e("RecipeRepository", "Error saving categories to cache: ${e.message}")
             }
@@ -78,7 +82,7 @@ class RecipeRepository(
     suspend fun getRecipeByIdFromCache(recipeId: Int): Recipe? {
         return withContext(ioDispatcher) {
             try {
-                recipeDao.getRecipeById(recipeId)
+                recipesDao.getRecipeById(recipeId)
             } catch (e: Exception) {
                 Log.i("RecipeRepository", "getRecipesByCategoryId error: ${e.message}")
                 null

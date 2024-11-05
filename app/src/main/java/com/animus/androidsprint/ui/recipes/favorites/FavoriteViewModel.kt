@@ -7,10 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.animus.androidsprint.data.RecipeRepository
 import com.animus.androidsprint.model.Recipe
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FavoriteViewModel(private val recipeRepository: RecipeRepository) : ViewModel() {
+@HiltViewModel
+class FavoriteViewModel @Inject constructor(
+    private val recipeRepository: RecipeRepository
+) : ViewModel() {
 
     private val _favoriteLiveData = MutableLiveData<FavoriteState>()
     val favoriteLiveData: LiveData<FavoriteState> = _favoriteLiveData

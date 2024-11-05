@@ -7,10 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.animus.androidsprint.data.RecipeRepository
 import com.animus.androidsprint.model.Recipe
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RecipeListViewModel(private val recipeRepository: RecipeRepository) : ViewModel() {
+@HiltViewModel
+class RecipeListViewModel @Inject constructor(
+    private val recipeRepository: RecipeRepository
+) : ViewModel() {
 
     private val _recipeListLiveData = MutableLiveData<RecipeListState>()
     val recipeListLiveData: LiveData<RecipeListState> = _recipeListLiveData
@@ -28,7 +33,8 @@ class RecipeListViewModel(private val recipeRepository: RecipeRepository) : View
                 if (recipesFromServer == null) {
                     _recipeListLiveData.postValue(RecipeListState(isError = true))
                 } else {
-                    val newState = currentState.copy(recipeList = recipesFromServer, isError = false)
+                    val newState =
+                        currentState.copy(recipeList = recipesFromServer, isError = false)
                     _recipeListLiveData.postValue(newState)
 
                     recipeRepository.saveRecipesToCache(recipesFromServer, categoryId)
